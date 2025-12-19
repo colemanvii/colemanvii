@@ -13,4 +13,4 @@ I’m interested in:
 Some things here are finished.  
 Most are not.
 
-That’s intentional.
+VII
