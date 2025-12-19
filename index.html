@@ -4,178 +4,302 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Coleman VII</title>
-  <meta name="description" content="Coleman VII — a quiet beginning." />
+  <meta name="description" content="Coleman VII — quiet work." />
+  <meta name="theme-color" content="#0b0c0f" />
   <style>
     :root{
-      --bg:#0b0c0f;
-      --fg:#f3f0e8;
-      --muted:rgba(243,240,232,.68);
-      --stroke:rgba(243,240,232,.14);
-      --card:rgba(243,240,232,.06);
-      --shadow:0 22px 70px rgba(0,0,0,.6);
-      --radius:24px;
+      --bg:#07080a;
+      --panel:#0c0e12;
+      --fg:rgba(245,242,235,.92);
+      --muted:rgba(245,242,235,.62);
+      --faint:rgba(245,242,235,.38);
+      --stroke:rgba(245,242,235,.14);
+      --stroke2:rgba(245,242,235,.10);
+      --dot:#f4b24c;
+      --shadow:0 26px 80px rgba(0,0,0,.68);
+      --radius:22px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
 
     body{
       margin:0;
       color:var(--fg);
       background:
-        radial-gradient(900px 700px at 20% 10%, rgba(255,200,120,.07), transparent 58%),
-        radial-gradient(900px 700px at 80% 25%, rgba(140,190,255,.06), transparent 60%),
-        radial-gradient(1000px 800px at 50% 95%, rgba(170,255,190,.04), transparent 60%),
+        radial-gradient(1200px 900px at 70% 20%, rgba(244,178,76,.06), transparent 62%),
+        radial-gradient(900px 700px at 20% 80%, rgba(120,170,255,.04), transparent 64%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 30%),
         var(--bg);
-      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      font: 15px/1.55 var(--sans);
       display:grid;
       place-items:center;
-      padding:32px;
+      padding:34px 22px;
       overflow:hidden;
     }
 
-    /* slow “living” drift */
+    /* slow breathing, barely-there */
     .air{
       position:fixed;
-      inset:-30%;
+      inset:-35%;
       background:
-        radial-gradient(closest-side, rgba(243,240,232,.06), transparent 68%),
-        radial-gradient(closest-side, rgba(243,240,232,.04), transparent 70%);
-      filter: blur(22px);
-      opacity:.6;
-      animation: drift 18s ease-in-out infinite alternate;
+        radial-gradient(closest-side, rgba(245,242,235,.05), transparent 70%),
+        radial-gradient(closest-side, rgba(245,242,235,.03), transparent 72%);
+      filter: blur(26px);
+      opacity:.42;
+      animation: drift 34s ease-in-out infinite alternate;
       pointer-events:none;
     }
     @keyframes drift{
-      0%{ transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
-      100%{ transform: translate3d(1.5%, 1%, 0) scale(1.06); }
+      0%{ transform: translate3d(-1.2%, -0.8%, 0) scale(1.02); }
+      100%{ transform: translate3d(1.2%, 0.8%, 0) scale(1.06); }
     }
+    @media (prefers-reduced-motion: reduce){ .air{ animation:none; } }
 
-    .wrap{
-      width:min(760px, 100%);
-      border:1px solid var(--stroke);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(243,240,232,.08), rgba(243,240,232,.03));
-      box-shadow:var(--shadow);
-      padding:40px 32px 28px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    /* gentle grain to keep it human */
+    /* grain keeps it human */
     .grain{
-      position:absolute; inset:-40%;
+      position:fixed; inset:-40%;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
       mix-blend-mode:overlay;
-      opacity:.6;
-      transform: rotate(8deg);
+      opacity:.45;
+      transform:rotate(10deg);
       pointer-events:none;
     }
 
-    header{display:flex; flex-direction:column; gap:12px; margin-bottom:26px;}
-    .kicker{
-      letter-spacing:.22em;
+    .wrap{
+      width:min(900px, 100%);
+      display:grid;
+      gap:18px;
+      grid-template-columns: 1fr;
+      align-items:start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(800px 320px at 20% 0%, rgba(244,178,76,.08), transparent 60%);
+      opacity:.7;
+      pointer-events:none;
+    }
+
+    .bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 18px 12px;
+      border-bottom:1px solid var(--stroke2);
+      position:relative;
+      z-index:1;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-family: var(--mono);
+      letter-spacing:.18em;
       text-transform:uppercase;
       font-size:12px;
       color:var(--muted);
     }
-    h1{
-      margin:0;
-      font-weight:600;
-      letter-spacing:-.02em;
-      font-size:40px;
-    }
-    p{
-      margin:0;
-      color:var(--muted);
-      max-width:58ch;
-    }
-
-    .buttons{
-      margin-top:26px;
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-    @media (min-width: 640px){
-      .buttons{ grid-template-columns: 1fr 1fr 1fr; }
-      h1{ font-size:44px; }
-    }
-
-    .pill{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:15px 14px;
-      border-radius:18px;
-      border:1px solid var(--stroke);
-      background:var(--card);
-      color:var(--fg);
-      opacity:.86;
-      user-select:none;
-      pointer-events:none; /* non-functional by design */
-      backdrop-filter: blur(10px);
-    }
     .dot{
-      width:9px; height:9px; border-radius:999px;
-      background: rgba(243,240,232,.9);
-      box-shadow: 0 0 0 3px rgba(243,240,232,.10);
-      opacity:.85;
+      width:9px; height:9px;
+      border-radius:999px;
+      background:var(--dot);
+      box-shadow: 0 0 0 6px rgba(244,178,76,.10);
+      opacity:.95;
     }
 
-    footer{
-      margin-top:26px;
-      padding-top:16px;
-      border-top:1px solid rgba(243,240,232,.10);
+    .icons{
       display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      color:var(--muted);
+      gap:10px;
+      opacity:.55;
+      font-family:var(--mono);
       font-size:12px;
+      user-select:none;
     }
-    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .icons span{
+      width:28px; height:28px;
+      display:grid; place-items:center;
+      border:1px solid rgba(245,242,235,.10);
+      border-radius:10px;
+      background:rgba(255,255,255,.02);
+    }
 
-    /* respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      .air{ animation:none; }
+    .body{
+      padding:22px 18px 18px;
+      position:relative;
+      z-index:1;
+    }
+
+    .headline{
+      font-family: var(--mono);
+      font-size:28px;
+      letter-spacing:-.01em;
+      margin:2px 0 10px;
+    }
+
+    .sub{
+      margin:0 0 18px;
+      color:var(--muted);
+      max-width: 62ch;
+    }
+
+    .divider{
+      height:1px;
+      background: rgba(245,242,235,.10);
+      margin:18px 0;
+    }
+
+    .label{
+      font-family: var(--mono);
+      font-size:11px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--faint);
+      margin-bottom:10px;
+    }
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .pill{
+      font-family: var(--mono);
+      font-size:13px;
+      color:rgba(245,242,235,.78);
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(245,242,235,.12);
+      background: rgba(255,255,255,.03);
+      user-select:none;
+      pointer-events:none; /* statement, not a menu (yet) */
+    }
+
+    .footer{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 18px;
+      border-top:1px solid var(--stroke2);
+      color:var(--faint);
+      font-family:var(--mono);
+      font-size:12px;
+      position:relative;
+      z-index:1;
+    }
+
+    /* second block: quiet statement on the side when wide */
+    @media (min-width: 900px){
+      .wrap{
+        grid-template-columns: 420px 1fr;
+        gap:22px;
+      }
+      .headline{ font-size:30px; }
+      .body{ padding:22px 22px 18px; }
+      .bar{ padding:16px 22px 12px; }
+      .footer{ padding:14px 22px; }
+    }
+
+    .right{
+      padding:24px 22px;
+      min-height: 260px;
+    }
+    .big{
+      font-family: var(--mono);
+      font-size:30px;
+      letter-spacing:-.01em;
+      margin:6px 0 12px;
+    }
+    .right p{
+      margin:0;
+      color:var(--muted);
+      max-width: 64ch;
+    }
+
+    .tags{
+      margin-top:18px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .tag{
+      font-family: var(--mono);
+      font-size:12px;
+      color:rgba(245,242,235,.70);
+      padding:8px 10px;
+      border-radius:12px;
+      border:1px solid rgba(245,242,235,.12);
+      background: rgba(255,255,255,.02);
+      user-select:none;
     }
   </style>
 </head>
 
 <body>
   <div class="air" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
 
-  <main class="wrap" role="main">
-    <div class="grain" aria-hidden="true"></div>
+  <main class="wrap" role="main" aria-label="Coleman VII landing">
+    <!-- LEFT: console card -->
+    <section class="card" aria-label="Console">
+      <div class="bar">
+        <div class="brand"><span class="dot" aria-hidden="true"></span> Coleman VII</div>
+        <div class="icons" aria-hidden="true">
+          <span>⌂</span><span>⇣</span><span>◐</span>
+        </div>
+      </div>
 
-    <header>
-      <div class="kicker">Coleman VII</div>
-      <h1>Quiet work.</h1>
-      <p>
-        A small room on the internet.<br />
-        The doors will open when the work is ready.
-      </p>
-    </header>
+      <div class="body">
+        <div class="label">Status</div>
+        <div class="headline">Quiet work.</div>
+        <p class="sub">
+          This is a place I tend.<br/>
+          Work appears when it’s ready.
+        </p>
 
-    <section class="buttons" aria-label="Markers">
-      <div class="pill"><span class="dot" aria-hidden="true"></span>Art</div>
-      <div class="pill"><span class="dot" aria-hidden="true"></span>Code</div>
-      <div class="pill"><span class="dot" aria-hidden="true"></span>Words</div>
+        <div class="divider"></div>
+
+        <div class="label">Forms</div>
+        <div class="pills" aria-label="Markers">
+          <div class="pill">Art</div>
+          <div class="pill">Code</div>
+          <div class="pill">Words</div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div>colemanvii.com</div>
+        <div>present</div>
+      </div>
     </section>
 
-    <footer>
-      <div class="mono">colemanvii.com</div>
-      <div class="mono" id="stamp"></div>
-    </footer>
+    <!-- RIGHT: spare statement field -->
+    <section class="card right" aria-label="Statement">
+      <div class="big"><span style="color:var(--dot)">•</span> Next chapter</div>
+      <p>
+        I care about language, attention, and what lasts.<br/>
+        No performance. No rush. Just the real thing, over time.
+      </p>
+      <div class="tags" aria-label="Tags">
+        <div class="tag">alignment &gt; acceleration</div>
+        <div class="tag">depth &gt; display</div>
+        <div class="tag">tend the signal</div>
+      </div>
+    </section>
   </main>
-
-  <script>
-    const d = new Date();
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    document.getElementById("stamp").textContent =
-      months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
-  </script>
 </body>
 </html>
