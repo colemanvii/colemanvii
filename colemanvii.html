@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Coleman VII</title>
+  <meta name="description" content="Coleman VII — a quiet beginning." />
+  <style>
+    :root{
+      --bg:#0b0c0f;
+      --fg:#f3f0e8;
+      --muted:rgba(243,240,232,.68);
+      --stroke:rgba(243,240,232,.14);
+      --card:rgba(243,240,232,.06);
+      --shadow:0 22px 70px rgba(0,0,0,.6);
+      --radius:24px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      margin:0;
+      color:var(--fg);
+      background:
+        radial-gradient(900px 700px at 20% 10%, rgba(255,200,120,.07), transparent 58%),
+        radial-gradient(900px 700px at 80% 25%, rgba(140,190,255,.06), transparent 60%),
+        radial-gradient(1000px 800px at 50% 95%, rgba(170,255,190,.04), transparent 60%),
+        var(--bg);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      display:grid;
+      place-items:center;
+      padding:32px;
+      overflow:hidden;
+    }
+
+    /* slow “living” drift */
+    .air{
+      position:fixed;
+      inset:-30%;
+      background:
+        radial-gradient(closest-side, rgba(243,240,232,.06), transparent 68%),
+        radial-gradient(closest-side, rgba(243,240,232,.04), transparent 70%);
+      filter: blur(22px);
+      opacity:.6;
+      animation: drift 18s ease-in-out infinite alternate;
+      pointer-events:none;
+    }
+    @keyframes drift{
+      0%{ transform: translate3d(-1.5%, -1%, 0) scale(1.02); }
+      100%{ transform: translate3d(1.5%, 1%, 0) scale(1.06); }
+    }
+
+    .wrap{
+      width:min(760px, 100%);
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(243,240,232,.08), rgba(243,240,232,.03));
+      box-shadow:var(--shadow);
+      padding:40px 32px 28px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* gentle grain to keep it human */
+    .grain{
+      position:absolute; inset:-40%;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.16'/%3E%3C/svg%3E");
+      mix-blend-mode:overlay;
+      opacity:.6;
+      transform: rotate(8deg);
+      pointer-events:none;
+    }
+
+    header{display:flex; flex-direction:column; gap:12px; margin-bottom:26px;}
+    .kicker{
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      font-size:12px;
+      color:var(--muted);
+    }
+    h1{
+      margin:0;
+      font-weight:600;
+      letter-spacing:-.02em;
+      font-size:40px;
+    }
+    p{
+      margin:0;
+      color:var(--muted);
+      max-width:58ch;
+    }
+
+    .buttons{
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    @media (min-width: 640px){
+      .buttons{ grid-template-columns: 1fr 1fr 1fr; }
+      h1{ font-size:44px; }
+    }
+
+    .pill{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:15px 14px;
+      border-radius:18px;
+      border:1px solid var(--stroke);
+      background:var(--card);
+      color:var(--fg);
+      opacity:.86;
+      user-select:none;
+      pointer-events:none; /* non-functional by design */
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:9px; height:9px; border-radius:999px;
+      background: rgba(243,240,232,.9);
+      box-shadow: 0 0 0 3px rgba(243,240,232,.10);
+      opacity:.85;
+    }
+
+    footer{
+      margin-top:26px;
+      padding-top:16px;
+      border-top:1px solid rgba(243,240,232,.10);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+    /* respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .air{ animation:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="air" aria-hidden="true"></div>
+
+  <main class="wrap" role="main">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header>
+      <div class="kicker">Coleman VII</div>
+      <h1>Quiet work.</h1>
+      <p>
+        A small room on the internet.<br />
+        The doors will open when the work is ready.
+      </p>
+    </header>
+
+    <section class="buttons" aria-label="Markers">
+      <div class="pill"><span class="dot" aria-hidden="true"></span>Art</div>
+      <div class="pill"><span class="dot" aria-hidden="true"></span>Code</div>
+      <div class="pill"><span class="dot" aria-hidden="true"></span>Words</div>
+    </section>
+
+    <footer>
+      <div class="mono">colemanvii.com</div>
+      <div class="mono" id="stamp"></div>
+    </footer>
+  </main>
+
+  <script>
+    const d = new Date();
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    document.getElementById("stamp").textContent =
+      months[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  </script>
+</body>
+</html>
