@@ -93,7 +93,7 @@
       color:var(--muted);
     }
 
-    /* ✅ LIVING PULSE (present + in/out breathing) */
+    /* 🔥 OBVIOUS, BREATHING EMBER */
     .dot{
       width:9px;
       height:9px;
@@ -101,42 +101,47 @@
       background:var(--dot);
       display:inline-block;
       transform-origin:center;
-      opacity:.78;
-      box-shadow:0 0 0 2px rgba(244,178,76,.14);
-      animation: emberPulse 5.6s ease-in-out infinite;
+      opacity:.65;
+      box-shadow:0 0 0 2px rgba(244,178,76,.18);
+      animation: emberPulse 4.2s ease-in-out infinite;
       will-change: opacity, box-shadow, transform;
     }
 
     @keyframes emberPulse{
       0%{
-        opacity:.62;
+        opacity:.55;
         transform:scale(1);
-        box-shadow:0 0 0 2px rgba(244,178,76,.10);
+        box-shadow:0 0 0 2px rgba(244,178,76,.16);
       }
       35%{
-        opacity:.90;
-        transform:scale(1.04);
-        box-shadow:0 0 0 3px rgba(244,178,76,.20);
+        opacity:.95;
+        transform:scale(1.12);
+        box-shadow:0 0 0 4px rgba(244,178,76,.34);
       }
       55%{
-        opacity:.70;
-        transform:scale(1.01);
-        box-shadow:0 0 0 2px rgba(244,178,76,.12);
-      }
-      78%{
-        opacity:.96;
-        transform:scale(1.05);
+        opacity:.75;
+        transform:scale(1.04);
         box-shadow:0 0 0 3px rgba(244,178,76,.22);
       }
+      80%{
+        opacity:1;
+        transform:scale(1.14);
+        box-shadow:0 0 0 5px rgba(244,178,76,.38);
+      }
       100%{
-        opacity:.62;
+        opacity:.55;
         transform:scale(1);
-        box-shadow:0 0 0 2px rgba(244,178,76,.10);
+        box-shadow:0 0 0 2px rgba(244,178,76,.16);
       }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .dot{ animation:none; opacity:.78; transform:none; box-shadow:0 0 0 2px rgba(244,178,76,.14); }
+      .dot{
+        animation:none;
+        opacity:.85;
+        transform:none;
+        box-shadow:0 0 0 3px rgba(244,178,76,.28);
+      }
       .air{ animation:none; }
     }
 
@@ -268,20 +273,8 @@
       <div class="label">Forms</div>
       <div class="pills">
         <div class="pill">Art work</div>
-
-        <a class="pill link"
-           href="https://thewestisdead.substack.com/"
-           target="_blank"
-           rel="noopener">
-          Writing
-        </a>
-
-        <a class="pill link"
-           href="https://github.com/colemanvii"
-           target="_blank"
-           rel="noopener">
-          Haven
-        </a>
+        <a class="pill link" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">Writing</a>
+        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">Haven</a>
       </div>
     </div>
 
