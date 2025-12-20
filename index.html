@@ -93,36 +93,52 @@
       color:var(--muted);
     }
 
-    /* Lively firefly: present + double flicker */
+    /* Living/breathing ember: subtle in/out + occasional tiny wink */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
-      opacity:.9;
-      box-shadow:0 0 0 2px rgba(244,178,76,.16);
-      animation: blink 7.2s linear infinite;
+      opacity:.78;
+      box-shadow:0 0 0 2px rgba(244,178,76,.14);
+      animation: ember 7.6s ease-in-out infinite;
     }
 
-    @keyframes blink{
-      /* steady presence */
-      0%   {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
-      76%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
-
-      /* first spark */
-      79%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.34);}
-      81%  {opacity:.95; box-shadow:0 0 0 2px rgba(244,178,76,.22);}
-
-      /* second flicker */
-      83%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.30);}
-      85%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
-
-      /* rest */
-      100% {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
+    @keyframes ember{
+      0%{
+        opacity:.62;
+        box-shadow:0 0 0 2px rgba(244,178,76,.10);
+        filter:saturate(1);
+      }
+      35%{
+        opacity:.86;
+        box-shadow:0 0 0 3px rgba(244,178,76,.18);
+        filter:saturate(1.05);
+      }
+      55%{
+        opacity:.72;
+        box-shadow:0 0 0 2px rgba(244,178,76,.12);
+        filter:saturate(1);
+      }
+      72%{
+        opacity:.92; /* gentle crest */
+        box-shadow:0 0 0 3px rgba(244,178,76,.20);
+        filter:saturate(1.08);
+      }
+      78%{
+        opacity:.70; /* small “in and out” dip */
+        box-shadow:0 0 0 2px rgba(244,178,76,.12);
+        filter:saturate(1);
+      }
+      100%{
+        opacity:.62;
+        box-shadow:0 0 0 2px rgba(244,178,76,.10);
+        filter:saturate(1);
+      }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .dot{ animation:none; }
+      .dot{ animation:none; opacity:.78; box-shadow:0 0 0 2px rgba(244,178,76,.14); }
       .air{ animation:none; }
     }
 
@@ -233,7 +249,7 @@
 <body>
   <div class="air" aria-hidden="true"></div>
 
-  <main class="console">
+  <main class="console" role="main" aria-label="Coleman VII">
     <div class="top">
       <div class="brand"><span class="dot" aria-hidden="true"></span> Coleman VII</div>
       <div class="toggle">
@@ -253,9 +269,21 @@
 
       <div class="label">Forms</div>
       <div class="pills">
-        <div class="pill">Art</div>
-        <a class="pill link" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">Words</a>
-        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">GitHub</a>
+        <div class="pill">Art work</div>
+
+        <a class="pill link"
+           href="https://thewestisdead.substack.com/"
+           target="_blank"
+           rel="noopener">
+          Writing
+        </a>
+
+        <a class="pill link"
+           href="https://github.com/colemanvii"
+           target="_blank"
+           rel="noopener">
+          Haven
+        </a>
       </div>
     </div>
 
