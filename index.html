@@ -93,52 +93,50 @@
       color:var(--muted);
     }
 
-    /* Living/breathing ember: subtle in/out + occasional tiny wink */
+    /* ✅ LIVING PULSE (present + in/out breathing) */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
+      display:inline-block;
+      transform-origin:center;
       opacity:.78;
       box-shadow:0 0 0 2px rgba(244,178,76,.14);
-      animation: ember 7.6s ease-in-out infinite;
+      animation: emberPulse 5.6s ease-in-out infinite;
+      will-change: opacity, box-shadow, transform;
     }
 
-    @keyframes ember{
+    @keyframes emberPulse{
       0%{
         opacity:.62;
+        transform:scale(1);
         box-shadow:0 0 0 2px rgba(244,178,76,.10);
-        filter:saturate(1);
       }
       35%{
-        opacity:.86;
-        box-shadow:0 0 0 3px rgba(244,178,76,.18);
-        filter:saturate(1.05);
+        opacity:.90;
+        transform:scale(1.04);
+        box-shadow:0 0 0 3px rgba(244,178,76,.20);
       }
       55%{
-        opacity:.72;
+        opacity:.70;
+        transform:scale(1.01);
         box-shadow:0 0 0 2px rgba(244,178,76,.12);
-        filter:saturate(1);
-      }
-      72%{
-        opacity:.92; /* gentle crest */
-        box-shadow:0 0 0 3px rgba(244,178,76,.20);
-        filter:saturate(1.08);
       }
       78%{
-        opacity:.70; /* small “in and out” dip */
-        box-shadow:0 0 0 2px rgba(244,178,76,.12);
-        filter:saturate(1);
+        opacity:.96;
+        transform:scale(1.05);
+        box-shadow:0 0 0 3px rgba(244,178,76,.22);
       }
       100%{
         opacity:.62;
+        transform:scale(1);
         box-shadow:0 0 0 2px rgba(244,178,76,.10);
-        filter:saturate(1);
       }
     }
 
     @media (prefers-reduced-motion: reduce){
-      .dot{ animation:none; opacity:.78; box-shadow:0 0 0 2px rgba(244,178,76,.14); }
+      .dot{ animation:none; opacity:.78; transform:none; box-shadow:0 0 0 2px rgba(244,178,76,.14); }
       .air{ animation:none; }
     }
 
