@@ -93,28 +93,32 @@
       color:var(--muted);
     }
 
-    /* TRUE FIREFLY BLINK — tight radius, hard on/off */
+    /* PRESENT MOST OF THE TIME + SUBTLE BLINK */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
-      opacity:0;
-      box-shadow:0 0 0 0 rgba(244,178,76,0);
-      animation: firefly 9.5s steps(1,end) infinite;
+      opacity:.85; /* present */
+      box-shadow:0 0 0 2px rgba(244,178,76,.14); /* tight halo */
+      animation: blink 7.8s linear infinite;
     }
 
-    @keyframes firefly{
-      0%   {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
-      70%  {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
-      72%  {opacity:1; box-shadow:0 0 0 4px rgba(244,178,76,.22);}
-      74%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.18);}
-      76%  {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
-      100% {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
+    @keyframes blink{
+      /* steady */
+      0%   {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
+      80%  {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
+
+      /* quick bright pop */
+      83%  {opacity:1;   box-shadow:0 0 0 4px rgba(244,178,76,.20);}
+      85%  {opacity:1;   box-shadow:0 0 0 3px rgba(244,178,76,.18);}
+
+      /* back to steady */
+      100% {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
     }
 
     @media (prefers-reduced-motion: reduce){
-      .dot{ animation:none; opacity:.7; box-shadow:0 0 0 2px rgba(244,178,76,.18); }
+      .dot{ animation:none; }
       .air{ animation:none; }
     }
 
@@ -225,12 +229,14 @@
 <body>
   <div class="air" aria-hidden="true"></div>
 
-  <main class="console">
+  <main class="console" role="main" aria-label="Coleman VII">
     <div class="top">
-      <div class="brand"><span class="dot"></span> Coleman VII</div>
+      <div class="brand"><span class="dot" aria-hidden="true"></span> Coleman VII</div>
       <div class="toggle">
         <span id="modeLabel">Light</span>
-        <button class="switch" id="themeToggle"><span class="knob"></span></button>
+        <button class="switch" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="knob" aria-hidden="true"></span>
+        </button>
       </div>
     </div>
 
