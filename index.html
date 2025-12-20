@@ -93,7 +93,7 @@
       color:var(--muted);
     }
 
-    /* PRESENT MOST OF THE TIME + STRONG BLINK */
+    /* Lively firefly: present + double flicker */
     .dot{
       width:9px;
       height:9px;
@@ -101,19 +101,23 @@
       background:var(--dot);
       opacity:.9;
       box-shadow:0 0 0 2px rgba(244,178,76,.16);
-      animation: blink 7.8s linear infinite;
+      animation: blink 7.2s linear infinite;
     }
 
     @keyframes blink{
-      /* steady */
+      /* steady presence */
       0%   {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
-      78%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
+      76%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
 
-      /* bright ignition */
-      81%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.32);}
-      83%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.28);}
+      /* first spark */
+      79%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.34);}
+      81%  {opacity:.95; box-shadow:0 0 0 2px rgba(244,178,76,.22);}
 
-      /* return */
+      /* second flicker */
+      83%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.30);}
+      85%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
+
+      /* rest */
       100% {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
     }
 
@@ -229,7 +233,7 @@
 <body>
   <div class="air" aria-hidden="true"></div>
 
-  <main class="console" role="main" aria-label="Coleman VII">
+  <main class="console">
     <div class="top">
       <div class="brand"><span class="dot" aria-hidden="true"></span> Coleman VII</div>
       <div class="toggle">
@@ -250,20 +254,8 @@
       <div class="label">Forms</div>
       <div class="pills">
         <div class="pill">Art</div>
-
-        <a class="pill link"
-           href="https://thewestisdead.substack.com/"
-           target="_blank"
-           rel="noopener">
-          Words
-        </a>
-
-        <a class="pill link"
-           href="https://github.com/colemanvii"
-           target="_blank"
-           rel="noopener">
-          GitHub
-        </a>
+        <a class="pill link" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">Words</a>
+        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
 
