@@ -93,28 +93,28 @@
       color:var(--muted);
     }
 
-    /* PRESENT MOST OF THE TIME + SUBTLE BLINK */
+    /* PRESENT MOST OF THE TIME + STRONG BLINK */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
-      opacity:.85; /* present */
-      box-shadow:0 0 0 2px rgba(244,178,76,.14); /* tight halo */
+      opacity:.9;
+      box-shadow:0 0 0 2px rgba(244,178,76,.16);
       animation: blink 7.8s linear infinite;
     }
 
     @keyframes blink{
       /* steady */
-      0%   {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
-      80%  {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
+      0%   {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
+      78%  {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
 
-      /* quick bright pop */
-      83%  {opacity:1;   box-shadow:0 0 0 4px rgba(244,178,76,.20);}
-      85%  {opacity:1;   box-shadow:0 0 0 3px rgba(244,178,76,.18);}
+      /* bright ignition */
+      81%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.32);}
+      83%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.28);}
 
-      /* back to steady */
-      100% {opacity:.85; box-shadow:0 0 0 2px rgba(244,178,76,.14);}
+      /* return */
+      100% {opacity:.9; box-shadow:0 0 0 2px rgba(244,178,76,.16);}
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -250,8 +250,20 @@
       <div class="label">Forms</div>
       <div class="pills">
         <div class="pill">Art</div>
-        <div class="pill">Words</div>
-        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">GitHub</a>
+
+        <a class="pill link"
+           href="https://thewestisdead.substack.com/"
+           target="_blank"
+           rel="noopener">
+          Words
+        </a>
+
+        <a class="pill link"
+           href="https://github.com/colemanvii"
+           target="_blank"
+           rel="noopener">
+          GitHub
+        </a>
       </div>
     </div>
 
