@@ -1,4 +1,4 @@
-I work slowly.  
+Working slowly.
 I care about language, attention, and what lasts.
 
 This space is a record of things tended over time:
