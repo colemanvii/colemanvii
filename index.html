@@ -95,11 +95,34 @@
       color:var(--muted);
     }
 
+    /* LIGHTNING BUG DOT */
     .dot{
-      width:9px; height:9px;
+      width:9px;
+      height:9px;
       border-radius:999px;
       background:var(--dot);
-      box-shadow:0 0 0 6px rgba(244,178,76,.12);
+      opacity:.55;
+      box-shadow:0 0 0 4px rgba(244,178,76,.08);
+      animation: firefly 6.5s ease-in-out infinite;
+    }
+
+    @keyframes firefly{
+      0%{
+        opacity:.55;
+        box-shadow:0 0 0 4px rgba(244,178,76,.08);
+      }
+      45%{
+        opacity:1;
+        box-shadow:0 0 0 9px rgba(244,178,76,.18);
+      }
+      100%{
+        opacity:.55;
+        box-shadow:0 0 0 4px rgba(244,178,76,.08);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .dot{ animation:none; }
     }
 
     .toggle{
@@ -199,7 +222,7 @@
     }
 
     .mantra{
-      font-family: "Hiragino Mincho ProN","Yu Mincho","MS Mincho",serif;
+      font-family:"Hiragino Mincho ProN","Yu Mincho","MS Mincho",serif;
       font-size:13px;
       letter-spacing:.08em;
       opacity:.75;
@@ -231,13 +254,7 @@
       <div class="pills">
         <div class="pill">Art</div>
         <div class="pill">Words</div>
-
-        <a class="pill link"
-           href="https://github.com/colemanvii"
-           target="_blank"
-           rel="noopener">
-          GitHub
-        </a>
+        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
 
