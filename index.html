@@ -20,7 +20,7 @@
       --stroke:rgba(18,18,18,.12);
       --panel:rgba(18,18,18,.035);
       --dot:#f4b24c;
-      --glow:rgba(244,178,76,.10);
+      --glow:rgba(244,178,76,.14);
     }
 
     [data-theme="dark"]{
@@ -93,54 +93,47 @@
       color:var(--muted);
     }
 
-    /* 🔥 OBVIOUS, BREATHING EMBER */
+    /* 🌕 BREATHING ORB — brighter, fuller glow */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
-      display:inline-block;
+      opacity:.7;
+      box-shadow:0 0 0 3px rgba(244,178,76,.22);
       transform-origin:center;
-      opacity:.65;
-      box-shadow:0 0 0 2px rgba(244,178,76,.18);
       animation: emberPulse 4.2s ease-in-out infinite;
       will-change: opacity, box-shadow, transform;
     }
 
     @keyframes emberPulse{
       0%{
-        opacity:.55;
+        opacity:.6;
         transform:scale(1);
-        box-shadow:0 0 0 2px rgba(244,178,76,.16);
+        box-shadow:0 0 0 3px rgba(244,178,76,.20);
       }
-      35%{
-        opacity:.95;
-        transform:scale(1.12);
-        box-shadow:0 0 0 4px rgba(244,178,76,.34);
-      }
-      55%{
-        opacity:.75;
-        transform:scale(1.04);
-        box-shadow:0 0 0 3px rgba(244,178,76,.22);
-      }
-      80%{
+      40%{
         opacity:1;
         transform:scale(1.14);
-        box-shadow:0 0 0 5px rgba(244,178,76,.38);
+        box-shadow:0 0 0 6px rgba(244,178,76,.42);
+      }
+      65%{
+        opacity:.75;
+        transform:scale(1.05);
+        box-shadow:0 0 0 4px rgba(244,178,76,.28);
       }
       100%{
-        opacity:.55;
+        opacity:.6;
         transform:scale(1);
-        box-shadow:0 0 0 2px rgba(244,178,76,.16);
+        box-shadow:0 0 0 3px rgba(244,178,76,.20);
       }
     }
 
     @media (prefers-reduced-motion: reduce){
       .dot{
         animation:none;
-        opacity:.85;
-        transform:none;
-        box-shadow:0 0 0 3px rgba(244,178,76,.28);
+        opacity:.9;
+        box-shadow:0 0 0 4px rgba(244,178,76,.32);
       }
       .air{ animation:none; }
     }
@@ -224,8 +217,8 @@
       pointer-events:auto;
     }
     .pill.link:hover{
-      background:rgba(244,178,76,.10);
-      border-color:rgba(244,178,76,.35);
+      background:rgba(244,178,76,.12);
+      border-color:rgba(244,178,76,.45);
     }
 
     .foot{
@@ -252,14 +245,12 @@
 <body>
   <div class="air" aria-hidden="true"></div>
 
-  <main class="console" role="main" aria-label="Coleman VII">
+  <main class="console">
     <div class="top">
       <div class="brand"><span class="dot" aria-hidden="true"></span> Coleman VII</div>
       <div class="toggle">
         <span id="modeLabel">Light</span>
-        <button class="switch" id="themeToggle" type="button" aria-label="Toggle theme">
-          <span class="knob" aria-hidden="true"></span>
-        </button>
+        <button class="switch" id="themeToggle"><span class="knob"></span></button>
       </div>
     </div>
 
@@ -273,8 +264,20 @@
       <div class="label">Forms</div>
       <div class="pills">
         <div class="pill">Art work</div>
-        <a class="pill link" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">Writing</a>
-        <a class="pill link" href="https://github.com/colemanvii" target="_blank" rel="noopener">Haven</a>
+
+        <a class="pill link"
+           href="https://thewestisdead.substack.com/"
+           target="_blank"
+           rel="noopener">
+          Writing
+        </a>
+
+        <a class="pill link"
+           href="https://github.com/colemanvii"
+           target="_blank"
+           rel="noopener">
+          Haven
+        </a>
       </div>
     </div>
 
