@@ -51,8 +51,7 @@
 
     .air{
       position:fixed; inset:-35%;
-      background:
-        radial-gradient(closest-side, rgba(0,0,0,.04), transparent 70%);
+      background: radial-gradient(closest-side, rgba(0,0,0,.04), transparent 70%);
       filter: blur(28px);
       opacity:.22;
       animation: drift 38s ease-in-out infinite alternate;
@@ -60,8 +59,7 @@
     }
     [data-theme="dark"] .air{
       opacity:.38;
-      background:
-        radial-gradient(closest-side, rgba(245,242,235,.05), transparent 70%);
+      background: radial-gradient(closest-side, rgba(245,242,235,.05), transparent 70%);
     }
 
     @keyframes drift{
@@ -95,34 +93,29 @@
       color:var(--muted);
     }
 
-    /* LIGHTNING BUG DOT */
+    /* TRUE FIREFLY BLINK — tight radius, hard on/off */
     .dot{
       width:9px;
       height:9px;
       border-radius:999px;
       background:var(--dot);
-      opacity:.55;
-      box-shadow:0 0 0 4px rgba(244,178,76,.08);
-      animation: firefly 6.5s ease-in-out infinite;
+      opacity:0;
+      box-shadow:0 0 0 0 rgba(244,178,76,0);
+      animation: firefly 9.5s steps(1,end) infinite;
     }
 
     @keyframes firefly{
-      0%{
-        opacity:.55;
-        box-shadow:0 0 0 4px rgba(244,178,76,.08);
-      }
-      45%{
-        opacity:1;
-        box-shadow:0 0 0 9px rgba(244,178,76,.18);
-      }
-      100%{
-        opacity:.55;
-        box-shadow:0 0 0 4px rgba(244,178,76,.08);
-      }
+      0%   {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
+      70%  {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
+      72%  {opacity:1; box-shadow:0 0 0 4px rgba(244,178,76,.22);}
+      74%  {opacity:1; box-shadow:0 0 0 3px rgba(244,178,76,.18);}
+      76%  {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
+      100% {opacity:0; box-shadow:0 0 0 0 rgba(244,178,76,0);}
     }
 
     @media (prefers-reduced-motion: reduce){
-      .dot{ animation:none; }
+      .dot{ animation:none; opacity:.7; box-shadow:0 0 0 2px rgba(244,178,76,.18); }
+      .air{ animation:none; }
     }
 
     .toggle{
@@ -154,9 +147,7 @@
       transform: translateX(20px);
     }
 
-    .body{
-      padding:22px 18px 18px;
-    }
+    .body{ padding:22px 18px 18px; }
 
     .label{
       font-family:var(--mono);
@@ -232,7 +223,7 @@
 </head>
 
 <body>
-  <div class="air"></div>
+  <div class="air" aria-hidden="true"></div>
 
   <main class="console">
     <div class="top">
@@ -246,7 +237,7 @@
     <div class="body">
       <div class="label">Status</div>
       <h1 class="headline">Quiet work.</h1>
-      <p class="sub">This is a place I tend.<br/>Work appears when it’s ready.</p>
+      <p class="sub">Paying attention.</p>
 
       <div class="line"></div>
 
