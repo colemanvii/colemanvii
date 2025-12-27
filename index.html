@@ -3,13 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Coleman VII — a quiet threshold." />
+  <meta name="description" content="Coleman VII — signal, story, systems that last." />
   <title>Coleman VII</title>
 
   <style>
-    /* -------------------------
-       Theme tokens
-    ------------------------- */
     :root{
       --radius: 14px;
       --pad: clamp(18px, 4vw, 44px);
@@ -17,330 +14,257 @@
       --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, Georgia, serif;
     }
 
-    :root[data-theme="light"]{
-      --bg: #F6F3EE;
-      --text: rgba(30,30,28,.90);
-      --muted: rgba(30,30,28,.62);
-      --line: rgba(30,30,28,.10);
-      --panel: rgba(30,30,28,.03);
-      --accent: #2E6B4C; /* moss */
-      --accentWash: rgba(46,107,76,.08);
-    }
-
     :root[data-theme="dark"]{
-      --bg: #0C0F0D;
-      --text: rgba(255,255,255,.88);
-      --muted: rgba(255,255,255,.58);
-      --line: rgba(255,255,255,.12);
-      --panel: rgba(255,255,255,.05);
-      --accent: #8CFFB3; /* phosphor */
-      --accentWash: rgba(140,255,179,.08);
+      --bg:#0C0F0D;
+      --text:rgba(255,255,255,.88);
+      --muted:rgba(255,255,255,.55);
+      --line:rgba(255,255,255,.12);
+      --panel:rgba(255,255,255,.05);
+      --accent:#8CFFB3;
     }
 
-    /* -------------------------
-       Base
-    ------------------------- */
+    :root[data-theme="light"]{
+      --bg:#F6F3EE;
+      --text:rgba(30,30,28,.90);
+      --muted:rgba(30,30,28,.60);
+      --line:rgba(30,30,28,.10);
+      --panel:rgba(30,30,28,.03);
+      --accent:#2E6B4C;
+    }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--mono);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--mono);
+      -webkit-font-smoothing:antialiased;
     }
 
-    a{ color: inherit; text-decoration: none; }
-    a:hover{ text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-    a:focus-visible{
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-      border-radius: 10px;
-    }
-
-    /* Subtle mission-control grid (very light) */
     body::before{
       content:"";
-      position: fixed;
-      inset: 0;
+      position:fixed;
+      inset:0;
       pointer-events:none;
       background:
-        linear-gradient(to right, color-mix(in srgb, var(--line) 20%, transparent) 1px, transparent 1px),
-        linear-gradient(to bottom, color-mix(in srgb, var(--line) 15%, transparent) 1px, transparent 1px);
-      background-size: 96px 96px;
-      opacity: .35;
+        linear-gradient(to right, var(--line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+      background-size:96px 96px;
+      opacity:.25;
     }
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ opacity:.9; }
 
     .frame{
-      max-width: 72ch;
-      margin: 0 auto;
-      padding: var(--pad);
-      position: relative;
+      max-width:72ch;
+      margin:0 auto;
+      padding:var(--pad);
     }
 
-    /* -------------------------
-       Top line (simple)
-    ------------------------- */
-    .top{
+    header{
       display:flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 14px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .brand{
-      min-width: 0;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:16px;
+      padding-bottom:18px;
+      border-bottom:1px solid var(--line);
     }
 
     h1{
       margin:0;
-      font-family: var(--serif);
-      font-size: clamp(26px, 4vw, 38px);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      font-weight: 500;
+      font-family:var(--serif);
+      font-size:clamp(26px,4vw,38px);
+      font-weight:500;
+      letter-spacing:-.02em;
     }
 
     .tag{
-      margin-top: 8px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.5;
-      max-width: 62ch;
+      margin-top:6px;
+      font-size:12px;
+      color:var(--muted);
     }
 
-    .controls{
+    .status{
       display:flex;
       align-items:center;
-      gap: 10px;
-      flex: 0 0 auto;
-      color: var(--muted);
-      font-size: 12px;
-      white-space: nowrap;
+      gap:12px;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
     }
 
     .dot{
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 30%, transparent);
+      width:7px;height:7px;border-radius:50%;
+      background:var(--accent);
+      box-shadow:0 0 10px var(--accent);
       display:inline-block;
-      margin-right: 8px;
-      transform: translateY(1px);
+      margin-right:6px;
     }
 
     .toggle{
-      display:inline-flex;
+      display:flex;
       align-items:center;
-      gap: 10px;
-      padding: 7px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: color-mix(in srgb, var(--panel) 80%, transparent);
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .toggle span{
-      font-size: 11px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--muted);
+      gap:8px;
+      padding:6px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      cursor:pointer;
     }
 
     .switch{
-      width: 40px;
-      height: 20px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      position: relative;
-      background: transparent;
+      width:38px;height:18px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      position:relative;
     }
 
     .knob{
+      width:12px;height:12px;
+      background:var(--accent);
+      border-radius:50%;
       position:absolute;
-      top: 50%;
-      left: 3px;
-      width: 14px;
-      height: 14px;
-      border-radius: 999px;
-      transform: translateY(-50%);
-      background: var(--accent);
-      transition: left 160ms ease;
-      box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 25%, transparent);
+      top:50%;left:3px;
+      transform:translateY(-50%);
+      transition:left .15s ease;
     }
 
-    :root[data-theme="dark"] .knob{ left: 21px; }
+    :root[data-theme="dark"] .knob{ left:21px; }
 
-    /* -------------------------
-       Content
-    ------------------------- */
-    .block{
-      padding-top: 18px;
-    }
+    main{ padding-top:18px; }
 
     .mission{
-      font-size: 15px;
-      line-height: 1.75;
-      margin: 0;
+      font-size:15px;
+      line-height:1.7;
     }
 
-    .mission .muted{ color: var(--muted); }
+    .muted{ color:var(--muted); }
 
-    .hr{
-      margin: 18px 0 16px;
-      border: 0;
-      border-top: 1px solid var(--line);
+    hr{
+      margin:18px 0;
+      border:0;
+      border-top:1px solid var(--line);
     }
 
     .label{
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+      font-size:11px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:10px;
     }
 
     .dest{
       display:flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 14px;
-      padding: 12px 12px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: color-mix(in srgb, var(--panel) 70%, transparent);
-      transition: background 160ms ease, border-color 160ms ease;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:var(--panel);
     }
 
-    .dest + .dest{ margin-top: 10px; }
-
-    .dest:hover{
-      border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
-      background: color-mix(in srgb, var(--accentWash) 70%, var(--panel));
-    }
+    .dest + .dest{ margin-top:10px; }
 
     .left{
       display:flex;
-      flex-direction: column;
-      gap: 6px;
-      min-width: 0;
+      flex-direction:column;
+      gap:4px;
     }
 
     .title{
       display:flex;
-      gap: 10px;
-      align-items: baseline;
-      font-size: 14px;
-      color: color-mix(in srgb, var(--text) 94%, white 6%);
-      line-height: 1.2;
+      gap:8px;
+      font-size:14px;
     }
 
-    .arrow{
-      color: var(--accent);
-      text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
-    }
+    .arrow{ color:var(--accent); }
 
     .desc{
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.55;
-      max-width: 60ch;
-    }
-
-    .hint{
-      color: var(--muted);
-      font-size: 11px;
-      letter-spacing: .10em;
-      text-transform: uppercase;
-      flex: 0 0 auto;
-      opacity: .85;
+      font-size:12px;
+      color:var(--muted);
     }
 
     footer{
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      color: color-mix(in srgb, var(--muted) 70%, transparent);
-      font-size: 11px;
+      margin-top:18px;
+      padding-top:14px;
+      border-top:1px solid var(--line);
+      font-size:11px;
+      color:var(--muted);
       display:flex;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    @media (max-width: 720px){
-      .controls{ display:none; } /* keep mobile pure */
+    @media(max-width:720px){
+      .status{ display:none; }
     }
   </style>
 </head>
 
 <body>
   <div class="frame">
-    <header class="top">
-      <div class="brand">
+    <header>
+      <div>
         <h1>Coleman VII</h1>
         <div class="tag">Signal. Story. Systems that last.</div>
       </div>
 
-      <div class="controls" aria-label="System">
+      <div class="status">
         <span><span class="dot"></span>ONLINE</span>
         <span id="utc">UTC — —:—:—</span>
-
-        <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
-          <span id="themeLabel">Light</span>
-          <div class="switch" aria-hidden="true"><div class="knob"></div></div>
-        </button>
+        <div class="toggle" id="toggle">
+          <span id="mode">Dark</span>
+          <div class="switch"><div class="knob"></div></div>
+        </div>
       </div>
     </header>
 
-    <main class="block">
-      <p class="mission">
+    <main>
+      <div class="mission">
         I work slowly.<br/>
-        I listen for what’s already true.<br/>
-        I help people and institutions clarify their signal<br/>
-        <span class="muted">and build things meant to endure.</span><br/><br/>
-        <span class="muted">This is not a portfolio. It’s a threshold.</span>
-      </p>
+        I listen for what’s true.<br/>
+        I build signal into form.<br/>
+        <span class="muted">Things meant to endure.</span><br/><br/>
+        <span class="muted">Not a portfolio. A threshold.</span>
+      </div>
 
-      <hr class="hr"/>
+      <hr/>
 
       <div class="label">Destinations</div>
 
-      <a class="dest" id="dest1" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">
+      <a class="dest" href="https://thewestisdead.substack.com/" target="_blank">
         <div class="left">
           <div class="title"><span class="arrow">→</span>Writing</div>
-          <div class="desc">Notes, field recordings, and long-form thinking.</div>
+          <div class="desc">Notes. Field recordings. Long form.</div>
         </div>
-        <div class="hint">Substack</div>
+        <div class="muted">Substack</div>
       </a>
 
-      <a class="dest" id="dest2" href="https://github.com/colemanvii" target="_blank" rel="noopener">
+      <a class="dest" href="https://github.com/colemanvii" target="_blank">
         <div class="left">
           <div class="title"><span class="arrow">→</span>Code / Tools</div>
-          <div class="desc">Experiments, utilities, unfinished systems.</div>
+          <div class="desc">Experiments. Utilities. Unfinished systems.</div>
         </div>
-        <div class="hint">GitHub</div>
+        <div class="muted">GitHub</div>
       </a>
 
-      <a class="dest" id="dest3" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
+      <a class="dest" href="https://colecalfee.com" target="_blank">
         <div class="left">
           <div class="title"><span class="arrow">→</span>Studio</div>
-          <div class="desc">Objects made by hand. Limited. Considered.</div>
+          <div class="desc">Objects made by hand.</div>
         </div>
-        <div class="hint">Purchase</div>
+        <div class="muted">Cole Calfee</div>
       </a>
 
-      <a class="dest" id="dest4" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
+      <a class="dest" href="https://your-haven-landing-page-link-here.com" target="_blank">
         <div class="left">
           <div class="title"><span class="arrow">→</span>Haven Institute</div>
-          <div class="desc">Orientation, alignment, human infrastructure.</div>
+          <div class="desc">Orientation. Alignment. Infrastructure.</div>
         </div>
-        <div class="hint">Landing</div>
+        <div class="muted">Landing</div>
       </a>
     </main>
 
@@ -352,50 +276,28 @@
 
   <script>
     // UTC clock
-    const utcEl = document.getElementById("utc");
-    function tickUTC(){
-      const d = new Date();
-      const hh = String(d.getUTCHours()).padStart(2,'0');
-      const mm = String(d.getUTCMinutes()).padStart(2,'0');
-      const ss = String(d.getUTCSeconds()).padStart(2,'0');
-      utcEl.textContent = `UTC ${hh}:${mm}:${ss}`;
+    const utc = document.getElementById("utc");
+    function tick(){
+      const d=new Date();
+      utc.textContent=`UTC ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
     }
-    tickUTC();
-    setInterval(tickUTC, 1000);
+    tick(); setInterval(tick,1000);
 
-    // Theme toggle (persists)
-    const root = document.documentElement;
-    const btn = document.getElementById("themeToggle");
-    const label = document.getElementById("themeLabel");
+    // Theme toggle
+    const root=document.documentElement;
+    const mode=document.getElementById("mode");
+    const toggle=document.getElementById("toggle");
 
     function setTheme(t){
-      root.setAttribute("data-theme", t);
-      label.textContent = (t === "dark") ? "Dark" : "Light";
-      try { localStorage.setItem("cvii_theme", t); } catch(e){}
+      root.setAttribute("data-theme",t);
+      mode.textContent=t==="dark"?"Dark":"Light";
+      try{localStorage.setItem("cvii_theme",t);}catch{}
     }
 
-    (function initTheme(){
-      let saved = null;
-      try { saved = localStorage.getItem("cvii_theme"); } catch(e){}
-      if (saved === "light" || saved === "dark") return setTheme(saved);
+    const saved=localStorage.getItem("cvii_theme");
+    setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
 
-      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setTheme(prefersDark ? "dark" : "light");
-    })();
-
-    btn.addEventListener("click", () => {
-      const current = root.getAttribute("data-theme") || "light";
-      setTheme(current === "dark" ? "light" : "dark");
-    });
-
-    // Optional: keyboard launch (1–4)
-    const map = { "1":"dest1","2":"dest2","3":"dest3","4":"dest4" };
-    window.addEventListener("keydown", (e) => {
-      if (map[e.key]) {
-        const a = document.getElementById(map[e.key]);
-        if (a) a.click();
-      }
-    });
+    toggle.onclick=()=>setTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
   </script>
 </body>
 </html>
