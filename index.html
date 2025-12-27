@@ -8,10 +8,10 @@
 
   <style>
     :root{
-      --radius: 14px;
-      --pad: clamp(18px, 4vw, 44px);
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, Georgia, serif;
+      --radius:14px;
+      --pad:clamp(18px,4vw,44px);
+      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
+      --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
     }
 
     :root[data-theme="dark"]{
@@ -21,6 +21,7 @@
       --line:rgba(255,255,255,.12);
       --panel:rgba(255,255,255,.05);
       --accent:#8CFFB3;
+      --accentWash:rgba(140,255,179,.10);
     }
 
     :root[data-theme="light"]{
@@ -30,10 +31,11 @@
       --line:rgba(30,30,28,.10);
       --panel:rgba(30,30,28,.03);
       --accent:#2E6B4C;
+      --accentWash:rgba(46,107,76,.10);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box;}
+    html,body{height:100%;}
     body{
       margin:0;
       background:var(--bg);
@@ -48,14 +50,13 @@
       inset:0;
       pointer-events:none;
       background:
-        linear-gradient(to right, var(--line) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+        linear-gradient(to right,var(--line) 1px,transparent 1px),
+        linear-gradient(to bottom,var(--line) 1px,transparent 1px);
       background-size:96px 96px;
       opacity:.25;
     }
 
-    a{ color:inherit; text-decoration:none; }
-    a:hover{ opacity:.9; }
+    a{color:inherit;text-decoration:none;}
 
     .frame{
       max-width:72ch;
@@ -130,16 +131,16 @@
       transition:left .15s ease;
     }
 
-    :root[data-theme="dark"] .knob{ left:21px; }
+    :root[data-theme="dark"] .knob{left:21px;}
 
-    main{ padding-top:18px; }
+    main{padding-top:18px;}
 
     .mission{
       font-size:15px;
       line-height:1.7;
     }
 
-    .muted{ color:var(--muted); }
+    .muted{color:var(--muted);}
 
     hr{
       margin:18px 0;
@@ -155,6 +156,7 @@
       margin-bottom:10px;
     }
 
+    /* DESTINATION PILLS */
     .dest{
       display:flex;
       justify-content:space-between;
@@ -163,9 +165,23 @@
       border:1px solid var(--line);
       border-radius:var(--radius);
       background:var(--panel);
+      transition:
+        border-color .18s ease,
+        background .18s ease,
+        box-shadow .18s ease,
+        transform .18s ease;
     }
 
-    .dest + .dest{ margin-top:10px; }
+    .dest + .dest{margin-top:10px;}
+
+    .dest:hover{
+      border-color:var(--accent);
+      background:var(--accentWash);
+      box-shadow:
+        0 0 0 1px var(--accent),
+        0 8px 24px rgba(0,0,0,.25);
+      transform:translateY(-1px);
+    }
 
     .left{
       display:flex;
@@ -179,7 +195,14 @@
       font-size:14px;
     }
 
-    .arrow{ color:var(--accent); }
+    .arrow{
+      color:var(--accent);
+      transition:transform .18s ease;
+    }
+
+    .dest:hover .arrow{
+      transform:translateX(2px);
+    }
 
     .desc{
       font-size:12px;
@@ -199,7 +222,7 @@
     }
 
     @media(max-width:720px){
-      .status{ display:none; }
+      .status{display:none;}
     }
   </style>
 </head>
@@ -226,8 +249,7 @@
       <div class="mission">
         I work slowly.<br/>
         I listen for what’s true.<br/>
-        I build signal into form.<br/>
-        <span class="muted">Things meant to endure.</span><br/><br/>
+        <span class="muted">I build things meant to endure.</span><br/><br/>
         <span class="muted">Not a portfolio. A threshold.</span>
       </div>
 
@@ -261,10 +283,10 @@
 
       <a class="dest" href="https://your-haven-landing-page-link-here.com" target="_blank">
         <div class="left">
-          <div class="title"><span class="arrow">→</span>Haven Institute</div>
-          <div class="desc">Orientation. Alignment. Infrastructure.</div>
+          <div class="title"><span class="arrow">→</span>Haven</div>
+          <div class="desc">Orientation and continuity.</div>
         </div>
-        <div class="muted">Landing</div>
+        <div class="muted">Institute</div>
       </a>
     </main>
 
@@ -276,12 +298,12 @@
 
   <script>
     // UTC clock
-    const utc = document.getElementById("utc");
+    const utc=document.getElementById("utc");
     function tick(){
       const d=new Date();
       utc.textContent=`UTC ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
     }
-    tick(); setInterval(tick,1000);
+    tick();setInterval(tick,1000);
 
     // Theme toggle
     const root=document.documentElement;
@@ -295,8 +317,7 @@
     }
 
     const saved=localStorage.getItem("cvii_theme");
-    setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
-
+    setTheme(saved||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));
     toggle.onclick=()=>setTheme(root.getAttribute("data-theme")==="dark"?"light":"dark");
   </script>
 </body>
