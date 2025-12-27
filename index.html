@@ -3,165 +3,198 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Coleman VII — mission control threshold." />
+  <meta name="description" content="Coleman VII — a quiet threshold." />
   <title>Coleman VII</title>
 
   <style>
+    /* -------------------------
+       Theme tokens
+    ------------------------- */
     :root{
-      /* Monk Mission Control */
-      --bg: #0C0F0D;
-      --panel: rgba(255,255,255,.04);
-      --panel2: rgba(255,255,255,.06);
-      --line: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.86);
-      --muted: rgba(255,255,255,.62);
-      --faint: rgba(255,255,255,.28);
-
-      /* phosphor accent (use sparingly) */
-      --accent: #8CFFB3;
-      --accent2: rgba(140,255,179,.18);
-
       --radius: 14px;
-      --shadow: 0 10px 35px rgba(0,0,0,.45);
+      --pad: clamp(18px, 4vw, 44px);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, Georgia, serif;
     }
 
+    :root[data-theme="light"]{
+      --bg: #F6F3EE;
+      --text: rgba(30,30,28,.90);
+      --muted: rgba(30,30,28,.62);
+      --line: rgba(30,30,28,.10);
+      --panel: rgba(30,30,28,.03);
+      --accent: #2E6B4C; /* moss */
+      --accentWash: rgba(46,107,76,.08);
+    }
+
+    :root[data-theme="dark"]{
+      --bg: #0C0F0D;
+      --text: rgba(255,255,255,.88);
+      --muted: rgba(255,255,255,.58);
+      --line: rgba(255,255,255,.12);
+      --panel: rgba(255,255,255,.05);
+      --accent: #8CFFB3; /* phosphor */
+      --accentWash: rgba(140,255,179,.08);
+    }
+
+    /* -------------------------
+       Base
+    ------------------------- */
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
-
     body{
       margin:0;
       background: var(--bg);
       color: var(--text);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      letter-spacing: .01em;
+      font-family: var(--mono);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-
-      /* subtle grid */
-      background-image:
-        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
-      background-size: 64px 64px;
-      background-position: 0 0;
     }
 
-    /* scanlines + vignette */
+    a{ color: inherit; text-decoration: none; }
+    a:hover{ text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
+    /* Subtle mission-control grid (very light) */
     body::before{
       content:"";
       position: fixed;
       inset: 0;
       pointer-events:none;
       background:
-        repeating-linear-gradient(
-          to bottom,
-          rgba(255,255,255,.015),
-          rgba(255,255,255,.015) 1px,
-          transparent 2px,
-          transparent 5px
-        ),
-        radial-gradient(circle at 30% 10%, rgba(140,255,179,.08), transparent 45%),
-        radial-gradient(circle at 70% 90%, rgba(140,255,179,.05), transparent 55%),
-        radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.55) 100%);
-      mix-blend-mode: screen;
-      opacity: .55;
-    }
-
-    a{
-      color: var(--text);
-      text-decoration: none;
-    }
-    a:hover{
-      color: #fff;
-    }
-    a:focus-visible{
-      outline: 2px solid var(--accent);
-      outline-offset: 4px;
-      border-radius: 8px;
+        linear-gradient(to right, color-mix(in srgb, var(--line) 20%, transparent) 1px, transparent 1px),
+        linear-gradient(to bottom, color-mix(in srgb, var(--line) 15%, transparent) 1px, transparent 1px);
+      background-size: 96px 96px;
+      opacity: .35;
     }
 
     .frame{
-      max-width: 980px;
+      max-width: 72ch;
       margin: 0 auto;
-      padding: clamp(18px, 4vw, 44px);
+      padding: var(--pad);
+      position: relative;
     }
 
-    .topbar{
+    /* -------------------------
+       Top line (simple)
+    ------------------------- */
+    .top{
       display:flex;
-      justify-content: space-between;
       align-items: baseline;
-      gap: 16px;
-      padding: 14px 16px;
-      background: linear-gradient(180deg, var(--panel2), var(--panel));
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--line);
     }
 
     .brand{
-      display:flex;
-      flex-direction: column;
-      gap: 4px;
+      min-width: 0;
     }
 
-    .brand .name{
-      font-size: 18px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+    h1{
+      margin:0;
+      font-family: var(--serif);
+      font-size: clamp(26px, 4vw, 38px);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      font-weight: 500;
     }
 
-    .brand .tag{
+    .tag{
+      margin-top: 8px;
       color: var(--muted);
       font-size: 12px;
-      max-width: 54ch;
+      line-height: 1.5;
+      max-width: 62ch;
     }
 
-    .status{
+    .controls{
       display:flex;
-      gap: 14px;
-      align-items: center;
+      align-items:center;
+      gap: 10px;
+      flex: 0 0 auto;
       color: var(--muted);
       font-size: 12px;
       white-space: nowrap;
     }
 
     .dot{
-      width: 8px;
-      height: 8px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: var(--accent);
-      box-shadow: 0 0 18px rgba(140,255,179,.45);
+      box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 30%, transparent);
       display:inline-block;
       margin-right: 8px;
       transform: translateY(1px);
     }
 
-    .grid{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: 1.35fr .85fr;
-      gap: 18px;
-    }
-
-    @media (max-width: 860px){
-      .grid{ grid-template-columns: 1fr; }
-    }
-
-    .panel{
-      background: linear-gradient(180deg, var(--panel2), var(--panel));
+    .toggle{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 7px 10px;
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--panel) 80%, transparent);
+      cursor: pointer;
+      user-select: none;
     }
 
-    .panel .hd{
-      display:flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--line);
-      background: rgba(255,255,255,.03);
+    .toggle span{
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .switch{
+      width: 40px;
+      height: 20px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      position: relative;
+      background: transparent;
+    }
+
+    .knob{
+      position:absolute;
+      top: 50%;
+      left: 3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      transform: translateY(-50%);
+      background: var(--accent);
+      transition: left 160ms ease;
+      box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 25%, transparent);
+    }
+
+    :root[data-theme="dark"] .knob{ left: 21px; }
+
+    /* -------------------------
+       Content
+    ------------------------- */
+    .block{
+      padding-top: 18px;
+    }
+
+    .mission{
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .mission .muted{ color: var(--muted); }
+
+    .hr{
+      margin: 18px 0 16px;
+      border: 0;
+      border-top: 1px solid var(--line);
     }
 
     .label{
@@ -169,116 +202,70 @@
       font-size: 11px;
       letter-spacing: .12em;
       text-transform: uppercase;
-    }
-
-    .meta{
-      color: var(--faint);
-      font-size: 11px;
-    }
-
-    .panel .bd{
-      padding: 14px;
-    }
-
-    .mission{
-      font-size: 14px;
-      line-height: 1.65;
-    }
-
-    .mission .muted{ color: var(--muted); }
-
-    .ruleline{
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px dashed rgba(255,255,255,.16);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .destinations{
-      display:flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .dest{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius: 12px;
-      padding: 12px 12px 11px;
-      transition: border-color 160ms ease, background 160ms ease;
+      display:flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 14px;
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--panel) 70%, transparent);
+      transition: background 160ms ease, border-color 160ms ease;
     }
+
+    .dest + .dest{ margin-top: 10px; }
 
     .dest:hover{
-      border-color: rgba(140,255,179,.35);
-      background: rgba(140,255,179,.06);
+      border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+      background: color-mix(in srgb, var(--accentWash) 70%, var(--panel));
     }
 
-    .dest .top{
+    .left{
       display:flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
     }
 
-    .dest .title{
+    .title{
       display:flex;
-      align-items:center;
       gap: 10px;
+      align-items: baseline;
       font-size: 14px;
-      color: #fff;
+      color: color-mix(in srgb, var(--text) 94%, white 6%);
+      line-height: 1.2;
     }
 
-    .chev{
+    .arrow{
       color: var(--accent);
-      text-shadow: 0 0 18px rgba(140,255,179,.25);
+      text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
     }
 
-    .dest .hint{
-      color: var(--faint);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .dest .desc{
-      margin-top: 6px;
+    .desc{
       color: var(--muted);
       font-size: 12px;
       line-height: 1.55;
+      max-width: 60ch;
     }
 
-    .kbd{
-      display:inline-block;
-      border: 1px solid rgba(255,255,255,.14);
-      padding: 2px 6px;
-      border-radius: 8px;
-      color: rgba(255,255,255,.72);
+    .hint{
+      color: var(--muted);
       font-size: 11px;
-      margin-left: 6px;
-      background: rgba(255,255,255,.04);
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      flex: 0 0 auto;
+      opacity: .85;
     }
 
-    .readout{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .tile{
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      border-radius: 12px;
-      padding: 12px;
-      min-height: 76px;
-    }
-    .tile .k{ color: var(--muted); font-size: 11px; letter-spacing:.12em; text-transform: uppercase; }
-    .tile .v{ margin-top: 6px; font-size: 13px; color:#fff; }
-    .tile .sub{ margin-top: 6px; font-size: 12px; color: var(--muted); }
-
-    .footer{
-      margin-top: 16px;
-      padding: 12px 2px;
-      color: var(--faint);
+    footer{
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      color: color-mix(in srgb, var(--muted) 70%, transparent);
       font-size: 11px;
       display:flex;
       justify-content: space-between;
@@ -286,136 +273,81 @@
       flex-wrap: wrap;
     }
 
-    /* gentle “cursor” */
-    .cursor{
-      display:inline-block;
-      width: 10px;
-      height: 14px;
-      background: rgba(140,255,179,.85);
-      margin-left: 8px;
-      transform: translateY(2px);
-      animation: blink 1.1s steps(1) infinite;
-      box-shadow: 0 0 18px rgba(140,255,179,.25);
+    @media (max-width: 720px){
+      .controls{ display:none; } /* keep mobile pure */
     }
-    @keyframes blink { 50%{ opacity: 0; } }
   </style>
 </head>
 
 <body>
   <div class="frame">
-    <header class="topbar" role="banner">
+    <header class="top">
       <div class="brand">
-        <div class="name">Coleman VII</div>
-        <div class="tag">Signal. Story. Systems that last. A quiet threshold—mission control for the work.</div>
+        <h1>Coleman VII</h1>
+        <div class="tag">Signal. Story. Systems that last.</div>
       </div>
-      <div class="status" aria-label="System status">
+
+      <div class="controls" aria-label="System">
         <span><span class="dot"></span>ONLINE</span>
         <span id="utc">UTC — —:—:—</span>
-        <span>NODE: CVII-01</span>
+
+        <button class="toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span id="themeLabel">Light</span>
+          <div class="switch" aria-hidden="true"><div class="knob"></div></div>
+        </button>
       </div>
     </header>
 
-    <main class="grid" role="main">
-      <!-- LEFT: MISSION -->
-      <section class="panel" aria-label="Mission">
-        <div class="hd">
-          <div class="label">Mission Brief</div>
-          <div class="meta">MODE: MONK / CONTROL</div>
-        </div>
-        <div class="bd">
-          <div class="mission">
-            <div>— I work slowly.</div>
-            <div>— I listen for what’s already true.</div>
-            <div>— I help people and institutions clarify their signal</div>
-            <div>  <span class="muted">and build things meant to endure.</span><span class="cursor" aria-hidden="true"></span></div>
+    <main class="block">
+      <p class="mission">
+        I work slowly.<br/>
+        I listen for what’s already true.<br/>
+        I help people and institutions clarify their signal<br/>
+        <span class="muted">and build things meant to endure.</span><br/><br/>
+        <span class="muted">This is not a portfolio. It’s a threshold.</span>
+      </p>
 
-            <div class="ruleline">
-              This is not a portfolio. It’s a threshold.
-            </div>
-          </div>
-        </div>
-      </section>
+      <hr class="hr"/>
 
-      <!-- RIGHT: READOUT -->
-      <aside class="panel" aria-label="Readout">
-        <div class="hd">
-          <div class="label">Readout</div>
-          <div class="meta">STATUS: STEADY</div>
-        </div>
-        <div class="bd">
-          <div class="readout">
-            <div class="tile">
-              <div class="k">Operating Principle</div>
-              <div class="v">Quiet authority</div>
-              <div class="sub">Signal over spectacle</div>
-            </div>
-            <div class="tile">
-              <div class="k">Tempo</div>
-              <div class="v">Slow / Intentional</div>
-              <div class="sub">Less, but truer</div>
-            </div>
-            <div class="tile">
-              <div class="k">Output</div>
-              <div class="v">Story + Systems</div>
-              <div class="sub">Built to last</div>
-            </div>
-            <div class="tile">
-              <div class="k">Contact</div>
-              <div class="v">Link out</div>
-              <div class="sub">No inbox here</div>
-            </div>
-          </div>
-        </div>
-      </aside>
+      <div class="label">Destinations</div>
 
-      <!-- LEFT: DESTINATIONS -->
-      <section class="panel" aria-label="Destinations" style="grid-column: 1 / -1;">
-        <div class="hd">
-          <div class="label">Destinations</div>
-          <div class="meta">Press <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span><span class="kbd">4</span> (optional)</div>
+      <a class="dest" id="dest1" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">
+        <div class="left">
+          <div class="title"><span class="arrow">→</span>Writing</div>
+          <div class="desc">Notes, field recordings, and long-form thinking.</div>
         </div>
-        <div class="bd">
-          <div class="destinations">
-            <a class="dest" id="dest1" href="https://your-substack-link-here.com" target="_blank" rel="noopener">
-              <div class="top">
-                <div class="title"><span class="chev">→</span>Writing</div>
-                <div class="hint">Substack</div>
-              </div>
-              <div class="desc">Notes, field recordings, and long-form thinking.</div>
-            </a>
+        <div class="hint">Substack</div>
+      </a>
 
-            <a class="dest" id="dest2" href="https://github.com/your-handle" target="_blank" rel="noopener">
-              <div class="top">
-                <div class="title"><span class="chev">→</span>Code / Tools</div>
-                <div class="hint">GitHub</div>
-              </div>
-              <div class="desc">Experiments, utilities, unfinished systems.</div>
-            </a>
-
-            <a class="dest" id="dest3" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
-              <div class="top">
-                <div class="title"><span class="chev">→</span>Studio</div>
-                <div class="hint">Purchase</div>
-              </div>
-              <div class="desc">Objects made by hand. Limited. Considered.</div>
-            </a>
-
-            <a class="dest" id="dest4" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
-              <div class="top">
-                <div class="title"><span class="chev">→</span>Haven Institute</div>
-                <div class="hint">Landing</div>
-              </div>
-              <div class="desc">Orientation, alignment, human infrastructure.</div>
-            </a>
-          </div>
+      <a class="dest" id="dest2" href="https://github.com/colemanvii" target="_blank" rel="noopener">
+        <div class="left">
+          <div class="title"><span class="arrow">→</span>Code / Tools</div>
+          <div class="desc">Experiments, utilities, unfinished systems.</div>
         </div>
-      </section>
+        <div class="hint">GitHub</div>
+      </a>
+
+      <a class="dest" id="dest3" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
+        <div class="left">
+          <div class="title"><span class="arrow">→</span>Studio</div>
+          <div class="desc">Objects made by hand. Limited. Considered.</div>
+        </div>
+        <div class="hint">Purchase</div>
+      </a>
+
+      <a class="dest" id="dest4" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
+        <div class="left">
+          <div class="title"><span class="arrow">→</span>Haven Institute</div>
+          <div class="desc">Orientation, alignment, human infrastructure.</div>
+        </div>
+        <div class="hint">Landing</div>
+      </a>
     </main>
 
-    <div class="footer" role="contentinfo">
+    <footer>
       <span>COLEMAN VII / CVII-01</span>
-      <span>“Built quiet. Built true.”</span>
-    </div>
+      <span>Built quiet. Built true.</span>
+    </footer>
   </div>
 
   <script>
@@ -431,13 +363,33 @@
     tickUTC();
     setInterval(tickUTC, 1000);
 
+    // Theme toggle (persists)
+    const root = document.documentElement;
+    const btn = document.getElementById("themeToggle");
+    const label = document.getElementById("themeLabel");
+
+    function setTheme(t){
+      root.setAttribute("data-theme", t);
+      label.textContent = (t === "dark") ? "Dark" : "Light";
+      try { localStorage.setItem("cvii_theme", t); } catch(e){}
+    }
+
+    (function initTheme(){
+      let saved = null;
+      try { saved = localStorage.getItem("cvii_theme"); } catch(e){}
+      if (saved === "light" || saved === "dark") return setTheme(saved);
+
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(prefersDark ? "dark" : "light");
+    })();
+
+    btn.addEventListener("click", () => {
+      const current = root.getAttribute("data-theme") || "light";
+      setTheme(current === "dark" ? "light" : "dark");
+    });
+
     // Optional: keyboard launch (1–4)
-    const map = {
-      "1": "dest1",
-      "2": "dest2",
-      "3": "dest3",
-      "4": "dest4"
-    };
+    const map = { "1":"dest1","2":"dest2","3":"dest3","4":"dest4" };
     window.addEventListener("keydown", (e) => {
       if (map[e.key]) {
         const a = document.getElementById(map[e.key]);
