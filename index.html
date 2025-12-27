@@ -1,53 +1,211 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Coleman VII — a small studio for signal, story, and systems that last." />
   <title>Coleman VII</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: #0b0f14;
-      color: #e6e6e6;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    :root{
+      --paper: #F6F3EE;
+      --carbon: #1E1E1C;
+      --muted: rgba(30,30,28,.72);
+      --faint: rgba(30,30,28,.22);
+      --accent: #6F5A45; /* clay */
     }
-    .portal {
-      text-align: center;
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+
+    body{
+      margin:0;
+      background: var(--paper);
+      color: var(--carbon);
+      line-height: 1.5;
+
+      /* quiet “paper” texture without images */
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(30,30,28,.045), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(30,30,28,.03), transparent 50%),
+        radial-gradient(circle at 35% 90%, rgba(30,30,28,.035), transparent 55%),
+        linear-gradient(to bottom, rgba(255,255,255,.35), transparent 40%),
+        repeating-linear-gradient(0deg, rgba(30,30,28,.01), rgba(30,30,28,.01) 1px, transparent 1px, transparent 6px);
+
+      /* typography: human serif + quiet sans, no external fonts */
+      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, "Georgia", serif;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    .pill {
-      display: inline-block;
-      margin: 6px;
-      padding: 10px 16px;
-      border: 1px solid #2a2f36;
-      border-radius: 999px;
-      color: #cfd6dd;
+
+    a{
+      color: var(--carbon);
       text-decoration: none;
+    }
+    a:hover{ text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:focus-visible{
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .wrap{
+      max-width: 58ch;
+      padding: clamp(28px, 6vw, 72px) clamp(22px, 5vw, 64px);
+    }
+
+    /* intentional “wrong” spacing choice: a slight left nudge on the links block */
+    .destinations{
+      margin-left: clamp(0px, 1.2vw, 10px);
+    }
+
+    header{
+      margin-bottom: clamp(26px, 5vw, 44px);
+    }
+
+    h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(28px, 4.8vw, 40px);
+      letter-spacing: -0.02em;
+      font-weight: 500;
+    }
+
+    .tagline{
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(15px, 2.2vw, 18px);
+    }
+
+    .copy{
+      margin: 0 0 22px 0;
+      font-size: clamp(16px, 2.35vw, 19px);
+    }
+    .copy p{ margin: 0 0 14px 0; }
+    .copy p:last-child{ margin-bottom: 0; }
+
+    .small{
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .section-title{
+      margin: 34px 0 14px 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    ul{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .item{
+      padding: 14px 0;
+      border-top: 1px solid rgba(30,30,28,.10);
+    }
+    .item:first-child{ border-top: 1px solid rgba(30,30,28,.10); }
+
+    .linkline{
+      display: inline-flex;
+      gap: 10px;
+      align-items: baseline;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-size: 15px;
+      letter-spacing: 0.01em;
+    }
+    .arrow{
+      color: var(--accent);
       font-size: 14px;
+      transform: translateY(-1px);
     }
-    .pill:hover {
-      border-color: #4f6b8a;
-      color: #ffffff;
+
+    .desc{
+      margin: 6px 0 0 0;
+      color: var(--muted);
+      font-size: 15px;
     }
-    .quiet {
-      opacity: 0.7;
-      font-size: 13px;
-      margin-bottom: 18px;
+
+    footer{
+      margin-top: 44px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(30,30,28,.10);
+      color: var(--faint);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      font-size: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    /* soft fade-in, but respect reduced motion */
+    .fade-in{
+      opacity: 0;
+      transform: translateY(4px);
+      animation: enter 700ms ease-out forwards;
+    }
+    @keyframes enter{
+      to{ opacity:1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{ animation: none; opacity:1; transform:none; }
     }
   </style>
 </head>
-<body>
-  <div class="portal">
-    <div class="quiet">Quiet work. No spectacle.</div>
 
-    <a class="pill" href="#">Art</a>
-    <a class="pill" href="#">Writing</a>
-    <a class="pill" href="#">Haven</a>
-    <a class="pill" href="#">Tangerine</a>
-    <a class="pill" href="console.html">Console</a>
-  </div>
+<body>
+  <main class="wrap fade-in">
+    <header>
+      <h1>Coleman VII</h1>
+      <p class="tagline">A small studio for signal, story, and systems that last.</p>
+    </header>
+
+    <section class="copy" aria-label="Statement">
+      <p>I work slowly.</p>
+      <p>I listen for what’s already true.</p>
+      <p>I help people and institutions clarify their signal<br/>and build things meant to endure.</p>
+      <p class="small">This is not a portfolio. It’s a threshold.</p>
+    </section>
+
+    <div class="section-title">Destinations</div>
+
+    <nav class="destinations" aria-label="Links">
+      <ul>
+        <li class="item">
+          <a class="linkline" href="https://your-substack-link-here.com" target="_blank" rel="noopener">
+            <span class="arrow">→</span><span>Writing</span>
+          </a>
+          <p class="desc">Notes, field recordings, and long-form thinking. <span class="small">(Substack)</span></p>
+        </li>
+
+        <li class="item">
+          <a class="linkline" href="https://github.com/your-handle" target="_blank" rel="noopener">
+            <span class="arrow">→</span><span>Code / Tools</span>
+          </a>
+          <p class="desc">Experiments, utilities, unfinished systems. <span class="small">(GitHub)</span></p>
+        </li>
+
+        <li class="item">
+          <a class="linkline" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
+            <span class="arrow">→</span><span>Studio</span>
+          </a>
+          <p class="desc">Objects made by hand. Limited. Considered. <span class="small">(Purchase site)</span></p>
+        </li>
+
+        <li class="item">
+          <a class="linkline" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
+            <span class="arrow">→</span><span>Haven Institute</span>
+          </a>
+          <p class="desc">Orientation, alignment, human infrastructure. <span class="small">(Landing page)</span></p>
+        </li>
+      </ul>
+    </nav>
+
+    <footer>
+      Coleman VII
+    </footer>
+  </main>
 </body>
 </html>
