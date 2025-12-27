@@ -3,209 +3,447 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Coleman VII — a small studio for signal, story, and systems that last." />
+  <meta name="description" content="Coleman VII — mission control threshold." />
   <title>Coleman VII</title>
 
   <style>
     :root{
-      --paper: #F6F3EE;
-      --carbon: #1E1E1C;
-      --muted: rgba(30,30,28,.72);
-      --faint: rgba(30,30,28,.22);
-      --accent: #6F5A45; /* clay */
+      /* Monk Mission Control */
+      --bg: #0C0F0D;
+      --panel: rgba(255,255,255,.04);
+      --panel2: rgba(255,255,255,.06);
+      --line: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.86);
+      --muted: rgba(255,255,255,.62);
+      --faint: rgba(255,255,255,.28);
+
+      /* phosphor accent (use sparingly) */
+      --accent: #8CFFB3;
+      --accent2: rgba(140,255,179,.18);
+
+      --radius: 14px;
+      --shadow: 0 10px 35px rgba(0,0,0,.45);
     }
 
-    *{ box-sizing: border-box; }
+    *{ box-sizing:border-box; }
     html,body{ height:100%; }
 
     body{
       margin:0;
-      background: var(--paper);
-      color: var(--carbon);
-      line-height: 1.5;
-
-      /* quiet “paper” texture without images */
-      background-image:
-        radial-gradient(circle at 20% 10%, rgba(30,30,28,.045), transparent 55%),
-        radial-gradient(circle at 80% 0%, rgba(30,30,28,.03), transparent 50%),
-        radial-gradient(circle at 35% 90%, rgba(30,30,28,.035), transparent 55%),
-        linear-gradient(to bottom, rgba(255,255,255,.35), transparent 40%),
-        repeating-linear-gradient(0deg, rgba(30,30,28,.01), rgba(30,30,28,.01) 1px, transparent 1px, transparent 6px);
-
-      /* typography: human serif + quiet sans, no external fonts */
-      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Garamond, "Georgia", serif;
-      text-rendering: geometricPrecision;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      letter-spacing: .01em;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+
+      /* subtle grid */
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      background-position: 0 0;
+    }
+
+    /* scanlines + vignette */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.015),
+          rgba(255,255,255,.015) 1px,
+          transparent 2px,
+          transparent 5px
+        ),
+        radial-gradient(circle at 30% 10%, rgba(140,255,179,.08), transparent 45%),
+        radial-gradient(circle at 70% 90%, rgba(140,255,179,.05), transparent 55%),
+        radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.55) 100%);
+      mix-blend-mode: screen;
+      opacity: .55;
     }
 
     a{
-      color: var(--carbon);
+      color: var(--text);
       text-decoration: none;
     }
-    a:hover{ text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a:hover{
+      color: #fff;
+    }
     a:focus-visible{
       outline: 2px solid var(--accent);
       outline-offset: 4px;
-      border-radius: 4px;
+      border-radius: 8px;
     }
 
-    .wrap{
-      max-width: 58ch;
-      padding: clamp(28px, 6vw, 72px) clamp(22px, 5vw, 64px);
+    .frame{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: clamp(18px, 4vw, 44px);
     }
 
-    /* intentional “wrong” spacing choice: a slight left nudge on the links block */
-    .destinations{
-      margin-left: clamp(0px, 1.2vw, 10px);
-    }
-
-    header{
-      margin-bottom: clamp(26px, 5vw, 44px);
-    }
-
-    h1{
-      margin: 0 0 10px 0;
-      font-size: clamp(28px, 4.8vw, 40px);
-      letter-spacing: -0.02em;
-      font-weight: 500;
-    }
-
-    .tagline{
-      margin: 0;
-      color: var(--muted);
-      font-size: clamp(15px, 2.2vw, 18px);
-    }
-
-    .copy{
-      margin: 0 0 22px 0;
-      font-size: clamp(16px, 2.35vw, 19px);
-    }
-    .copy p{ margin: 0 0 14px 0; }
-    .copy p:last-child{ margin-bottom: 0; }
-
-    .small{
-      color: var(--muted);
-      font-size: 15px;
-    }
-
-    .section-title{
-      margin: 34px 0 14px 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    ul{
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .item{
-      padding: 14px 0;
-      border-top: 1px solid rgba(30,30,28,.10);
-    }
-    .item:first-child{ border-top: 1px solid rgba(30,30,28,.10); }
-
-    .linkline{
-      display: inline-flex;
-      gap: 10px;
+    .topbar{
+      display:flex;
+      justify-content: space-between;
       align-items: baseline;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      font-size: 15px;
-      letter-spacing: 0.01em;
-    }
-    .arrow{
-      color: var(--accent);
-      font-size: 14px;
-      transform: translateY(-1px);
+      gap: 16px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, var(--panel2), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
 
-    .desc{
-      margin: 6px 0 0 0;
+    .brand{
+      display:flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .brand .name{
+      font-size: 18px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand .tag{
       color: var(--muted);
-      font-size: 15px;
-    }
-
-    footer{
-      margin-top: 44px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(30,30,28,.10);
-      color: var(--faint);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       font-size: 12px;
-      letter-spacing: 0.02em;
+      max-width: 54ch;
     }
 
-    /* soft fade-in, but respect reduced motion */
-    .fade-in{
-      opacity: 0;
-      transform: translateY(4px);
-      animation: enter 700ms ease-out forwards;
+    .status{
+      display:flex;
+      gap: 14px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
     }
-    @keyframes enter{
-      to{ opacity:1; transform: translateY(0); }
+
+    .dot{
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(140,255,179,.45);
+      display:inline-block;
+      margin-right: 8px;
+      transform: translateY(1px);
     }
-    @media (prefers-reduced-motion: reduce){
-      .fade-in{ animation: none; opacity:1; transform:none; }
+
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1.35fr .85fr;
+      gap: 18px;
     }
+
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .panel{
+      background: linear-gradient(180deg, var(--panel2), var(--panel));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel .hd{
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+
+    .label{
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .meta{
+      color: var(--faint);
+      font-size: 11px;
+    }
+
+    .panel .bd{
+      padding: 14px;
+    }
+
+    .mission{
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .mission .muted{ color: var(--muted); }
+
+    .ruleline{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(255,255,255,.16);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .destinations{
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dest{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 12px;
+      padding: 12px 12px 11px;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+
+    .dest:hover{
+      border-color: rgba(140,255,179,.35);
+      background: rgba(140,255,179,.06);
+    }
+
+    .dest .top{
+      display:flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .dest .title{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .chev{
+      color: var(--accent);
+      text-shadow: 0 0 18px rgba(140,255,179,.25);
+    }
+
+    .dest .hint{
+      color: var(--faint);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .dest .desc{
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .kbd{
+      display:inline-block;
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: 11px;
+      margin-left: 6px;
+      background: rgba(255,255,255,.04);
+    }
+
+    .readout{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .tile{
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 76px;
+    }
+    .tile .k{ color: var(--muted); font-size: 11px; letter-spacing:.12em; text-transform: uppercase; }
+    .tile .v{ margin-top: 6px; font-size: 13px; color:#fff; }
+    .tile .sub{ margin-top: 6px; font-size: 12px; color: var(--muted); }
+
+    .footer{
+      margin-top: 16px;
+      padding: 12px 2px;
+      color: var(--faint);
+      font-size: 11px;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* gentle “cursor” */
+    .cursor{
+      display:inline-block;
+      width: 10px;
+      height: 14px;
+      background: rgba(140,255,179,.85);
+      margin-left: 8px;
+      transform: translateY(2px);
+      animation: blink 1.1s steps(1) infinite;
+      box-shadow: 0 0 18px rgba(140,255,179,.25);
+    }
+    @keyframes blink { 50%{ opacity: 0; } }
   </style>
 </head>
 
 <body>
-  <main class="wrap fade-in">
-    <header>
-      <h1>Coleman VII</h1>
-      <p class="tagline">A small studio for signal, story, and systems that last.</p>
+  <div class="frame">
+    <header class="topbar" role="banner">
+      <div class="brand">
+        <div class="name">Coleman VII</div>
+        <div class="tag">Signal. Story. Systems that last. A quiet threshold—mission control for the work.</div>
+      </div>
+      <div class="status" aria-label="System status">
+        <span><span class="dot"></span>ONLINE</span>
+        <span id="utc">UTC — —:—:—</span>
+        <span>NODE: CVII-01</span>
+      </div>
     </header>
 
-    <section class="copy" aria-label="Statement">
-      <p>I work slowly.</p>
-      <p>I listen for what’s already true.</p>
-      <p>I help people and institutions clarify their signal<br/>and build things meant to endure.</p>
-      <p class="small">This is not a portfolio. It’s a threshold.</p>
-    </section>
+    <main class="grid" role="main">
+      <!-- LEFT: MISSION -->
+      <section class="panel" aria-label="Mission">
+        <div class="hd">
+          <div class="label">Mission Brief</div>
+          <div class="meta">MODE: MONK / CONTROL</div>
+        </div>
+        <div class="bd">
+          <div class="mission">
+            <div>— I work slowly.</div>
+            <div>— I listen for what’s already true.</div>
+            <div>— I help people and institutions clarify their signal</div>
+            <div>  <span class="muted">and build things meant to endure.</span><span class="cursor" aria-hidden="true"></span></div>
 
-    <div class="section-title">Destinations</div>
+            <div class="ruleline">
+              This is not a portfolio. It’s a threshold.
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <nav class="destinations" aria-label="Links">
-      <ul>
-        <li class="item">
-          <a class="linkline" href="https://your-substack-link-here.com" target="_blank" rel="noopener">
-            <span class="arrow">→</span><span>Writing</span>
-          </a>
-          <p class="desc">Notes, field recordings, and long-form thinking. <span class="small">(Substack)</span></p>
-        </li>
+      <!-- RIGHT: READOUT -->
+      <aside class="panel" aria-label="Readout">
+        <div class="hd">
+          <div class="label">Readout</div>
+          <div class="meta">STATUS: STEADY</div>
+        </div>
+        <div class="bd">
+          <div class="readout">
+            <div class="tile">
+              <div class="k">Operating Principle</div>
+              <div class="v">Quiet authority</div>
+              <div class="sub">Signal over spectacle</div>
+            </div>
+            <div class="tile">
+              <div class="k">Tempo</div>
+              <div class="v">Slow / Intentional</div>
+              <div class="sub">Less, but truer</div>
+            </div>
+            <div class="tile">
+              <div class="k">Output</div>
+              <div class="v">Story + Systems</div>
+              <div class="sub">Built to last</div>
+            </div>
+            <div class="tile">
+              <div class="k">Contact</div>
+              <div class="v">Link out</div>
+              <div class="sub">No inbox here</div>
+            </div>
+          </div>
+        </div>
+      </aside>
 
-        <li class="item">
-          <a class="linkline" href="https://github.com/your-handle" target="_blank" rel="noopener">
-            <span class="arrow">→</span><span>Code / Tools</span>
-          </a>
-          <p class="desc">Experiments, utilities, unfinished systems. <span class="small">(GitHub)</span></p>
-        </li>
+      <!-- LEFT: DESTINATIONS -->
+      <section class="panel" aria-label="Destinations" style="grid-column: 1 / -1;">
+        <div class="hd">
+          <div class="label">Destinations</div>
+          <div class="meta">Press <span class="kbd">1</span><span class="kbd">2</span><span class="kbd">3</span><span class="kbd">4</span> (optional)</div>
+        </div>
+        <div class="bd">
+          <div class="destinations">
+            <a class="dest" id="dest1" href="https://your-substack-link-here.com" target="_blank" rel="noopener">
+              <div class="top">
+                <div class="title"><span class="chev">→</span>Writing</div>
+                <div class="hint">Substack</div>
+              </div>
+              <div class="desc">Notes, field recordings, and long-form thinking.</div>
+            </a>
 
-        <li class="item">
-          <a class="linkline" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
-            <span class="arrow">→</span><span>Studio</span>
-          </a>
-          <p class="desc">Objects made by hand. Limited. Considered. <span class="small">(Purchase site)</span></p>
-        </li>
+            <a class="dest" id="dest2" href="https://github.com/your-handle" target="_blank" rel="noopener">
+              <div class="top">
+                <div class="title"><span class="chev">→</span>Code / Tools</div>
+                <div class="hint">GitHub</div>
+              </div>
+              <div class="desc">Experiments, utilities, unfinished systems.</div>
+            </a>
 
-        <li class="item">
-          <a class="linkline" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
-            <span class="arrow">→</span><span>Haven Institute</span>
-          </a>
-          <p class="desc">Orientation, alignment, human infrastructure. <span class="small">(Landing page)</span></p>
-        </li>
-      </ul>
-    </nav>
+            <a class="dest" id="dest3" href="https://your-studio-shop-link-here.com" target="_blank" rel="noopener">
+              <div class="top">
+                <div class="title"><span class="chev">→</span>Studio</div>
+                <div class="hint">Purchase</div>
+              </div>
+              <div class="desc">Objects made by hand. Limited. Considered.</div>
+            </a>
 
-    <footer>
-      Coleman VII
-    </footer>
-  </main>
+            <a class="dest" id="dest4" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
+              <div class="top">
+                <div class="title"><span class="chev">→</span>Haven Institute</div>
+                <div class="hint">Landing</div>
+              </div>
+              <div class="desc">Orientation, alignment, human infrastructure.</div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="footer" role="contentinfo">
+      <span>COLEMAN VII / CVII-01</span>
+      <span>“Built quiet. Built true.”</span>
+    </div>
+  </div>
+
+  <script>
+    // UTC clock
+    const utcEl = document.getElementById("utc");
+    function tickUTC(){
+      const d = new Date();
+      const hh = String(d.getUTCHours()).padStart(2,'0');
+      const mm = String(d.getUTCMinutes()).padStart(2,'0');
+      const ss = String(d.getUTCSeconds()).padStart(2,'0');
+      utcEl.textContent = `UTC ${hh}:${mm}:${ss}`;
+    }
+    tickUTC();
+    setInterval(tickUTC, 1000);
+
+    // Optional: keyboard launch (1–4)
+    const map = {
+      "1": "dest1",
+      "2": "dest2",
+      "3": "dest3",
+      "4": "dest4"
+    };
+    window.addEventListener("keydown", (e) => {
+      if (map[e.key]) {
+        const a = document.getElementById(map[e.key]);
+        if (a) a.click();
+      }
+    });
+  </script>
 </body>
 </html>
