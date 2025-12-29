@@ -3,362 +3,145 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Coleman VII — signal, story, systems that last." />
+  <meta name="description" content="Coleman VII" />
+  <meta name="theme-color" content="#070708" />
   <title>Coleman VII</title>
-
+  <link rel="stylesheet" href="./assets/tokens.css" />
   <style>
-    :root{
-      --radius:14px;
-      --pad:clamp(18px,4vw,44px);
-      --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
-      --serif:ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-    }
-
-    :root[data-theme="dark"]{
-      --bg:#0C0F0D;
-      --text:rgba(255,255,255,.88);
-      --muted:rgba(255,255,255,.55);
-      --line:rgba(255,255,255,.12);
-      --panel:rgba(255,255,255,.05);
-      --accent:#8CFFB3;
-      --accentWash:rgba(140,255,179,.10);
-    }
-
-    :root[data-theme="light"]{
-      --bg:#F6F3EE;
-      --text:rgba(30,30,28,.90);
-      --muted:rgba(30,30,28,.60);
-      --line:rgba(30,30,28,.10);
-      --panel:rgba(30,30,28,.03);
-      --accent:#2E6B4C;
-      --accentWash:rgba(46,107,76,.10);
-    }
-
-    *{box-sizing:border-box;}
-    html,body{height:100%;}
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:var(--mono);
-      -webkit-font-smoothing:antialiased;
-    }
-
-    /* subtle mission-control grid */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background:
-        linear-gradient(to right,var(--line) 1px,transparent 1px),
-        linear-gradient(to bottom,var(--line) 1px,transparent 1px);
-      background-size:96px 96px;
-      opacity:.25;
-    }
-
-    a{color:inherit;text-decoration:none;}
-    a:focus-visible{
-      outline:2px solid var(--accent);
-      outline-offset:4px;
-      border-radius:12px;
-    }
-
-    .frame{
-      max-width:72ch;
-      margin:0 auto;
-      padding:var(--pad);
-      position:relative;
-    }
-
-    header{
-      display:flex;
-      justify-content:space-between;
-      align-items:baseline;
-      gap:16px;
-      padding-bottom:18px;
-      border-bottom:1px solid var(--line);
-    }
-
-    h1{
-      margin:0;
+    :root{ --pilot: var(--pilot); } /* green */
+    .stamp{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase}
+    .headline{
       font-family:var(--serif);
-      font-size:clamp(26px,4vw,38px);
-      font-weight:500;
-      letter-spacing:-.02em;
+      font-size: clamp(44px, 6vw, 72px);
+      line-height: .95;
+      letter-spacing: -0.6px;
+      margin: 0;
     }
+    .sub{font-family:var(--mono);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-top:10px}
+    .ruleRow{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--hair2);border-bottom:1px solid var(--hair2);margin-top:18px}
+    .lbl{font-family:var(--mono);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+    .rule{flex:1;height:1px;background:linear-gradient(to right, transparent, var(--hair), transparent);opacity:.55}
 
-    .tag{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--muted);
+    .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+    @media (max-width:900px){.tiles{grid-template-columns:1fr}}
+    .tile{
+      border-radius:18px;border:1px solid var(--hair2);
+      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      padding:16px;
+      display:flex;justify-content:space-between;gap:14px;
+      text-decoration:none;color:var(--fg);
+      transition:transform .18s ease,border-color .18s ease;
     }
-
-    .status{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-
-    .dot{
-      width:7px;height:7px;border-radius:50%;
-      background:var(--accent);
-      box-shadow:0 0 12px color-mix(in srgb, var(--accent) 40%, transparent);
-      display:inline-block;
-      margin-right:6px;
-      transform:translateY(1px);
-    }
-
-    .toggle{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      cursor:pointer;
-      user-select:none;
-      background:color-mix(in srgb, var(--panel) 80%, transparent);
-    }
-
-    .switch{
-      width:38px;height:18px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      position:relative;
-      background:transparent;
-    }
-
-    .knob{
-      width:12px;height:12px;
-      background:var(--accent);
-      border-radius:50%;
-      position:absolute;
-      top:50%;left:3px;
-      transform:translateY(-50%);
-      transition:left .15s ease;
-      box-shadow:0 0 12px color-mix(in srgb, var(--accent) 30%, transparent);
-    }
-
-    :root[data-theme="dark"] .knob{left:21px;}
-
-    main{padding-top:18px;}
-
-    .mission{
-      font-size:15px;
-      line-height:1.7;
-    }
-    .muted{color:var(--muted);}
-
-    hr{
-      margin:18px 0;
-      border:0;
-      border-top:1px solid var(--line);
-    }
-
-    .label{
-      font-size:11px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:10px;
-    }
-
-    /* DESTINATION PILLS */
-    .dest{
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      padding:12px;
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:var(--panel);
-      cursor:pointer;
-
-      transition:
-        border-color .18s ease,
-        background .18s ease,
-        box-shadow .18s ease,
-        transform .18s ease,
-        color .18s ease;
-    }
-    .dest + .dest{margin-top:10px;}
-
-    /* Bring back the "armed" interaction */
-    .dest:hover{
-      border-color:var(--accent);
-      background: linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--accentWash) 65%, var(--panel)),
-        var(--panel)
-      );
-      box-shadow:
-        inset 0 0 0 1px var(--accent),
-        0 10px 30px rgba(0,0,0,.35);
-      transform:translateY(-2px);
-    }
-    .dest:active{
-      transform:translateY(0px);
-      box-shadow:
-        inset 0 0 0 1px var(--accent),
-        0 6px 18px rgba(0,0,0,.28);
-    }
-
-    .left{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-    }
-
-    .title{
-      display:flex;
-      gap:8px;
-      font-size:14px;
-      color:color-mix(in srgb, var(--text) 92%, transparent);
-    }
-
-    .arrow{
-      color:var(--accent);
-      transition:transform .18s ease, text-shadow .18s ease;
-      text-shadow:0 0 0 transparent;
-    }
-
-    .desc{
-      font-size:12px;
-      color:var(--muted);
-      line-height:1.55;
-      max-width:60ch;
-    }
-
-    /* Text response on hover */
-    .dest:hover .title,
-    .dest:hover .desc{
-      color:color-mix(in srgb, var(--text) 96%, white 4%);
-    }
-    :root[data-theme="light"] .dest:hover .title,
-    :root[data-theme="light"] .dest:hover .desc{
-      color:rgba(30,30,28,.95);
-    }
-
-    .dest:hover .arrow{
-      transform:translateX(4px);
-      text-shadow:0 0 16px color-mix(in srgb, var(--accent) 45%, transparent);
-    }
-
-    footer{
-      margin-top:18px;
-      padding-top:14px;
-      border-top:1px solid var(--line);
-      font-size:11px;
-      color:var(--muted);
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-
-    @media(max-width:720px){
-      .status{display:none;}
-    }
+    .tile:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--pilot) 20%, var(--hair2))}
+    .tL{display:grid;gap:6px}
+    .tK{font-family:var(--mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
+    .tT{font-family:var(--serif);font-size:20px;letter-spacing:-.2px;margin:0}
+    .tD{font-family:var(--sans);font-size:13px;color:var(--muted);margin:0;max-width:48ch}
+    .pill{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--hair2);padding:6px 10px;border-radius:999px;align-self:start;background:color-mix(in srgb, var(--panel) 85%, transparent)}
   </style>
 </head>
 
 <body>
-  <div class="frame">
+  <div class="grid-bg"></div>
+  <div class="grain"></div>
+
+  <div class="wrap">
     <header>
-      <div>
-        <h1>Coleman VII</h1>
-        <div class="tag">Signal. Story. Systems that last.</div>
+      <div class="sig">
+        <span class="pilot" aria-hidden="true"></span>
+        <div class="domain">Coleman VII</div>
       </div>
 
-      <div class="status">
-        <span><span class="dot"></span>ONLINE</span>
-        <span id="utc">UTC — —:—:—</span>
-        <div class="toggle" id="toggle" role="button" tabindex="0" aria-label="Toggle theme">
-          <span id="mode">Dark</span>
-          <div class="switch" aria-hidden="true"><div class="knob"></div></div>
+      <div class="ui">
+        <span id="utc">UTC — --:--:--</span>
+        <span class="toggle" id="themeToggle" role="button" aria-label="Toggle theme">
+          <span id="themeLabel">Dark</span>
+          <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+        </span>
+      </div>
+    </header>
+
+    <main class="card fade">
+      <div class="in">
+        <div class="stamp">Signal. Story. Systems.</div>
+        <h1 class="headline">Quiet work<br/>that lasts.</h1>
+
+        <div class="ruleRow fade d2">
+          <div class="lbl">destinations</div>
+          <div class="rule" aria-hidden="true"></div>
+          <div class="lbl">online</div>
         </div>
 
-      <hr/>
+        <section class="tiles fade d3" aria-label="Destinations">
+          <a class="tile" href="https://colecalfee.substack.com" target="_blank" rel="noreferrer">
+            <div class="tL">
+              <div class="tK">writing</div>
+              <p class="tT">Notes</p>
+              <p class="tD">Field recordings. Long form.</p>
+            </div>
+            <span class="pill">substack</span>
+          </a>
 
-      <div class="label">Destinations</div>
+          <a class="tile" href="#" onclick="return false;">
+            <div class="tL">
+              <div class="tK">work</div>
+              <p class="tT">Case Files</p>
+              <p class="tD">Selected systems & story.</p>
+            </div>
+            <span class="pill">soon</span>
+          </a>
 
-      <a class="dest" href="https://thewestisdead.substack.com/" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="title"><span class="arrow">→</span>Writing</div>
-          <div class="desc">Notes. Field recordings. Long form.</div>
-        </div>
-        <div class="muted">Substack</div>
-      </a>
-
-      <a class="dest" href="https://github.com/colemanvii" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="title"><span class="arrow">→</span>Code / Tools</div>
-          <div class="desc">Experiments. Utilities. Unfinished systems.</div>
-        </div>
-        <div class="muted">GitHub</div>
-      </a>
-
-      <a class="dest" href="https://colecalfee.com" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="title"><span class="arrow">→</span>Studio</div>
-          <div class="desc">Objects made by hand.</div>
-        </div>
-        <div class="muted">Cole Calfee</div>
-      </a>
-
-      <a class="dest" href="https://your-haven-landing-page-link-here.com" target="_blank" rel="noopener">
-        <div class="left">
-          <div class="title"><span class="arrow">→</span>Haven</div>
-          <div class="desc">Orientation and continuity.</div>
-        </div>
-        <div class="muted">Institute</div>
-      </a>
+          <a class="tile" href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer">
+            <div class="tL">
+              <div class="tK">film</div>
+              <p class="tT">Tangerine</p>
+              <p class="tD">A small light, kept warm.</p>
+            </div>
+            <span class="pill">enter</span>
+          </a>
+        </section>
+      </div>
     </main>
 
     <footer>
-      <span>COLEMAN VII / CVII-01</span>
-      <span>Built quiet. Built true.</span>
+      <div>© <span id="y"></span> coleman vii</div>
+      <div>signal-not-spectacle</div>
     </footer>
   </div>
 
   <script>
+    // theme
+    const root = document.documentElement;
+    const key = "cvii-theme";
+    const saved = localStorage.getItem(key);
+    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+
+    function setTheme(mode){
+      root.setAttribute("data-theme", mode);
+      localStorage.setItem(key, mode);
+      document.getElementById("themeLabel").textContent = (mode === "light") ? "Light" : "Dark";
+      document.querySelector('meta[name="theme-color"]').setAttribute("content", (mode==="light") ? "#f7f4ef" : "#070708");
+    }
+    setTheme(saved || (prefersLight ? "light" : "dark"));
+
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      setTheme(cur === "light" ? "dark" : "light");
+    });
+
+    // footer year
+    document.getElementById("y").textContent = new Date().getFullYear();
+
     // UTC clock
-    const utc = document.getElementById("utc");
+    const utcEl = document.getElementById("utc");
     function tick(){
       const d = new Date();
-      utc.textContent =
-        `UTC ${String(d.getUTCHours()).padStart(2,'0')}:${String(d.getUTCMinutes()).padStart(2,'0')}:${String(d.getUTCSeconds()).padStart(2,'0')}`;
+      const h = String(d.getUTCHours()).padStart(2,"0");
+      const m = String(d.getUTCMinutes()).padStart(2,"0");
+      const s = String(d.getUTCSeconds()).padStart(2,"0");
+      utcEl.textContent = `UTC — ${h}:${m}:${s}`;
     }
-    tick();
-    setInterval(tick, 1000);
-
-    // Theme toggle (persist)
-    const root = document.documentElement;
-    const mode = document.getElementById("mode");
-    const toggle = document.getElementById("toggle");
-
-    function setTheme(t){
-      root.setAttribute("data-theme", t);
-      mode.textContent = (t === "dark") ? "Dark" : "Light";
-      try { localStorage.setItem("cvii_theme", t); } catch(e){}
-    }
-
-    const saved = (() => { try { return localStorage.getItem("cvii_theme"); } catch(e){ return null; } })();
-    setTheme(saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"));
-
-    function flip(){
-      setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
-    }
-
-    toggle.addEventListener("click", flip);
-    toggle.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); }
-    });
+    tick(); setInterval(tick, 1000);
   </script>
 </body>
 </html>
