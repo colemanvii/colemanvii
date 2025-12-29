@@ -1,92 +1,263 @@
-<!-- colemanvii/index.html — FINAL PASS -->
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <meta name="theme-color" content="#070708" />
+  <meta name="theme-color" content="#0b0b0c"/>
   <title>Coleman VII</title>
 
-  <!-- paste tokens.css into /tokens.css or inline it here -->
-  <link rel="stylesheet" href="./tokens.css"/>
-
   <style>
-    /* If you don’t want a separate tokens.css file, paste tokens.css above and delete this link. */
-    a{color:inherit}
-    a:hover{text-decoration:underline;text-underline-offset:3px}
-    .dot{color:var(--pilot-green)}
+    :root{
+      --bg:#0b0b0c;
+      --fg:rgba(255,255,255,.9);
+      --muted:rgba(255,255,255,.55);
+      --hair:rgba(255,255,255,.08);
+      --hair2:rgba(255,255,255,.04);
+      --pilot:#39d98a;
+
+      --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      --sans: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      --serif: ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    }
+
+    [data-theme="light"]{
+      --bg:#f6f3ee;
+      --fg:rgba(0,0,0,.82);
+      --muted:rgba(0,0,0,.5);
+      --hair:rgba(0,0,0,.1);
+      --hair2:rgba(0,0,0,.05);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--fg);
+      font-family:var(--sans);
+    }
+
+    /* atmosphere */
+    .grid{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      background:
+        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size:140px 140px;
+      opacity:.12;
+    }
+    [data-theme="light"] .grid{
+      background:
+        linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px);
+      opacity:.1;
+    }
+
+    .grain{
+      position:fixed; inset:0; pointer-events:none; z-index:0;
+      opacity:.18; mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      background-size:220px 220px;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:1200px;
+      margin:0 auto;
+      padding:32px 24px 96px;
+      min-height:100%;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:48px;
+    }
+
+    .brand{
+      font-family:var(--serif);
+      font-size:34px;
+      letter-spacing:-.4px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .pilot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--pilot);
+      box-shadow:0 0 0 7px color-mix(in srgb, var(--pilot) 18%, transparent);
+    }
+
+    .ui{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:var(--muted);
+      display:flex;
+      gap:14px;
+      align-items:center;
+    }
+
+    .toggle{
+      border:1px solid var(--hair);
+      border-radius:999px;
+      padding:6px 10px;
+      cursor:pointer;
+      user-select:none;
+    }
+
+    main{max-width:720px}
+
+    .kicker{
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+
+    h1{
+      font-family:var(--serif);
+      font-size:64px;
+      line-height:.95;
+      letter-spacing:-.8px;
+      margin:0 0 36px;
+    }
+
+    .rule{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 0;
+      border-top:1px solid var(--hair2);
+      border-bottom:1px solid var(--hair2);
+      margin-bottom:28px;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1.4px;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+
+    nav{
+      display:grid;
+      gap:18px;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:1.2px;
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+    a:hover{
+      text-decoration:underline;
+      text-underline-offset:3px;
+    }
+
+    .dot{color:var(--pilot)}
+
+    footer{
+      position:absolute;
+      bottom:32px;
+      left:24px;
+      right:24px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
   </style>
 </head>
+
 <body>
-<div class="grid-bg"></div><div class="grain"></div>
+  <div class="grid"></div>
+  <div class="grain"></div>
 
-<div class="wrap">
-  <header>
-    <div class="brand">Coleman VII</div>
-    <div class="ui">
-      <span id="utc">UTC — --:--</span>
-      <span class="toggle" id="toggle">Light</span>
-    </div>
-  </header>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="pilot"></span>
+        Coleman VII
+      </div>
+      <div class="ui">
+        <span id="utc">UTC — --:--:--</span>
+        <span class="toggle" id="toggle">Light</span>
+      </div>
+    </header>
 
-  <main style="max-width:720px">
-    <div style="font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--muted);text-transform:uppercase;">
-      Signal. Story. Systems.
-    </div>
+    <main>
+      <div class="kicker">Signal. Story. Systems.</div>
 
-    <h1 style="font-family:var(--serif);font-size:64px;line-height:.95;letter-spacing:-.8px;margin:12px 0 32px;">
-      Quiet work<br/>that lasts.
-    </h1>
+      <h1>Quiet work<br/>that lasts.</h1>
 
-    <div style="border-top:1px solid var(--hair2);border-bottom:1px solid var(--hair2);padding:18px 0;margin-bottom:28px;
-                display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);">
-      <span>Destinations</span><span>Online</span>
-    </div>
+      <div class="rule">
+        <span>Destinations</span>
+        <span>Online</span>
+      </div>
 
-    <nav style="display:grid;gap:18px;font-family:var(--mono);font-size:12px;letter-spacing:1.2px;">
-      <a href="https://colecalfee.substack.com" target="_blank" rel="noreferrer" style="text-decoration:none;">
-        <span class="dot">●</span> Writing — Notes
-      </a>
+      <nav>
+        <a href="https://colecalfee.substack.com" target="_blank">
+          <span class="dot">●</span> Writing — Notes
+        </a>
+        <span style="opacity:.6">
+          <span class="dot">●</span> Work — Case Files (soon)
+        </span>
+        <a href="https://colemanvii.github.io/tangerine/" target="_blank">
+          <span class="dot">●</span> Film — Tangerine
+        </a>
+      </nav>
+    </main>
 
-      <a href="#" onclick="return false;" style="text-decoration:none;opacity:.6;">
-        <span class="dot">●</span> Work — Case Files <span style="opacity:.7">(soon)</span>
-      </a>
+    <footer>
+      <span>© <span id="y"></span> coleman vii</span>
+      <span>signal—not—spectacle</span>
+    </footer>
+  </div>
 
-      <a href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer" style="text-decoration:none;">
-        <span class="dot">●</span> Film — Tangerine
-      </a>
-    </nav>
-  </main>
+  <script>
+    const root=document.documentElement;
+    const key="cvii-theme";
+    const saved=localStorage.getItem(key);
 
-  <footer>
-    <span>© <span id="y"></span> coleman vii</span>
-    <span>signal—not—spectacle</span>
-  </footer>
-</div>
+    function setTheme(m){
+      root.setAttribute("data-theme",m);
+      localStorage.setItem(key,m);
+      document.querySelector('meta[name="theme-color"]').setAttribute(
+        "content", m==="light" ? "#f6f3ee" : "#0b0b0c"
+      );
+      document.getElementById("toggle").textContent = m==="light" ? "Dark" : "Light";
+    }
 
-<script>
-const root=document.documentElement;
-const key="cvii-theme";
-const saved=localStorage.getItem(key);
+    setTheme(saved || "dark");
+    document.getElementById("toggle").onclick =
+      () => setTheme(root.getAttribute("data-theme")==="dark" ? "light" : "dark");
 
-function setTheme(m){
-  root.setAttribute("data-theme",m);
-  localStorage.setItem(key,m);
-  document.querySelector('meta[name="theme-color"]').setAttribute("content", m==="light" ? "#f6f3ee" : "#070708");
-  document.getElementById("toggle").textContent = m==="light" ? "Dark" : "Light";
-}
+    document.getElementById("y").textContent = new Date().getFullYear();
 
-setTheme(saved || "light");
-document.getElementById("toggle").onclick=()=>setTheme(root.getAttribute("data-theme")==="light"?"dark":"light");
-
-document.getElementById("y").textContent = new Date().getFullYear();
-
-const u=document.getElementById("utc");
-function tick(){
-  const d=new Date();
-  u.textContent=`UTC — ${String(d.getUTCHours()).padStart(2,"0")}:${String(d.getUTCMinutes()).padStart(2,"0")}:${String(d.getUTCSeconds()).padStart(2,"0")}`;
-}
-tick(); setInterval(tick,1000);
-</script>
+    const utc=document.getElementById("utc");
+    function tick(){
+      const d=new Date();
+      utc.textContent =
+        "UTC — " +
+        String(d.getUTCHours()).padStart(2,"0") + ":" +
+        String(d.getUTCMinutes()).padStart(2,"0") + ":" +
+        String(d.getUTCSeconds()).padStart(2,"0");
+    }
+    tick(); setInterval(tick,1000);
+  </script>
 </body>
 </html>
