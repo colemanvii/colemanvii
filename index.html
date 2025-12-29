@@ -1,147 +1,92 @@
+<!-- colemanvii/index.html — FINAL PASS -->
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Coleman VII" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <meta name="theme-color" content="#070708" />
   <title>Coleman VII</title>
-  <link rel="stylesheet" href="./assets/tokens.css" />
-  <style>
-    :root{ --pilot: var(--pilot); } /* green */
-    .stamp{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase}
-    .headline{
-      font-family:var(--serif);
-      font-size: clamp(44px, 6vw, 72px);
-      line-height: .95;
-      letter-spacing: -0.6px;
-      margin: 0;
-    }
-    .sub{font-family:var(--mono);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-top:10px}
-    .ruleRow{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--hair2);border-bottom:1px solid var(--hair2);margin-top:18px}
-    .lbl{font-family:var(--mono);font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-    .rule{flex:1;height:1px;background:linear-gradient(to right, transparent, var(--hair), transparent);opacity:.55}
 
-    .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
-    @media (max-width:900px){.tiles{grid-template-columns:1fr}}
-    .tile{
-      border-radius:18px;border:1px solid var(--hair2);
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
-      padding:16px;
-      display:flex;justify-content:space-between;gap:14px;
-      text-decoration:none;color:var(--fg);
-      transition:transform .18s ease,border-color .18s ease;
-    }
-    .tile:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--pilot) 20%, var(--hair2))}
-    .tL{display:grid;gap:6px}
-    .tK{font-family:var(--mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted)}
-    .tT{font-family:var(--serif);font-size:20px;letter-spacing:-.2px;margin:0}
-    .tD{font-family:var(--sans);font-size:13px;color:var(--muted);margin:0;max-width:48ch}
-    .pill{font-family:var(--mono);font-size:11px;color:var(--muted);border:1px solid var(--hair2);padding:6px 10px;border-radius:999px;align-self:start;background:color-mix(in srgb, var(--panel) 85%, transparent)}
+  <!-- paste tokens.css into /tokens.css or inline it here -->
+  <link rel="stylesheet" href="./tokens.css"/>
+
+  <style>
+    /* If you don’t want a separate tokens.css file, paste tokens.css above and delete this link. */
+    a{color:inherit}
+    a:hover{text-decoration:underline;text-underline-offset:3px}
+    .dot{color:var(--pilot-green)}
   </style>
 </head>
-
 <body>
-  <div class="grid-bg"></div>
-  <div class="grain"></div>
+<div class="grid-bg"></div><div class="grain"></div>
 
-  <div class="wrap">
-    <header>
-      <div class="sig">
-        <span class="pilot" aria-hidden="true"></span>
-        <div class="domain">Coleman VII</div>
-      </div>
+<div class="wrap">
+  <header>
+    <div class="brand">Coleman VII</div>
+    <div class="ui">
+      <span id="utc">UTC — --:--</span>
+      <span class="toggle" id="toggle">Light</span>
+    </div>
+  </header>
 
-      <div class="ui">
-        <span id="utc">UTC — --:--:--</span>
-        <span class="toggle" id="themeToggle" role="button" aria-label="Toggle theme">
-          <span id="themeLabel">Dark</span>
-          <span class="switch" aria-hidden="true"><span class="knob"></span></span>
-        </span>
-      </div>
-    </header>
+  <main style="max-width:720px">
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:1.4px;color:var(--muted);text-transform:uppercase;">
+      Signal. Story. Systems.
+    </div>
 
-    <main class="card fade">
-      <div class="in">
-        <div class="stamp">Signal. Story. Systems.</div>
-        <h1 class="headline">Quiet work<br/>that lasts.</h1>
+    <h1 style="font-family:var(--serif);font-size:64px;line-height:.95;letter-spacing:-.8px;margin:12px 0 32px;">
+      Quiet work<br/>that lasts.
+    </h1>
 
-        <div class="ruleRow fade d2">
-          <div class="lbl">destinations</div>
-          <div class="rule" aria-hidden="true"></div>
-          <div class="lbl">online</div>
-        </div>
+    <div style="border-top:1px solid var(--hair2);border-bottom:1px solid var(--hair2);padding:18px 0;margin-bottom:28px;
+                display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);">
+      <span>Destinations</span><span>Online</span>
+    </div>
 
-        <section class="tiles fade d3" aria-label="Destinations">
-          <a class="tile" href="https://colecalfee.substack.com" target="_blank" rel="noreferrer">
-            <div class="tL">
-              <div class="tK">writing</div>
-              <p class="tT">Notes</p>
-              <p class="tD">Field recordings. Long form.</p>
-            </div>
-            <span class="pill">substack</span>
-          </a>
+    <nav style="display:grid;gap:18px;font-family:var(--mono);font-size:12px;letter-spacing:1.2px;">
+      <a href="https://colecalfee.substack.com" target="_blank" rel="noreferrer" style="text-decoration:none;">
+        <span class="dot">●</span> Writing — Notes
+      </a>
 
-          <a class="tile" href="#" onclick="return false;">
-            <div class="tL">
-              <div class="tK">work</div>
-              <p class="tT">Case Files</p>
-              <p class="tD">Selected systems & story.</p>
-            </div>
-            <span class="pill">soon</span>
-          </a>
+      <a href="#" onclick="return false;" style="text-decoration:none;opacity:.6;">
+        <span class="dot">●</span> Work — Case Files <span style="opacity:.7">(soon)</span>
+      </a>
 
-          <a class="tile" href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer">
-            <div class="tL">
-              <div class="tK">film</div>
-              <p class="tT">Tangerine</p>
-              <p class="tD">A small light, kept warm.</p>
-            </div>
-            <span class="pill">enter</span>
-          </a>
-        </section>
-      </div>
-    </main>
+      <a href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer" style="text-decoration:none;">
+        <span class="dot">●</span> Film — Tangerine
+      </a>
+    </nav>
+  </main>
 
-    <footer>
-      <div>© <span id="y"></span> coleman vii</div>
-      <div>signal-not-spectacle</div>
-    </footer>
-  </div>
+  <footer>
+    <span>© <span id="y"></span> coleman vii</span>
+    <span>signal—not—spectacle</span>
+  </footer>
+</div>
 
-  <script>
-    // theme
-    const root = document.documentElement;
-    const key = "cvii-theme";
-    const saved = localStorage.getItem(key);
-    const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+<script>
+const root=document.documentElement;
+const key="cvii-theme";
+const saved=localStorage.getItem(key);
 
-    function setTheme(mode){
-      root.setAttribute("data-theme", mode);
-      localStorage.setItem(key, mode);
-      document.getElementById("themeLabel").textContent = (mode === "light") ? "Light" : "Dark";
-      document.querySelector('meta[name="theme-color"]').setAttribute("content", (mode==="light") ? "#f7f4ef" : "#070708");
-    }
-    setTheme(saved || (prefersLight ? "light" : "dark"));
+function setTheme(m){
+  root.setAttribute("data-theme",m);
+  localStorage.setItem(key,m);
+  document.querySelector('meta[name="theme-color"]').setAttribute("content", m==="light" ? "#f6f3ee" : "#070708");
+  document.getElementById("toggle").textContent = m==="light" ? "Dark" : "Light";
+}
 
-    document.getElementById("themeToggle").addEventListener("click", () => {
-      const cur = root.getAttribute("data-theme") || "dark";
-      setTheme(cur === "light" ? "dark" : "light");
-    });
+setTheme(saved || "light");
+document.getElementById("toggle").onclick=()=>setTheme(root.getAttribute("data-theme")==="light"?"dark":"light");
 
-    // footer year
-    document.getElementById("y").textContent = new Date().getFullYear();
+document.getElementById("y").textContent = new Date().getFullYear();
 
-    // UTC clock
-    const utcEl = document.getElementById("utc");
-    function tick(){
-      const d = new Date();
-      const h = String(d.getUTCHours()).padStart(2,"0");
-      const m = String(d.getUTCMinutes()).padStart(2,"0");
-      const s = String(d.getUTCSeconds()).padStart(2,"0");
-      utcEl.textContent = `UTC — ${h}:${m}:${s}`;
-    }
-    tick(); setInterval(tick, 1000);
-  </script>
+const u=document.getElementById("utc");
+function tick(){
+  const d=new Date();
+  u.textContent=`UTC — ${String(d.getUTCHours()).padStart(2,"0")}:${String(d.getUTCMinutes()).padStart(2,"0")}:${String(d.getUTCSeconds()).padStart(2,"0")}`;
+}
+tick(); setInterval(tick,1000);
+</script>
 </body>
 </html>
