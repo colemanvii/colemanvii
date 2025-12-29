@@ -1,4 +1,4 @@
-<!-- colemanvii/index.html — single file, no external CSS -->
+<!-- colemanvii/index.html — single file, no external CSS, no tryhard copy -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -74,7 +74,7 @@
 
     .wrap{
       position:relative; z-index:1;
-      max-width:1180px;
+      max-width:1120px;
       margin:0 auto;
       padding: 28px 22px 92px;
       min-height:100%;
@@ -120,17 +120,7 @@
     }
     .btn{cursor:pointer}
 
-    /* layout */
-    main{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      align-items:start;
-      margin-top: 8px;
-    }
-    @media (max-width: 900px){
-      main{grid-template-columns:1fr; gap:22px;}
-    }
+    main{max-width:760px}
 
     .kicker{
       font-family:var(--mono);
@@ -138,14 +128,7 @@
       letter-spacing:1.6px;
       text-transform:uppercase;
       color:var(--muted);
-      margin-bottom: 18px;
-    }
-
-    .rule{
-      height:1px;
-      background: linear-gradient(to right, transparent, var(--hair), transparent);
-      opacity:.9;
-      margin: 18px 0 18px;
+      margin: 10px 0 18px;
     }
 
     .sectionTitle{
@@ -155,15 +138,15 @@
       letter-spacing:1.6px;
       text-transform:uppercase;
       color:var(--muted);
-      padding: 10px 0;
+      padding: 12px 0;
       border-top: 1px solid var(--hair2);
       border-bottom: 1px solid var(--hair2);
     }
 
     .list{
       display:grid;
-      gap:14px;
-      padding-top: 16px;
+      gap:18px;
+      padding-top: 18px;
     }
 
     .row{
@@ -176,6 +159,7 @@
       text-transform:uppercase;
       color: var(--fg);
     }
+
     .dot{
       width:7px; height:7px; border-radius:50%;
       background: var(--pilot);
@@ -183,6 +167,7 @@
       flex: 0 0 auto;
       transform: translateY(1px);
     }
+
     .sub{
       color: var(--muted);
       text-transform:none;
@@ -191,29 +176,15 @@
       font-size: 13px;
       margin-left: 19px;
       margin-top: 6px;
-      max-width: 50ch;
+      max-width: 54ch;
       line-height: 1.35;
     }
 
-    /* right column: quiet presence */
-    .right{
-      padding-top: 6px;
-      color: var(--muted);
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-    }
-    .presence{
-      border-left: 1px solid var(--hair2);
-      padding-left: 16px;
-      margin-top: 8px;
-      max-width: 44ch;
-      line-height: 1.6;
+    .mutedLine{
+      height:1px;
+      background: linear-gradient(to right, transparent, var(--hair2), transparent);
       opacity:.9;
-    }
-    @media (max-width:900px){
-      .right{display:none;}
+      margin: 26px 0 0;
     }
 
     footer{
@@ -228,9 +199,9 @@
       opacity:.85;
     }
 
-    /* mobile type balance */
-    @media (max-width: 420px){
+    @media (max-width: 520px){
       .brand{font-size:32px}
+      .sub{max-width: 44ch}
     }
   </style>
 </head>
@@ -254,47 +225,40 @@
     </header>
 
     <main>
-      <section>
-        <div class="kicker">Signal. Story. Systems.</div>
+      <div class="kicker">Signal. Story. Systems.</div>
 
-        <div class="sectionTitle">
-          <span>Destinations</span>
-          <span>Online</span>
+      <div class="sectionTitle">
+        <span>Destinations</span>
+        <span>Online</span>
+      </div>
+
+      <div class="list" aria-label="Destinations">
+        <div>
+          <a class="row" href="https://colecalfee.substack.com" target="_blank" rel="noreferrer">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Writing — Notes</span>
+          </a>
+          <div class="sub">Field recordings. Long form. The work, as it happens.</div>
         </div>
 
-        <div class="list" aria-label="Destinations">
-          <div>
-            <a class="row" href="https://colecalfee.substack.com" target="_blank" rel="noreferrer">
-              <span class="dot" aria-hidden="true"></span>
-              <span>Writing — Notes</span>
-            </a>
-            <div class="sub">Field recordings. Long form. The work, as it happens.</div>
-          </div>
-
-          <div>
-            <span class="row" style="opacity:.55">
-              <span class="dot" aria-hidden="true"></span>
-              <span>Work — Case Files (soon)</span>
-            </span>
-            <div class="sub" style="opacity:.75">Selected systems & story, archived clean.</div>
-          </div>
-
-          <div>
-            <a class="row" href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer">
-              <span class="dot" aria-hidden="true"></span>
-              <span>Film — Tangerine</span>
-            </a>
-            <div class="sub">A small light. Motion, slowly.</div>
-          </div>
+        <div>
+          <span class="row" style="opacity:.55">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Work — Case Files (soon)</span>
+          </span>
+          <div class="sub" style="opacity:.75">Selected systems & story, archived clean.</div>
         </div>
-      </section>
 
-      <aside class="right" aria-hidden="true">
-        <div class="presence">
-          This page is not a pitch.<br/>
-          It’s a coordinate.
+        <div>
+          <a class="row" href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer">
+            <span class="dot" aria-hidden="true"></span>
+            <span>Film — Tangerine</span>
+          </a>
+          <div class="sub">A small light. Motion, slowly.</div>
         </div>
-      </aside>
+      </div>
+
+      <div class="mutedLine" aria-hidden="true"></div>
     </main>
 
     <footer>
