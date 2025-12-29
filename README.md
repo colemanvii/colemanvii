@@ -1,16 +1,6 @@
-Working slowly.
-I care about language, attention, and what lasts.
+Notes, systems, fragments.
 
-This space is a record of things tended over time:
-notes, systems, fragments, experiments,
-and work meant to stay coherent rather than loud.
-
-I’m interested in:
-- alignment over acceleration  
-- depth over display  
-- tools that protect the human signal  
-
-Some things here are finished.  
-Most are not.
+Some finished.
+Most in progress.
 
 VII
