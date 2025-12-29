@@ -1,3 +1,4 @@
+<!-- colemanvii/index.html — single file, no external CSS -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,23 +10,24 @@
   <style>
     :root{
       --bg:#0b0b0c;
-      --fg:rgba(255,255,255,.9);
-      --muted:rgba(255,255,255,.55);
-      --hair:rgba(255,255,255,.08);
-      --hair2:rgba(255,255,255,.04);
+      --fg:rgba(255,255,255,.88);
+      --muted:rgba(255,255,255,.52);
+      --hair:rgba(255,255,255,.09);
+      --hair2:rgba(255,255,255,.05);
+      --panel:rgba(255,255,255,.02);
       --pilot:#39d98a;
 
       --mono: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
       --sans: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       --serif: ui-serif,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
     }
-
     [data-theme="light"]{
       --bg:#f6f3ee;
       --fg:rgba(0,0,0,.82);
-      --muted:rgba(0,0,0,.5);
-      --hair:rgba(0,0,0,.1);
-      --hair2:rgba(0,0,0,.05);
+      --muted:rgba(0,0,0,.50);
+      --hair:rgba(0,0,0,.10);
+      --hair2:rgba(0,0,0,.06);
+      --panel:rgba(0,0,0,.02);
     }
 
     *{box-sizing:border-box}
@@ -35,191 +37,264 @@
       background:var(--bg);
       color:var(--fg);
       font-family:var(--sans);
+      overflow-x:hidden;
     }
+    a{color:inherit;text-decoration:none}
+    a:hover{text-decoration:underline;text-underline-offset:3px}
 
     /* atmosphere */
     .grid{
       position:fixed; inset:0; pointer-events:none; z-index:0;
       background:
-        linear-gradient(to right, rgba(255,255,255,.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+        linear-gradient(to right, rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.045) 1px, transparent 1px);
       background-size:140px 140px;
-      opacity:.12;
+      opacity:.10;
     }
     [data-theme="light"] .grid{
       background:
         linear-gradient(to right, rgba(0,0,0,.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(0,0,0,.05) 1px, transparent 1px);
-      opacity:.1;
+      opacity:.10;
     }
-
     .grain{
       position:fixed; inset:0; pointer-events:none; z-index:0;
-      opacity:.18; mix-blend-mode:overlay;
+      opacity:.16; mix-blend-mode:overlay;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
       background-size:220px 220px;
     }
+    .aura{
+      position:fixed; inset:-30vh -30vw; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(55vw 40vw at 18% 8%, color-mix(in srgb, var(--pilot) 10%, transparent), transparent 60%),
+        radial-gradient(55vw 40vw at 80% 18%, rgba(255,255,255,.03), transparent 65%);
+      filter: blur(16px);
+      opacity:.75;
+    }
 
     .wrap{
-      position:relative;
-      z-index:1;
-      max-width:1200px;
+      position:relative; z-index:1;
+      max-width:1180px;
       margin:0 auto;
-      padding:32px 24px 96px;
+      padding: 28px 22px 92px;
       min-height:100%;
     }
 
     header{
       display:flex;
       justify-content:space-between;
-      align-items:flex-end;
+      align-items:flex-start;
       gap:16px;
       flex-wrap:wrap;
-      margin-bottom:48px;
+      margin-bottom:34px;
     }
 
     .brand{
+      display:flex; align-items:center; gap:10px;
       font-family:var(--serif);
-      font-size:34px;
-      letter-spacing:-.4px;
-      display:flex;
-      align-items:center;
-      gap:10px;
+      font-size:36px;
+      letter-spacing:-.5px;
+      line-height:1;
     }
-
     .pilot{
-      width:8px;height:8px;border-radius:50%;
+      width:9px; height:9px; border-radius:50%;
       background:var(--pilot);
-      box-shadow:0 0 0 7px color-mix(in srgb, var(--pilot) 18%, transparent);
+      box-shadow: 0 0 0 8px color-mix(in srgb, var(--pilot) 18%, transparent);
+      transform: translateY(1px);
     }
 
     .ui{
+      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
       font-family:var(--mono);
       font-size:11px;
-      letter-spacing:1.2px;
+      letter-spacing:1.3px;
       text-transform:uppercase;
       color:var(--muted);
-      display:flex;
-      gap:14px;
-      align-items:center;
     }
-
-    .toggle{
+    .chip{
       border:1px solid var(--hair);
       border-radius:999px;
-      padding:6px 10px;
-      cursor:pointer;
+      padding:7px 11px;
+      background: color-mix(in srgb, var(--panel) 80%, transparent);
       user-select:none;
     }
+    .btn{cursor:pointer}
 
-    main{max-width:720px}
+    /* layout */
+    main{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items:start;
+      margin-top: 8px;
+    }
+    @media (max-width: 900px){
+      main{grid-template-columns:1fr; gap:22px;}
+    }
 
     .kicker{
       font-family:var(--mono);
       font-size:11px;
-      letter-spacing:1.4px;
+      letter-spacing:1.6px;
       text-transform:uppercase;
       color:var(--muted);
-      margin-bottom:12px;
-    }
-
-    h1{
-      font-family:var(--serif);
-      font-size:64px;
-      line-height:.95;
-      letter-spacing:-.8px;
-      margin:0 0 36px;
+      margin-bottom: 18px;
     }
 
     .rule{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:18px 0;
-      border-top:1px solid var(--hair2);
-      border-bottom:1px solid var(--hair2);
-      margin-bottom:28px;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:1.4px;
-      text-transform:uppercase;
-      color:var(--muted);
+      height:1px;
+      background: linear-gradient(to right, transparent, var(--hair), transparent);
+      opacity:.9;
+      margin: 18px 0 18px;
     }
 
-    nav{
+    .sectionTitle{
+      display:flex; justify-content:space-between; align-items:center;
+      font-family:var(--mono);
+      font-size:11px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      color:var(--muted);
+      padding: 10px 0;
+      border-top: 1px solid var(--hair2);
+      border-bottom: 1px solid var(--hair2);
+    }
+
+    .list{
       display:grid;
-      gap:18px;
+      gap:14px;
+      padding-top: 16px;
+    }
+
+    .row{
+      display:flex;
+      align-items:baseline;
+      gap:12px;
       font-family:var(--mono);
       font-size:12px;
       letter-spacing:1.2px;
+      text-transform:uppercase;
+      color: var(--fg);
+    }
+    .dot{
+      width:7px; height:7px; border-radius:50%;
+      background: var(--pilot);
+      box-shadow: 0 0 0 7px color-mix(in srgb, var(--pilot) 10%, transparent);
+      flex: 0 0 auto;
+      transform: translateY(1px);
+    }
+    .sub{
+      color: var(--muted);
+      text-transform:none;
+      letter-spacing: .2px;
+      font-family: var(--sans);
+      font-size: 13px;
+      margin-left: 19px;
+      margin-top: 6px;
+      max-width: 50ch;
+      line-height: 1.35;
     }
 
-    a{
-      color:inherit;
-      text-decoration:none;
+    /* right column: quiet presence */
+    .right{
+      padding-top: 6px;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
     }
-    a:hover{
-      text-decoration:underline;
-      text-underline-offset:3px;
+    .presence{
+      border-left: 1px solid var(--hair2);
+      padding-left: 16px;
+      margin-top: 8px;
+      max-width: 44ch;
+      line-height: 1.6;
+      opacity:.9;
     }
-
-    .dot{color:var(--pilot)}
+    @media (max-width:900px){
+      .right{display:none;}
+    }
 
     footer{
       position:absolute;
-      bottom:32px;
-      left:24px;
-      right:24px;
-      display:flex;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
+      left:22px; right:22px; bottom:30px;
+      display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
       font-family:var(--mono);
       font-size:11px;
-      letter-spacing:1.2px;
+      letter-spacing:1.3px;
       text-transform:uppercase;
       color:var(--muted);
+      opacity:.85;
+    }
+
+    /* mobile type balance */
+    @media (max-width: 420px){
+      .brand{font-size:32px}
     }
   </style>
 </head>
 
 <body>
+  <div class="aura"></div>
   <div class="grid"></div>
   <div class="grain"></div>
 
   <div class="wrap">
     <header>
       <div class="brand">
-        <span class="pilot"></span>
+        <span class="pilot" aria-hidden="true"></span>
         Coleman VII
       </div>
+
       <div class="ui">
-        <span id="utc">UTC — --:--:--</span>
-        <span class="toggle" id="toggle">Light</span>
+        <span class="chip" id="utc">UTC — --:--:--</span>
+        <span class="chip btn" id="toggle">Light</span>
       </div>
     </header>
 
     <main>
-      <div class="kicker">Signal. Story. Systems.</div>
+      <section>
+        <div class="kicker">Signal. Story. Systems.</div>
 
-      <h1>Quiet work<br/>that lasts.</h1>
+        <div class="sectionTitle">
+          <span>Destinations</span>
+          <span>Online</span>
+        </div>
 
-      <div class="rule">
-        <span>Destinations</span>
-        <span>Online</span>
-      </div>
+        <div class="list" aria-label="Destinations">
+          <div>
+            <a class="row" href="https://colecalfee.substack.com" target="_blank" rel="noreferrer">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Writing — Notes</span>
+            </a>
+            <div class="sub">Field recordings. Long form. The work, as it happens.</div>
+          </div>
 
-      <nav>
-        <a href="https://colecalfee.substack.com" target="_blank">
-          <span class="dot">●</span> Writing — Notes
-        </a>
-        <span style="opacity:.6">
-          <span class="dot">●</span> Work — Case Files (soon)
-        </span>
-        <a href="https://colemanvii.github.io/tangerine/" target="_blank">
-          <span class="dot">●</span> Film — Tangerine
-        </a>
-      </nav>
+          <div>
+            <span class="row" style="opacity:.55">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Work — Case Files (soon)</span>
+            </span>
+            <div class="sub" style="opacity:.75">Selected systems & story, archived clean.</div>
+          </div>
+
+          <div>
+            <a class="row" href="https://colemanvii.github.io/tangerine/" target="_blank" rel="noreferrer">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Film — Tangerine</span>
+            </a>
+            <div class="sub">A small light. Motion, slowly.</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="right" aria-hidden="true">
+        <div class="presence">
+          This page is not a pitch.<br/>
+          It’s a coordinate.
+        </div>
+      </aside>
     </main>
 
     <footer>
@@ -229,35 +304,36 @@
   </div>
 
   <script>
-    const root=document.documentElement;
-    const key="cvii-theme";
-    const saved=localStorage.getItem(key);
+    const root = document.documentElement;
+    const key  = "cvii-theme";
+    const saved = localStorage.getItem(key);
 
     function setTheme(m){
-      root.setAttribute("data-theme",m);
-      localStorage.setItem(key,m);
+      root.setAttribute("data-theme", m);
+      localStorage.setItem(key, m);
       document.querySelector('meta[name="theme-color"]').setAttribute(
-        "content", m==="light" ? "#f6f3ee" : "#0b0b0c"
+        "content", m === "light" ? "#f6f3ee" : "#0b0b0c"
       );
-      document.getElementById("toggle").textContent = m==="light" ? "Dark" : "Light";
+      document.getElementById("toggle").textContent = (m === "light") ? "Dark" : "Light";
     }
-
     setTheme(saved || "dark");
-    document.getElementById("toggle").onclick =
-      () => setTheme(root.getAttribute("data-theme")==="dark" ? "light" : "dark");
+
+    document.getElementById("toggle").addEventListener("click", () => {
+      const cur = root.getAttribute("data-theme") || "dark";
+      setTheme(cur === "dark" ? "light" : "dark");
+    });
 
     document.getElementById("y").textContent = new Date().getFullYear();
 
-    const utc=document.getElementById("utc");
+    const utcEl = document.getElementById("utc");
     function tick(){
-      const d=new Date();
-      utc.textContent =
-        "UTC — " +
-        String(d.getUTCHours()).padStart(2,"0") + ":" +
-        String(d.getUTCMinutes()).padStart(2,"0") + ":" +
-        String(d.getUTCSeconds()).padStart(2,"0");
+      const d = new Date();
+      const h = String(d.getUTCHours()).padStart(2,"0");
+      const m = String(d.getUTCMinutes()).padStart(2,"0");
+      const s = String(d.getUTCSeconds()).padStart(2,"0");
+      utcEl.textContent = `UTC — ${h}:${m}:${s}`;
     }
-    tick(); setInterval(tick,1000);
+    tick(); setInterval(tick, 1000);
   </script>
 </body>
 </html>
