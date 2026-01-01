@@ -2,427 +2,295 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Coleman VII — Applied clarity.</title>
-  <meta name="description" content="Quiet story stewardship for brands built to last." />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coleman VII</title>
+  <meta name="description" content="Coleman VII is a small studio focused on clarity, restraint, and usefulness." />
   <style>
     :root{
-      --bg:#fbfaf7;
-      --paper:#ffffff;
-      --ink:#141414;
-      --muted:rgba(20,20,20,.72);
-      --faint:rgba(20,20,20,.08);
-      --line:rgba(20,20,20,.14);
-      --shadow:0 1px 0 rgba(20,20,20,.04), 0 18px 48px rgba(20,20,20,.06);
-      --radius:16px;
-      --radius2:22px;
-      --max:1040px;
-      --topbar:#b7d7b8; /* subtle green */
-      --serif:ui-serif, Georgia, "Times New Roman", Times, serif;
-      --sans:ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --bg:#0b0c0f;
+      --fg:#e9e9ea;
+      --muted:#b6b7bd;
+      --line:rgba(233,233,234,.14);
+      --card:rgba(233,233,234,.04);
+      --max: 840px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family:var(--sans);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(900px 600px at 20% 0%, rgba(233,233,234,.06), transparent 55%),
+                  radial-gradient(700px 500px at 90% 10%, rgba(233,233,234,.04), transparent 60%),
+                  var(--bg);
+      color:var(--fg);
+      letter-spacing:.2px;
     }
+    a{color:var(--fg); text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    /* top line */
-    .topbar{
-      height:4px;
-      background:var(--topbar);
-      position:sticky;
-      top:0;
-      z-index:30;
-    }
-
-    /* header */
     header{
-      position:sticky;
-      top:4px;
-      z-index:20;
-      backdrop-filter:saturate(120%) blur(10px);
-      background:color-mix(in srgb, var(--bg) 86%, transparent);
-      border-bottom:1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      position:sticky; top:0;
+      backdrop-filter: blur(10px);
+      background: rgba(11,12,15,.72);
+      border-bottom:1px solid var(--line);
+      z-index:10;
     }
-    .wrap{max-width:var(--max);margin:0 auto;padding:18px 24px}
-    .nav{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
-    .brand{display:flex;flex-direction:column;gap:4px;line-height:1.1}
-    .brand .name{
-      letter-spacing:.16em;
-      font-size:12px;
-      text-transform:uppercase;
-    }
-    .brand .tag{
-      font-size:13px;
-      color:var(--muted);
-    }
-    nav a{
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      text-decoration:none;
-      padding:10px 10px;
-      border-radius:12px;
-      transition:all .18s ease;
-    }
-    nav a:hover{color:var(--ink);background:rgba(20,20,20,.04)}
-    nav a:focus-visible{outline:2px solid var(--topbar);outline-offset:2px}
-
-    /* main */
-    main{padding:56px 0 84px}
-    .hero{max-width:740px;padding:0 24px;margin:0 auto}
-    .h1{
-      font-family:var(--serif);
-      font-size:clamp(48px, 6vw, 82px);
-      letter-spacing:-.02em;
-      margin:0 0 10px;
-    }
-    .kicker{
-      display:flex;align-items:center;gap:10px;
-      font-family:var(--mono);
-      font-size:11px;
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color:rgba(20,20,20,.55);
-      margin:0 0 26px;
-    }
-    .dot{width:5px;height:5px;border-radius:99px;background:rgba(20,20,20,.35);display:inline-block}
-
-    .lead{
-      font-family:var(--serif);
-      font-size:20px;
-      line-height:1.65;
-      margin:0 0 18px;
-      color:var(--ink);
-    }
-    .p{
-      font-size:16px;
-      line-height:1.75;
-      color:var(--muted);
-      margin:0 0 14px;
-      max-width:64ch;
-    }
-
-    .callout{
-      margin-top:22px;
-      padding:14px 16px;
-      border-left:3px solid color-mix(in srgb, var(--topbar) 72%, white);
-      background:rgba(20,20,20,.02);
-      border-radius:12px;
-      color:rgba(20,20,20,.78);
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    /* cards */
-    .grid{
-      max-width:740px;
-      margin:28px auto 0;
-      padding:0 24px;
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:14px;
-    }
-    .card{
-      background:var(--paper);
-      border:1px solid color-mix(in srgb, var(--line) 72%, transparent);
-      border-radius:var(--radius);
-      padding:16px 16px 18px;
-      box-shadow:0 1px 0 rgba(20,20,20,.03);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
-      text-decoration:none;
-      color:inherit;
-      min-height:112px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      gap:10px;
-    }
-    .card:hover{
-      transform:translateY(-2px);
-      border-color:rgba(20,20,20,.20);
-      box-shadow:var(--shadow);
-    }
-    .label{
-      font-size:11px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(20,20,20,.55);
-    }
-    .text{
-      font-family:var(--serif);
-      font-size:16px;
-      line-height:1.45;
-      color:rgba(20,20,20,.78);
-      margin:0;
-    }
-
-    /* signature + newsletter pill */
-    .divider{
-      max-width:740px;
-      margin:26px auto 0;
-      padding:0 24px;
-    }
-    .hr{height:1px;background:color-mix(in srgb, var(--line) 72%, transparent)}
-    .pillrow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:18px;
-      align-items:center;
-    }
-    .pill{
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      padding:10px 12px;
-      border:1px solid color-mix(in srgb, var(--line) 72%, transparent);
-      border-radius:999px;
-      color:rgba(20,20,20,.62);
-      background:rgba(255,255,255,.66);
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      transition:transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease;
-      box-shadow:0 1px 0 rgba(20,20,20,.02);
-    }
-    .pill:hover{
-      transform:translateY(-1px);
-      border-color:rgba(20,20,20,.22);
-      background:rgba(255,255,255,.9);
-      color:rgba(20,20,20,.82);
-      box-shadow:0 10px 26px rgba(20,20,20,.06);
-    }
-    .pill:focus-visible{outline:2px solid var(--topbar);outline-offset:3px}
-
-    .pill--newsletter{
-      border-color:color-mix(in srgb, var(--topbar) 55%, var(--line));
-      background:color-mix(in srgb, var(--topbar) 9%, white);
-      color:rgba(20,20,20,.76);
-      position:relative;
-    }
-    .pill--newsletter .spark{
-      width:7px;height:7px;border-radius:99px;
-      background:color-mix(in srgb, var(--topbar) 90%, #2a5);
-      box-shadow:0 0 0 3px rgba(183,215,184,.25);
-      display:inline-block;
-      flex:0 0 auto;
-    }
-    .pill--newsletter .arrow{
-      font-family:var(--mono);
-      letter-spacing:0;
-      opacity:.7;
-      margin-left:2px;
-    }
-    .pill--newsletter:hover{
-      background:color-mix(in srgb, var(--topbar) 14%, white);
-      border-color:color-mix(in srgb, var(--topbar) 78%, var(--line));
-    }
-
-    /* sections */
-    .section{
-      max-width:740px;
-      margin:42px auto 0;
-      padding:0 24px;
-    }
-    .section h2{
-      font-size:11px;
-      letter-spacing:.24em;
-      text-transform:uppercase;
-      color:rgba(20,20,20,.60);
-      margin:0 0 10px;
-      font-family:var(--mono);
-    }
-    .bullets{
-      margin:10px 0 0;
-      padding-left:18px;
-      color:var(--muted);
-      line-height:1.85;
-      font-size:15px;
-      max-width:70ch;
-    }
-
-    /* footer */
-    footer{
-      margin-top:70px;
-      border-top:1px solid color-mix(in srgb, var(--line) 72%, transparent);
-      background:color-mix(in srgb, var(--bg) 86%, white);
-    }
-    .foot{
+    .nav{
       max-width:var(--max);
       margin:0 auto;
-      padding:24px 24px;
+      padding:16px 20px;
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      color:rgba(20,20,20,.58);
-      font-size:13px;
+      gap:16px;
     }
-    .foot a{
-      color:inherit;
-      text-decoration:none;
-      border-bottom:1px solid rgba(20,20,20,.25);
-      padding-bottom:1px;
+    .brand{
+      font-weight:600;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      font-size:12px;
+      opacity:.95;
     }
-    .foot a:hover{color:var(--ink);border-bottom-color:rgba(20,20,20,.55)}
+    .navlinks{display:flex; gap:14px; font-size:13px; color:var(--muted)}
+    .navlinks a{color:var(--muted)}
 
-    /* responsive */
-    @media (max-width:720px){
-      .grid{grid-template-columns:1fr}
-      nav{display:none}
-      .wrap{padding:16px 18px}
-      .hero,.grid,.divider,.section{padding:0 18px}
+    main{max-width:var(--max); margin:0 auto; padding:48px 20px 72px}
+
+    .hero{
+      padding:34px 0 28px;
+      border-bottom:1px solid var(--line);
+      margin-bottom:28px;
     }
+    h1{
+      margin:0 0 12px;
+      font-size:44px;
+      line-height:1.08;
+      letter-spacing:-.8px;
+      font-weight:600;
+    }
+    .lede{
+      margin:0;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.55;
+      max-width:70ch;
+    }
+    .pillrow{margin-top:18px; display:flex; flex-wrap:wrap; gap:10px}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      background:rgba(233,233,234,.03);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:14px;
+    }
+    @media (min-width: 760px){
+      .grid{grid-template-columns: 1fr 1fr}
+    }
+
+    section{margin-top:22px}
+    h2{
+      margin:0 0 12px;
+      font-size:13px;
+      text-transform:uppercase;
+      letter-spacing:.9px;
+      color:var(--muted);
+      font-weight:600;
+    }
+    .card{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:16px;
+      padding:16px 16px 14px;
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:600;
+      letter-spacing:-.2px;
+    }
+    .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14.5px;
+    }
+
+    ul{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-size:14.5px}
+    li{margin:6px 0}
+
+    .rule{margin:26px 0; border:0; border-top:1px solid var(--line)}
+
+    .cta{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      padding:18px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background: rgba(233,233,234,.05);
+    }
+    .cta strong{font-size:16px; font-weight:600}
+    .cta .small{color:var(--muted); font-size:14.5px; line-height:1.6}
+    .cta .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(233,233,234,.04);
+      color:var(--fg);
+      font-size:13px;
+      font-weight:600;
+      letter-spacing:.2px;
+    }
+    .btn:hover{background: rgba(233,233,234,.07); text-decoration:none}
+
+    footer{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:20px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+    }
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
   </style>
 </head>
-
 <body>
-  <div class="topbar"></div>
-
   <header>
-    <div class="wrap">
-      <div class="nav">
-        <div class="brand" aria-label="Coleman VII">
-          <div class="name">COLEMAN VII</div>
-          <div class="tag">Storytelling · Design · Narrative direction</div>
-        </div>
-
-        <nav aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#work">Work</a>
-          <a href="#approach">Approach</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </div>
+    <div class="nav">
+      <div class="brand">Coleman VII</div>
+      <nav class="navlinks" aria-label="Primary">
+        <a href="#work">What we do</a>
+        <a href="#process">How we work</a>
+        <a href="#fit">Who it’s for</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="top">
-      <h1 class="h1">Applied clarity.</h1>
-      <p class="kicker"><span class="dot"></span> Quiet work <span class="dot"></span> Built to endure</p>
-
-      <p class="lead">Quiet story stewardship for brands built to last.</p>
-
-      <p class="p">
-        Coleman VII helps technically excellent brands translate what they make into stories people trust—especially in
-        the American South and Appalachia, where place, use, and restraint matter more than noise.
+    <div class="hero">
+      <h1>Clarity, restraint, usefulness.</h1>
+      <p class="lede">
+        Coleman VII is a small studio focused on building durable brand foundations—
+        language, design, and systems that hold up over time.
       </p>
-      <p class="p">
-        This is not advertising. It’s long-arc storytelling rooted in terrain, craft, and lived experience.
-      </p>
-
-      <div class="callout" role="note">
-        <strong>Principle:</strong> clarity over campaigns, trust over reach. I protect the signal.
-      </div>
-    </section>
-
-    <section class="grid" aria-label="Quick links">
-      <a class="card" href="#about">
-        <div class="label">About</div>
-        <p class="text">What it is, who it’s for, and who leads it.</p>
-      </a>
-
-      <a class="card" href="#approach">
-        <div class="label">Approach</div>
-        <p class="text">Listening first. Then clarity. Then execution.</p>
-      </a>
-
-      <a class="card" href="#work">
-        <div class="label">Work</div>
-        <p class="text">A selective record. Nothing shown by default.</p>
-      </a>
-
-      <a class="card" href="#contact">
-        <div class="label">Contact</div>
-        <p class="text">A simple doorway for new work.</p>
-      </a>
-    </section>
-
-    <div class="divider">
-      <div class="hr"></div>
-
-      <div class="pillrow" aria-label="Signature and newsletter">
-        <div class="pill" role="note">Founded and led by artist and writer Coleman</div>
-
-        <a class="pill pill--newsletter"
-           href="https://festinalentenotes.substack.com/"
-           target="_blank"
-           rel="noopener"
-           aria-label="Read the newsletter: Festina Lente Notes (opens in a new tab)">
-          <span class="spark" aria-hidden="true"></span>
-          Notes — Festina Lente
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+      <div class="pillrow" aria-label="Principles">
+        <span class="pill">No hype</span>
+        <span class="pill">No noise</span>
+        <span class="pill">Long-term thinking</span>
+        <span class="pill">Careful craft</span>
       </div>
     </div>
 
-    <section class="section" id="work">
-      <h2>Selected Work</h2>
-      <p class="p">
-        I work quietly and long-term. Many partnerships are ongoing or private. More can be shared in conversation.
-      </p>
-      <ul class="bullets">
-        <li>Product storytelling for a performance footwear brand expanding in the U.S.</li>
-        <li>Long-arc narrative direction for outdoor and heritage-driven companies in the Southeast.</li>
-        <li>Founder advisory: product language, launch cadence, and regional voice.</li>
-      </ul>
+    <section id="work">
+      <h2>What We Do</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Story &amp; Direction</h3>
+          <p>We help you understand what matters, then shape language and narrative around it.</p>
+        </div>
+        <div class="card">
+          <h3>Design &amp; Systems</h3>
+          <p>We build identities, sites, and tools that feel natural to use and easy to live with.</p>
+        </div>
+        <div class="card">
+          <h3>Ongoing Partnership</h3>
+          <p>We work on a retainer model: fewer clients, deeper focus, steadier progress.</p>
+        </div>
+        <div class="card">
+          <h3>Editorial Support</h3>
+          <p>We refine positioning, voice, and messaging until it reads like the truth—without strain.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="section" id="about">
-      <h2>What I Do</h2>
-      <ul class="bullets">
-        <li>Product narrative and language</li>
-        <li>Launch stories that feel earned</li>
-        <li>Visual and written systems that compound over time</li>
-        <li>Regional translation for the Southeast and U.S. market</li>
-      </ul>
+    <hr class="rule" />
+
+    <section id="process">
+      <h2>How We Work</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Listen first</h3>
+          <p>We start with what’s real: constraints, audience, and the work you’re already doing.</p>
+        </div>
+        <div class="card">
+          <h3>Reduce before we add</h3>
+          <p>We remove the extra so the signal shows up clean.</p>
+        </div>
+        <div class="card">
+          <h3>Build simple structures</h3>
+          <p>We favor systems that are easy to maintain and hard to break.</p>
+        </div>
+        <div class="card">
+          <h3>Attention beats acceleration</h3>
+          <p>Progress comes from consistency and care, not constant reinvention.</p>
+        </div>
+      </div>
     </section>
 
-    <section class="section" id="approach">
-      <h2>How I Work</h2>
-      <ul class="bullets">
-        <li>Quiet, focused, relational</li>
-        <li>Long-term over one-off</li>
-        <li>Premium without posturing</li>
-        <li>Ground truth over trend</li>
-      </ul>
+    <hr class="rule" />
+
+    <section id="fit">
+      <h2>Who This Is For</h2>
+      <div class="card">
+        <ul>
+          <li>Brands that value taste over trend.</li>
+          <li>Teams who want consistency, not campaigns.</li>
+          <li>Founders who care about how something feels as much as how it performs.</li>
+        </ul>
+      </div>
     </section>
 
-    <section class="section" id="contact">
-      <h2>Next</h2>
-      <p class="p">
-        If you’re interested in working together, reach out. I take on a limited number of partnerships each year.
-      </p>
-      <p class="p">
-        <a href="mailto:colecalfee@gmail.com" style="color:inherit;">colecalfee@gmail.com</a>
-      </p>
+    <hr class="rule" />
+
+    <section>
+      <h2>The Point</h2>
+      <div class="card">
+        <p>
+          The goal is not to look impressive. The goal is to build something coherent—
+          calm, usable, and <strong>quiet</strong> in the way a well-made object is quiet.
+        </p>
+      </div>
+    </section>
+
+    <hr class="rule" />
+
+    <section id="contact">
+      <h2>Work With Us</h2>
+      <div class="cta">
+        <strong>Limited partners, long horizons.</strong>
+        <div class="small">
+          If the approach resonates, reach out. We’ll start with a short note,
+          then move into a simple first conversation.
+        </div>
+        <div class="actions">
+          <a class="btn" href="mailto:hello@colemanvii.com">Email: <span class="mono">hello@colemanvii.com</span></a>
+          <a class="btn" href="#work">View services</a>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <div class="foot">
-      <div>© <span id="y"></span> Coleman VII</div>
-      <div style="display:flex;gap:14px;flex-wrap:wrap">
-        <a href="https://festinalentenotes.substack.com/" target="_blank" rel="noopener">Newsletter</a>
-        <a href="#top">Back to top</a>
-      </div>
-    </div>
+    <div>© <span id="y"></span> Coleman VII</div>
   </footer>
 
   <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+    document.getElementById('y').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
