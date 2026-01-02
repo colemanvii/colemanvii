@@ -2,180 +2,193 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Coleman VII</title>
-  <meta name="description" content="Coleman VII is a small studio focused on clarity, restraint, and usefulness." />
+  <meta name="description" content="Coleman VII builds durable brand foundations—language, design, and systems that hold up over time." />
+
   <style>
     :root{
-      --bg:#0b0c0f;
-      --fg:#e9e9ea;
-      --muted:#b6b7bd;
-      --line:rgba(233,233,234,.14);
-      --card:rgba(233,233,234,.04);
-      --max: 840px;
+      --bg:#07090c;
+      --panel:#0b0f15;
+      --text:#e8edf6;
+      --muted:#a7b1c2;
+      --line:rgba(255,255,255,.10);
+      --shadow: 0 20px 60px rgba(0,0,0,.55);
+      --radius:18px;
+      --max: 720px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      background: radial-gradient(900px 600px at 20% 0%, rgba(233,233,234,.06), transparent 55%),
-                  radial-gradient(700px 500px at 90% 10%, rgba(233,233,234,.04), transparent 60%),
-                  var(--bg);
-      color:var(--fg);
-      letter-spacing:.2px;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 50% 10%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 500px at 15% 40%, rgba(120,160,255,.07), transparent 60%),
+        radial-gradient(900px 500px at 85% 55%, rgba(255,160,120,.05), transparent 60%),
+        var(--bg);
+      letter-spacing: -0.01em;
     }
-    a{color:var(--fg); text-decoration:none}
-    a:hover{text-decoration:underline}
+
+    a{ color:inherit; text-decoration:none; }
+    a:hover{ opacity:.9; }
 
     header{
-      position:sticky; top:0;
-      backdrop-filter: blur(10px);
-      background: rgba(11,12,15,.72);
-      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:0;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom, rgba(7,9,12,.85), rgba(7,9,12,.55));
+      border-bottom: 1px solid var(--line);
       z-index:10;
     }
     .nav{
-      max-width:var(--max);
+      max-width: 1040px;
       margin:0 auto;
-      padding:16px 20px;
+      padding: 16px 20px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
     }
     .brand{
-      font-weight:600;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      font-size:12px;
-      opacity:.95;
+      font-size: 13px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      opacity:.92;
+      white-space:nowrap;
     }
-    .navlinks{display:flex; gap:14px; font-size:13px; color:var(--muted)}
-    .navlinks a{color:var(--muted)}
+    nav{
+      display:flex;
+      gap:18px;
+      font-size: 13px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    nav a{ padding:6px 2px; }
+    nav a:hover{ color: var(--text); }
 
-    main{max-width:var(--max); margin:0 auto; padding:48px 20px 72px}
+    main{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 56px 20px 84px;
+    }
 
     .hero{
-      padding:34px 0 28px;
-      border-bottom:1px solid var(--line);
-      margin-bottom:28px;
+      padding: 28px 0 18px;
     }
     h1{
-      margin:0 0 12px;
-      font-size:44px;
-      line-height:1.08;
-      letter-spacing:-.8px;
-      font-weight:600;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.05;
+      margin:0 0 14px;
+      letter-spacing: -0.03em;
     }
     .lede{
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 58ch;
       margin:0;
-      color:var(--muted);
-      font-size:18px;
-      line-height:1.55;
-      max-width:70ch;
-    }
-    .pillrow{margin-top:18px; display:flex; flex-wrap:wrap; gap:10px}
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      background:rgba(233,233,234,.03);
-      border-radius:999px;
-      color:var(--muted);
-      font-size:12px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:14px;
-    }
-    @media (min-width: 760px){
-      .grid{grid-template-columns: 1fr 1fr}
+    .divider{
+      height:1px;
+      background: var(--line);
+      margin: 28px 0;
     }
 
-    section{margin-top:22px}
-    h2{
-      margin:0 0 12px;
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:.9px;
-      color:var(--muted);
-      font-weight:600;
+    section{
+      padding: 6px 0;
     }
-    .card{
-      border:1px solid var(--line);
-      background:var(--card);
-      border-radius:16px;
-      padding:16px 16px 14px;
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin:0 0 14px;
     }
-    .card h3{
+
+    .item{
+      padding: 16px 18px;
+      background: rgba(11,15,21,.55);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin: 14px 0;
+    }
+    .item h3{
       margin:0 0 8px;
-      font-size:18px;
-      font-weight:600;
-      letter-spacing:-.2px;
+      font-size: 16px;
+      letter-spacing: -0.01em;
     }
-    .card p{
+    .item p{
       margin:0;
-      color:var(--muted);
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14.5px;
+    }
+
+    .stack{
+      display:grid;
+      gap: 10px;
+    }
+    .lineItem{
+      padding: 10px 0;
+    }
+    .lineItem strong{
+      display:block;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .lineItem span{
+      color: var(--muted);
       line-height:1.6;
-      font-size:14.5px;
+      font-size: 14.5px;
+      display:block;
+      max-width: 70ch;
     }
 
-    ul{margin:0; padding-left:18px; color:var(--muted); line-height:1.7; font-size:14.5px}
-    li{margin:6px 0}
-
-    .rule{margin:26px 0; border:0; border-top:1px solid var(--line)}
-
-    .cta{
+    footer{
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
       display:flex;
-      flex-direction:column;
-      gap:10px;
-      padding:18px;
-      border-radius:18px;
-      border:1px solid var(--line);
-      background: rgba(233,233,234,.05);
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
-    .cta strong{font-size:16px; font-weight:600}
-    .cta .small{color:var(--muted); font-size:14.5px; line-height:1.6}
-    .cta .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:6px}
     .btn{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(233,233,234,.04);
-      color:var(--fg);
-      font-size:13px;
-      font-weight:600;
-      letter-spacing:.2px;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
     }
-    .btn:hover{background: rgba(233,233,234,.07); text-decoration:none}
+    .btn:hover{ background: rgba(255,255,255,.08); }
 
-    footer{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:20px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:12px;
+    /* Small screens */
+    @media (max-width:520px){
+      nav{ display:none; }
+      main{ padding-top: 42px; }
+      .item{ box-shadow:none; }
     }
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
   </style>
 </head>
+
 <body>
   <header>
     <div class="nav">
-      <div class="brand">Coleman VII</div>
-      <nav class="navlinks" aria-label="Primary">
-        <a href="#work">What we do</a>
-        <a href="#process">How we work</a>
-        <a href="#fit">Who it’s for</a>
+      <div class="brand">COLEMAN VII</div>
+      <nav>
+        <a href="#what">What we do</a>
+        <a href="#how">How we work</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -185,112 +198,79 @@
     <div class="hero">
       <h1>Clarity, restraint, usefulness.</h1>
       <p class="lede">
-        Coleman VII is a small studio focused on building durable brand foundations—
-        language, design, and systems that hold up over time.
+        We build durable brand foundations—language, design, and systems that hold up over time.
       </p>
-      <div class="pillrow" aria-label="Principles">
-        <span class="pill">No hype</span>
-        <span class="pill">No noise</span>
-        <span class="pill">Long-term thinking</span>
-        <span class="pill">Careful craft</span>
-      </div>
     </div>
 
-    <section id="work">
-      <h2>What We Do</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Story &amp; Direction</h3>
-          <p>We help you understand what matters, then shape language and narrative around it.</p>
+    <div class="divider"></div>
+
+    <section id="what">
+      <p class="kicker">What we do</p>
+
+      <div class="item">
+        <h3>Story &amp; Direction</h3>
+        <p>Positioning, narrative, and language. We help you understand what matters, then shape the story around it.</p>
+      </div>
+
+      <div class="item">
+        <h3>Design &amp; Systems</h3>
+        <p>Identities, sites, and tools designed to feel natural to use—and easy to live with.</p>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="how">
+      <p class="kicker">How we work</p>
+
+      <div class="stack">
+        <div class="lineItem">
+          <strong>Listen first.</strong>
+          <span>We start with what’s real: constraints, audience, and the work already in motion.</span>
         </div>
-        <div class="card">
-          <h3>Design &amp; Systems</h3>
-          <p>We build identities, sites, and tools that feel natural to use and easy to live with.</p>
-        </div>
-        <div class="card">
-          <h3>Ongoing Partnership</h3>
-          <p>We work on a retainer model: fewer clients, deeper focus, steadier progress.</p>
-        </div>
-        <div class="card">
-          <h3>Editorial Support</h3>
-          <p>We refine positioning, voice, and messaging until it reads like the truth—without strain.</p>
+
+        <div class="lineItem">
+          <strong>Reduce before adding.</strong>
+          <span>We remove the extra so the signal shows up clean.</span>
         </div>
       </div>
     </section>
 
-    <hr class="rule" />
+    <div class="divider"></div>
 
-    <section id="process">
-      <h2>How We Work</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Listen first</h3>
-          <p>We start with what’s real: constraints, audience, and the work you’re already doing.</p>
-        </div>
-        <div class="card">
-          <h3>Reduce before we add</h3>
-          <p>We remove the extra so the signal shows up clean.</p>
-        </div>
-        <div class="card">
-          <h3>Build simple structures</h3>
-          <p>We favor systems that are easy to maintain and hard to break.</p>
-        </div>
-        <div class="card">
-          <h3>Attention beats acceleration</h3>
-          <p>Progress comes from consistency and care, not constant reinvention.</p>
-        </div>
+    <section id="partnership">
+      <p class="kicker">Partnership</p>
+      <div class="lineItem">
+        <strong>Retainer, few clients.</strong>
+        <span>We work on a retainer basis with a small number of clients. Fewer engagements, deeper focus, steadier progress.</span>
       </div>
     </section>
 
-    <hr class="rule" />
-
-    <section id="fit">
-      <h2>Who This Is For</h2>
-      <div class="card">
-        <ul>
-          <li>Brands that value taste over trend.</li>
-          <li>Teams who want consistency, not campaigns.</li>
-          <li>Founders who care about how something feels as much as how it performs.</li>
-        </ul>
-      </div>
-    </section>
-
-    <hr class="rule" />
-
-    <section>
-      <h2>The Point</h2>
-      <div class="card">
-        <p>
-          The goal is not to look impressive. The goal is to build something coherent—
-          calm, usable, and <strong>quiet</strong> in the way a well-made object is quiet.
-        </p>
-      </div>
-    </section>
-
-    <hr class="rule" />
+    <div class="divider"></div>
 
     <section id="contact">
-      <h2>Work With Us</h2>
-      <div class="cta">
-        <strong>Limited partners, long horizons.</strong>
-        <div class="small">
-          If the approach resonates, reach out. We’ll start with a short note,
-          then move into a simple first conversation.
-        </div>
-        <div class="actions">
-          <a class="btn" href="mailto:hello@colemanvii.com">Email: <span class="mono">hello@colemanvii.com</span></a>
-          <a class="btn" href="#work">View services</a>
-        </div>
+      <p class="kicker">Contact</p>
+      <div class="lineItem">
+        <strong>If the work resonates, get in touch.</strong>
+        <span>
+          Email: <a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
+          <!-- or swap for a simple form link -->
+        </span>
       </div>
     </section>
+
+    <footer>
+      <div>© <span id="year"></span> Coleman VII</div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <a href="#what">What we do</a>
+        <span style="opacity:.5;">·</span>
+        <a href="#contact">Contact</a>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    <div>© <span id="y"></span> Coleman VII</div>
-  </footer>
-
   <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
