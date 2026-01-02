@@ -1,74 +1,160 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Coleman VII</title>
   <meta name="description" content="Coleman VII builds durable brand foundations—language, design, and systems that hold up over time." />
+  <meta name="color-scheme" content="dark light" />
 
   <style>
+    /* -----------------------------
+       Theme tokens
+    ------------------------------*/
     :root{
       --bg:#07090c;
-      --panel:#0b0f15;
+      --bg2:#07090c; /* base background fallback */
       --text:#e8edf6;
       --muted:#a7b1c2;
       --line:rgba(255,255,255,.10);
+      --panel: rgba(11,15,21,.55);
+      --panelSolid:#0b0f15;
       --shadow: 0 20px 60px rgba(0,0,0,.55);
       --radius:18px;
-      --max: 720px;
+
+      --max: 740px;
+      --navMax: 1040px;
+
+      --h1: clamp(34px, 4vw, 52px);
+      --body: 16px;
+      --small: 13px;
+
+      --glowA: rgba(255,255,255,.08);
+      --glowB: rgba(120,160,255,.07);
+      --glowC: rgba(255,160,120,.05);
     }
 
+    html[data-theme="light"]{
+      --bg:#f6f7fb;
+      --bg2:#f6f7fb;
+      --text:#0b1020;
+      --muted:#4a566b;
+      --line:rgba(10,20,40,.12);
+      --panel: rgba(255,255,255,.72);
+      --panelSolid:#ffffff;
+      --shadow: 0 18px 50px rgba(10,20,40,.12);
+
+      --glowA: rgba(10,20,40,.06);
+      --glowB: rgba(70,110,255,.06);
+      --glowC: rgba(255,150,90,.04);
+    }
+
+    /* -----------------------------
+       Base
+    ------------------------------*/
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+        "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
       background:
-        radial-gradient(1200px 600px at 50% 10%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(900px 500px at 15% 40%, rgba(120,160,255,.07), transparent 60%),
-        radial-gradient(900px 500px at 85% 55%, rgba(255,160,120,.05), transparent 60%),
-        var(--bg);
+        radial-gradient(1200px 600px at 50% 10%, var(--glowA), transparent 60%),
+        radial-gradient(900px 500px at 15% 40%, var(--glowB), transparent 60%),
+        radial-gradient(900px 500px at 85% 55%, var(--glowC), transparent 60%),
+        var(--bg2);
       letter-spacing: -0.01em;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     a{ color:inherit; text-decoration:none; }
     a:hover{ opacity:.9; }
 
+    /* -----------------------------
+       Header / Nav
+    ------------------------------*/
     header{
-      position:sticky;
+      position: sticky;
       top:0;
+      z-index: 10;
       backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(7,9,12,.85), rgba(7,9,12,.55));
+      -webkit-backdrop-filter: blur(12px);
+      background: linear-gradient(to bottom, rgba(7,9,12,.80), rgba(7,9,12,.40));
       border-bottom: 1px solid var(--line);
-      z-index:10;
     }
+    html[data-theme="light"] header{
+      background: linear-gradient(to bottom, rgba(246,247,251,.86), rgba(246,247,251,.55));
+    }
+
     .nav{
-      max-width: 1040px;
-      margin:0 auto;
+      max-width: var(--navMax);
+      margin: 0 auto;
       padding: 16px 20px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
+      gap: 16px;
     }
+
     .brand{
-      font-size: 13px;
+      font-size: 12px;
       letter-spacing: .28em;
       text-transform: uppercase;
       opacity:.92;
-      white-space:nowrap;
+      white-space: nowrap;
     }
+
+    .navRight{
+      display:flex;
+      align-items:center;
+      gap: 18px;
+      white-space: nowrap;
+    }
+
     nav{
       display:flex;
-      gap:18px;
+      gap: 18px;
       font-size: 13px;
       color: var(--muted);
-      white-space:nowrap;
+      white-space: nowrap;
     }
     nav a{ padding:6px 2px; }
     nav a:hover{ color: var(--text); }
 
+    /* -----------------------------
+       Toggle (quiet)
+    ------------------------------*/
+    .themeToggle{
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.05);
+      display:inline-flex;
+      align-items:center;
+      padding: 3px;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html[data-theme="light"] .themeToggle{
+      background: rgba(0,0,0,.03);
+    }
+    .toggleDot{
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--text);
+      opacity: .9;
+      transform: translateX(0);
+      transition: transform .18s ease;
+    }
+
+    /* -----------------------------
+       Layout
+    ------------------------------*/
     main{
       max-width: var(--max);
       margin: 0 auto;
@@ -79,16 +165,17 @@
       padding: 28px 0 18px;
     }
     h1{
-      font-size: clamp(34px, 4vw, 52px);
+      font-size: var(--h1);
       line-height: 1.05;
-      margin:0 0 14px;
+      margin: 0 0 14px;
       letter-spacing: -0.03em;
+      font-weight: 650; /* slightly calmer than 700+ */
     }
     .lede{
-      font-size: 16px;
-      line-height: 1.6;
+      font-size: var(--body);
+      line-height: 1.65;
       color: var(--muted);
-      max-width: 58ch;
+      max-width: 60ch;
       margin:0;
     }
 
@@ -96,58 +183,77 @@
       height:1px;
       background: var(--line);
       margin: 28px 0;
+      opacity: .65; /* keep quiet */
     }
 
-    section{
-      padding: 6px 0;
-    }
+    section{ padding: 6px 0; }
+
     .kicker{
       font-size: 11px;
       letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--muted);
-      margin:0 0 14px;
+      margin: 0 0 14px;
     }
 
     .item{
       padding: 16px 18px;
-      background: rgba(11,15,21,.55);
+      background: var(--panel);
       border: 1px solid rgba(255,255,255,.08);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       margin: 14px 0;
     }
+    html[data-theme="light"] .item{
+      border: 1px solid rgba(10,20,40,.10);
+    }
+
     .item h3{
       margin:0 0 8px;
       font-size: 16px;
       letter-spacing: -0.01em;
+      font-weight: 600;
     }
     .item p{
       margin:0;
       color: var(--muted);
-      line-height: 1.6;
+      line-height: 1.65;
       font-size: 14.5px;
     }
 
-    .stack{
-      display:grid;
-      gap: 10px;
-    }
-    .lineItem{
-      padding: 10px 0;
-    }
+    .stack{ display:grid; gap: 10px; }
+    .lineItem{ padding: 10px 0; }
     .lineItem strong{
       display:block;
       font-size: 15px;
       margin-bottom: 6px;
+      font-weight: 600;
     }
     .lineItem span{
       color: var(--muted);
-      line-height:1.6;
+      line-height: 1.65;
       font-size: 14.5px;
       display:block;
       max-width: 70ch;
     }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      margin-top: 10px;
+    }
+    html[data-theme="light"] .btn{
+      border: 1px solid rgba(10,20,40,.14);
+      background: rgba(0,0,0,.03);
+    }
+    .btn:hover{ opacity: 1; background: rgba(255,255,255,.08); }
+    html[data-theme="light"] .btn:hover{ background: rgba(0,0,0,.05); }
 
     footer{
       margin-top: 26px;
@@ -158,20 +264,16 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+      gap: 14px;
+      flex-wrap: wrap;
     }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: var(--text);
+
+    /* Accessibility */
+    :focus-visible{
+      outline: 2px solid rgba(120,160,255,.7);
+      outline-offset: 3px;
+      border-radius: 10px;
     }
-    .btn:hover{ background: rgba(255,255,255,.08); }
 
     /* Small screens */
     @media (max-width:520px){
@@ -180,26 +282,45 @@
       .item{ box-shadow:none; }
     }
   </style>
+
+  <script>
+    // Apply theme ASAP to avoid flash
+    (function(){
+      try{
+        const saved = localStorage.getItem("theme");
+        const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+        const initial = saved || (prefersLight ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", initial);
+      }catch(e){
+        // If storage blocked, default stays "dark"
+      }
+    })();
+  </script>
 </head>
 
 <body>
   <header>
     <div class="nav">
       <div class="brand">COLEMAN VII</div>
-      <nav>
-        <a href="#what">What we do</a>
-        <a href="#how">How we work</a>
-        <a href="#contact">Contact</a>
-      </nav>
+
+      <div class="navRight">
+        <nav aria-label="Primary">
+          <a href="#what">What we do</a>
+          <a href="#how">How we work</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="themeToggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+          <span class="toggleDot" id="toggleDot" aria-hidden="true"></span>
+        </button>
+      </div>
     </div>
   </header>
 
   <main>
     <div class="hero">
       <h1>Clarity, restraint, usefulness.</h1>
-      <p class="lede">
-        We build durable brand foundations—language, design, and systems that hold up over time.
-      </p>
+      <p class="lede">We build durable brand foundations—language, design, and systems that hold up over time.</p>
     </div>
 
     <div class="divider"></div>
@@ -238,23 +359,12 @@
 
     <div class="divider"></div>
 
-    <section id="partnership">
-      <p class="kicker">Partnership</p>
-      <div class="lineItem">
-        <strong>Retainer, few clients.</strong>
-        <span>We work on a retainer basis with a small number of clients. Fewer engagements, deeper focus, steadier progress.</span>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
     <section id="contact">
       <p class="kicker">Contact</p>
       <div class="lineItem">
         <strong>If the work resonates, get in touch.</strong>
         <span>
-          Email: <a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
-          <!-- or swap for a simple form link -->
+          <a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
         </span>
       </div>
     </section>
@@ -270,7 +380,40 @@
   </main>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+    // Toggle behavior + remember choice
+    (function(){
+      const root = document.documentElement;
+      const btn = document.getElementById("themeToggle");
+      const dot = document.getElementById("toggleDot");
+
+      function setDot(){
+        const t = root.getAttribute("data-theme");
+        dot.style.transform = (t === "light") ? "translateX(18px)" : "translateX(0)";
+      }
+
+      setDot();
+
+      btn.addEventListener("click", function(){
+        const current = root.getAttribute("data-theme") || "dark";
+        const next = (current === "dark") ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        try{ localStorage.setItem("theme", next); }catch(e){}
+        setDot();
+      });
+
+      // Optional: update if system preference changes AND user hasn't set a preference
+      try{
+        const mq = window.matchMedia("(prefers-color-scheme: light)");
+        mq.addEventListener("change", function(){
+          const saved = localStorage.getItem("theme");
+          if (saved) return;
+          root.setAttribute("data-theme", mq.matches ? "light" : "dark");
+          setDot();
+        });
+      }catch(e){}
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 </html>
