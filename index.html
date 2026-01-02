@@ -8,79 +8,70 @@
   <meta name="color-scheme" content="dark light" />
 
   <style>
-    /* ===========================
-       COLEMAN VII — MIDDLE GROUND
-       Cinematic calm + monk-like copy
-       No SaaS artifacts, no cockpit UI.
-       One quiet theme switch (footer).
-    ============================ */
-
     :root{
       --max: 760px;
       --navMax: 1100px;
       --radius: 18px;
 
       /* Dark */
-      --bg: #07090c;
-      --text: #e9eef6;
-      --muted: #a6b0c1;
-      --faint: rgba(255,255,255,.06);
-      --line: rgba(255,255,255,.10);
+      --bg:#07090c;
+      --text:#e9eef6;
+      --muted:#a6b0c1;
+      --line:rgba(255,255,255,.10);
+      --faint:rgba(255,255,255,.06);
 
-      /* Panels (not cards) */
+      /* Panels (quiet) */
       --panel: rgba(255,255,255,.045);
-      --panel2: rgba(255,255,255,.030);
+      --panel2: rgba(255,255,255,.028);
 
-      /* Soft bloom */
-      --glowA: rgba(255,255,255,.085);
+      /* Atmosphere */
+      --glowA: rgba(255,255,255,.090);
       --glowB: rgba(120,160,255,.070);
       --glowC: rgba(255,160,120,.050);
 
-      /* A single “pilot light” accent */
-      --pilot: rgba(120, 255, 200, .75);
-      --pilotDim: rgba(120, 255, 200, .18);
+      /* Pilot light */
+      --pilot: rgba(120,255,200,.70);
+      --pilotDim: rgba(120,255,200,.14);
 
       /* Type */
-      --h1: clamp(34px, 4vw, 48px);
+      --h1: clamp(34px, 4vw, 50px);
       --body: 16px;
-      --small: 13px;
       --kicker: 11px;
     }
 
     html[data-theme="light"]{
-      --bg: #f6f7fb;
-      --text: #0b1020;
-      --muted: #4a566b;
-      --faint: rgba(10,20,40,.06);
-      --line: rgba(10,20,40,.12);
+      --bg:#f6f7fb;
+      --text:#0b1020;
+      --muted:#4a566b;
+      --line:rgba(10,20,40,.12);
+      --faint:rgba(10,20,40,.06);
 
       --panel: rgba(10,20,40,.035);
-      --panel2: rgba(10,20,40,.025);
+      --panel2: rgba(10,20,40,.022);
 
-      --glowA: rgba(10,20,40,.070);
+      --glowA: rgba(10,20,40,.075);
       --glowB: rgba(70,110,255,.060);
       --glowC: rgba(255,150,90,.045);
 
-      --pilot: rgba(0, 120, 85, .75);
-      --pilotDim: rgba(0, 120, 85, .16);
+      --pilot: rgba(0,120,85,.75);
+      --pilotDim: rgba(0,120,85,.12);
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
-
     body{
       margin:0;
-      color: var(--text);
+      color:var(--text);
       background:
-        radial-gradient(1100px 620px at 50% 12%, var(--glowA), transparent 62%),
+        radial-gradient(1150px 650px at 50% 12%, var(--glowA), transparent 62%),
         radial-gradient(900px 560px at 18% 42%, var(--glowB), transparent 64%),
         radial-gradient(900px 560px at 84% 56%, var(--glowC), transparent 66%),
         var(--bg);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
         "Apple Color Emoji","Segoe UI Emoji";
-      letter-spacing: -0.01em;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      letter-spacing:-0.01em;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
       overflow-x:hidden;
     }
 
@@ -93,17 +84,15 @@
       border-radius: 10px;
     }
 
-    /* ===========================
-       HEADER
-    ============================ */
+    /* Header */
     header{
-      position: sticky;
+      position:sticky;
       top:0;
-      z-index: 10;
+      z-index:10;
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(7,9,12,.84), rgba(7,9,12,.52));
+      background: linear-gradient(to bottom, rgba(7,9,12,.82), rgba(7,9,12,.50));
     }
     html[data-theme="light"] header{
       background: linear-gradient(to bottom, rgba(246,247,251,.88), rgba(246,247,251,.60));
@@ -123,25 +112,29 @@
       display:flex;
       align-items:center;
       gap: 10px;
-      white-space: nowrap;
+      white-space:nowrap;
       opacity:.95;
     }
-
     .pilot{
       width: 9px; height: 9px;
       border-radius: 999px;
       background: var(--pilot);
-      box-shadow: 0 0 0 6px rgba(120,255,200,.07);
+      box-shadow: 0 0 0 6px rgba(120,255,200,.06);
       opacity: .85;
     }
     html[data-theme="light"] .pilot{
-      box-shadow: 0 0 0 6px rgba(0,120,85,.06);
+      box-shadow: 0 0 0 6px rgba(0,120,85,.05);
     }
-
     .wordmark{
       font-size: 12px;
       letter-spacing: .28em;
       text-transform: uppercase;
+    }
+
+    .navRight{
+      display:flex;
+      align-items:center;
+      gap: 14px;
     }
 
     nav{
@@ -149,24 +142,47 @@
       gap: 18px;
       font-size: 13px;
       color: var(--muted);
-      white-space: nowrap;
+      white-space:nowrap;
     }
     nav a{ padding:6px 2px; }
     nav a:hover{ color: var(--text); }
 
-    /* ===========================
-       MAIN
-    ============================ */
+    /* Tiny toggle (icon only, no label) */
+    .themeBtn{
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      color: var(--muted);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .themeBtn:hover{
+      color: var(--text);
+      background: rgba(255,255,255,.04);
+      border-color: var(--faint);
+    }
+    html[data-theme="light"] .themeBtn:hover{
+      background: rgba(10,20,40,.04);
+    }
+    .icon{
+      width: 16px; height: 16px;
+      display:block;
+    }
+
+    /* Main */
     main{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 64px 20px 84px;
+      padding: 68px 20px 84px;
     }
 
     .hero{
-      padding: 22px 0 16px;
+      padding: 20px 0 16px;
     }
-
     h1{
       font-size: var(--h1);
       line-height: 1.04;
@@ -174,7 +190,6 @@
       letter-spacing: -0.03em;
       font-weight: 620;
     }
-
     .lede{
       font-size: var(--body);
       line-height: 1.72;
@@ -183,8 +198,8 @@
       margin:0;
     }
 
-    /* Found note (the “signal” without UI) */
-    .note{
+    /* The single “beautiful” extra: a found line */
+    .foundLine{
       margin-top: 22px;
       padding-top: 16px;
       border-top: 1px solid var(--faint);
@@ -194,9 +209,9 @@
       display:flex;
       gap: 10px;
       align-items:flex-start;
-      max-width: 70ch;
+      max-width: 72ch;
     }
-    .noteMark{
+    .foundDot{
       width: 7px; height: 7px;
       border-radius: 999px;
       background: var(--pilotDim);
@@ -208,10 +223,8 @@
       height:1px;
       background: var(--faint);
       margin: 34px 0;
-      opacity: .9;
+      opacity: .95;
     }
-
-    section{ padding: 6px 0; }
 
     .kicker{
       font-size: var(--kicker);
@@ -221,21 +234,18 @@
       margin: 0 0 14px;
     }
 
-    /* Panels (quiet blocks) */
     .panel{
       padding: 18px 18px;
       background: linear-gradient(to bottom, var(--panel), var(--panel2));
       border-radius: var(--radius);
       margin: 14px 0;
     }
-
     .panel h3{
       margin:0 0 8px;
       font-size: 16px;
       letter-spacing: -0.01em;
       font-weight: 600;
     }
-
     .panel p{
       margin:0;
       color: var(--muted);
@@ -260,7 +270,6 @@
       max-width: 75ch;
     }
 
-    /* Contact */
     .btn{
       display:inline-flex;
       align-items:center;
@@ -275,19 +284,11 @@
     html[data-theme="light"] .btn{
       background: rgba(0,0,0,.02);
     }
-    .btn:hover{
-      opacity: 1;
-      background: rgba(255,255,255,.05);
-    }
-    html[data-theme="light"] .btn:hover{
-      background: rgba(0,0,0,.04);
-    }
+    .btn:hover{ opacity: 1; background: rgba(255,255,255,.05); }
+    html[data-theme="light"] .btn:hover{ background: rgba(0,0,0,.04); }
 
-    /* ===========================
-       FOOTER (quiet theme switch)
-    ============================ */
     footer{
-      margin-top: 30px;
+      margin-top: 32px;
       padding-top: 22px;
       border-top: 1px solid var(--faint);
       color: var(--muted);
@@ -296,61 +297,17 @@
       align-items:center;
       justify-content:space-between;
       gap: 14px;
-      flex-wrap: wrap;
+      flex-wrap:wrap;
     }
 
-    .footerRight{
-      display:flex;
-      align-items:center;
-      gap: 14px;
-    }
-
-    .themeLink{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--faint);
-      background: transparent;
-      color: var(--muted);
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .themeLink:hover{ color: var(--text); border-color: var(--line); }
-
-    .switch{
-      width: 34px;
-      height: 18px;
-      border-radius: 999px;
-      border: 1px solid var(--faint);
-      background: rgba(255,255,255,.02);
-      display:flex;
-      align-items:center;
-      padding: 2px;
-    }
-    .switchDot{
-      width: 14px;
-      height: 14px;
-      border-radius: 999px;
-      background: var(--text);
-      opacity:.85;
-      transform: translateX(0);
-      transition: transform .18s ease;
-    }
-    html[data-theme="light"] .switchDot{
-      transform: translateX(16px);
-    }
-
-    /* Mobile */
     @media (max-width:520px){
       nav{ display:none; }
-      main{ padding-top: 48px; }
+      main{ padding-top: 52px; }
     }
   </style>
 
   <script>
-    // Apply theme ASAP to avoid flash
+    // Theme ASAP (no flash)
     (function(){
       try{
         const saved = localStorage.getItem("theme");
@@ -370,11 +327,20 @@
         <span class="wordmark">COLEMAN VII</span>
       </div>
 
-      <nav aria-label="Primary">
-        <a href="#what">What we do</a>
-        <a href="#how">How we work</a>
-        <a href="#contact">Contact</a>
-      </nav>
+      <div class="navRight">
+        <nav aria-label="Primary">
+          <a href="#what">What we do</a>
+          <a href="#how">How we work</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button class="themeBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+          <!-- minimal sun/moon glyph (inline SVG, no library) -->
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path id="glyph" d="" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -383,8 +349,8 @@
       <h1>Clarity that holds.</h1>
       <p class="lede">A studio for shaping language, design, and systems—quietly, carefully, over time.</p>
 
-      <div class="note" aria-label="Found note">
-        <span class="noteMark" aria-hidden="true"></span>
+      <div class="foundLine" aria-label="Found note">
+        <span class="foundDot" aria-hidden="true"></span>
         <span>Fewer words. Deeper truth.</span>
       </div>
     </div>
@@ -435,41 +401,55 @@
 
     <footer>
       <div>© <span id="year"></span> Coleman VII</div>
-
-      <div class="footerRight">
+      <div style="display:flex;gap:12px;align-items:center;">
         <a href="#contact">Contact</a>
-        <button class="themeLink" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-          <span style="letter-spacing:.22em;text-transform:uppercase;font-size:11px;">Light</span>
-          <span class="switch" aria-hidden="true"><span class="switchDot"></span></span>
-          <span style="letter-spacing:.22em;text-transform:uppercase;font-size:11px;">Dark</span>
-        </button>
       </div>
     </footer>
   </main>
 
   <script>
     (function(){
-      // YEAR
-      document.getElementById("year").textContent = new Date().getFullYear();
-
-      // THEME TOGGLE (quiet, footer)
       const root = document.documentElement;
       const btn = document.getElementById("themeToggle");
+      const glyph = document.getElementById("glyph");
 
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Simple glyph swap (moon in dark, sun in light)
+      function setGlyph(){
+        const t = root.getAttribute("data-theme") || "dark";
+        if (t === "light"){
+          // sun
+          glyph.setAttribute("d",
+            "M12 3v2M12 19v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M3 12h2M19 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42M12 8a4 4 0 1 0 0 8a4 4 0 0 0 0-8z"
+          );
+        } else {
+          // moon
+          glyph.setAttribute("d",
+            "M21 14.5A7.5 7.5 0 0 1 9.5 3a6.8 6.8 0 1 0 11.5 11.5z"
+          );
+        }
+      }
+      setGlyph();
+
+      // Toggle click
       btn.addEventListener("click", function(){
         const current = root.getAttribute("data-theme") || "dark";
         const next = (current === "dark") ? "light" : "dark";
         root.setAttribute("data-theme", next);
         try{ localStorage.setItem("theme", next); }catch(e){}
+        setGlyph();
       });
 
-      // If system preference changes and user hasn't chosen
+      // System pref changes only if user hasn't chosen
       try{
         const mq = window.matchMedia("(prefers-color-scheme: light)");
         mq.addEventListener("change", function(){
           const saved = localStorage.getItem("theme");
           if (saved) return;
           root.setAttribute("data-theme", mq.matches ? "light" : "dark");
+          setGlyph();
         });
       }catch(e){}
     })();
