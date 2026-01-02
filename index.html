@@ -1,115 +1,190 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-haven="on">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Coleman VII</title>
-  <meta name="description" content="Coleman VII builds durable brand foundations—language, design, and systems that hold up over time." />
+  <meta name="description" content="Clarity that holds. A studio for shaping language, design, and systems—quietly, carefully, over time." />
   <meta name="color-scheme" content="dark light" />
 
   <style>
-    /* -----------------------------
-       Theme tokens
-    ------------------------------*/
+    /* ===========================
+       HAVEN-CODED TOKENS
+       Quiet authority, human spark,
+       mission-control warmth.
+    ============================ */
     :root{
-      --bg:#07090c;
-      --bg2:#07090c; /* base background fallback */
-      --text:#e8edf6;
-      --muted:#a7b1c2;
-      --line:rgba(255,255,255,.10);
-      --panel: rgba(11,15,21,.55);
-      --panelSolid:#0b0f15;
-      --shadow: 0 20px 60px rgba(0,0,0,.55);
-      --radius:18px;
+      --max: 760px;
+      --navMax: 1100px;
+      --radius: 18px;
 
-      --max: 740px;
-      --navMax: 1040px;
+      /* Dark */
+      --bg: #06080b;
+      --text: #e9eef6;
+      --muted: #a6b0c1;
+      --line: rgba(255,255,255,.10);
+      --panel: rgba(11,15,21,.50);
+      --panel2: rgba(11,15,21,.32);
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
 
+      /* Haven accent: phosphor */
+      --phosphor: rgba(120, 255, 200, .85);
+      --phosphorDim: rgba(120, 255, 200, .22);
+      --phosphorLine: rgba(120, 255, 200, .12);
+
+      /* Subtle glow layers */
+      --glowA: rgba(255,255,255,.08);
+      --glowB: rgba(90,140,255,.06);
+      --glowC: rgba(255,170,110,.04);
+
+      /* Type */
       --h1: clamp(34px, 4vw, 52px);
       --body: 16px;
       --small: 13px;
-
-      --glowA: rgba(255,255,255,.08);
-      --glowB: rgba(120,160,255,.07);
-      --glowC: rgba(255,160,120,.05);
+      --kicker: 11px;
     }
 
     html[data-theme="light"]{
-      --bg:#f6f7fb;
-      --bg2:#f6f7fb;
-      --text:#0b1020;
-      --muted:#4a566b;
-      --line:rgba(10,20,40,.12);
-      --panel: rgba(255,255,255,.72);
-      --panelSolid:#ffffff;
-      --shadow: 0 18px 50px rgba(10,20,40,.12);
+      --bg: #f6f7fb;
+      --text: #0b1020;
+      --muted: #4a566b;
+      --line: rgba(10,20,40,.12);
+      --panel: rgba(255,255,255,.76);
+      --panel2: rgba(255,255,255,.55);
+      --shadow: 0 18px 55px rgba(10,20,40,.12);
+
+      --phosphor: rgba(0, 120, 85, .90);
+      --phosphorDim: rgba(0, 120, 85, .16);
+      --phosphorLine: rgba(0, 120, 85, .10);
 
       --glowA: rgba(10,20,40,.06);
       --glowB: rgba(70,110,255,.06);
       --glowC: rgba(255,150,90,.04);
     }
 
-    /* -----------------------------
-       Base
-    ------------------------------*/
+    /* ===========================
+       BASE
+    ============================ */
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
-        "Apple Color Emoji","Segoe UI Emoji";
       color: var(--text);
       background:
-        radial-gradient(1200px 600px at 50% 10%, var(--glowA), transparent 60%),
-        radial-gradient(900px 500px at 15% 40%, var(--glowB), transparent 60%),
-        radial-gradient(900px 500px at 85% 55%, var(--glowC), transparent 60%),
-        var(--bg2);
+        radial-gradient(1200px 650px at 50% 10%, var(--glowA), transparent 60%),
+        radial-gradient(900px 550px at 15% 40%, var(--glowB), transparent 62%),
+        radial-gradient(900px 550px at 85% 55%, var(--glowC), transparent 65%),
+        var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+        "Apple Color Emoji","Segoe UI Emoji";
       letter-spacing: -0.01em;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-x:hidden;
     }
 
     a{ color:inherit; text-decoration:none; }
-    a:hover{ opacity:.9; }
+    a:hover{ opacity:.92; }
 
-    /* -----------------------------
-       Header / Nav
-    ------------------------------*/
+    /* Quiet focus ring */
+    :focus-visible{
+      outline: 2px solid var(--phosphorDim);
+      outline-offset: 3px;
+      border-radius: 10px;
+    }
+
+    /* ===========================
+       HAVEN LAYER (subtle CRT, scanline, grain)
+       Off by default if data-haven="off"
+    ============================ */
+    .havenLayer{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 1;
+      z-index: 1;
+    }
+    html[data-haven="off"] .havenLayer{ display:none; }
+
+    /* scanline */
+    .havenLayer::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to bottom,
+          rgba(255,255,255,.035),
+          rgba(255,255,255,0) 7px);
+      background-size: 100% 9px;
+      opacity: .10;
+      mix-blend-mode: overlay;
+    }
+
+    /* vignette + faint phosphor drift */
+    .havenLayer::after{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background:
+        radial-gradient(closest-side at 50% 50%, transparent 55%, rgba(0,0,0,.35) 100%),
+        radial-gradient(900px 480px at 35% 35%, var(--phosphorDim), transparent 65%),
+        radial-gradient(900px 480px at 70% 70%, rgba(255,255,255,.03), transparent 70%);
+      opacity: .55;
+      filter: blur(0.3px);
+    }
+
+    /* ===========================
+       HEADER / NAV
+    ============================ */
     header{
       position: sticky;
       top:0;
       z-index: 10;
+      border-bottom: 1px solid var(--line);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(7,9,12,.80), rgba(7,9,12,.40));
-      border-bottom: 1px solid var(--line);
+      background: linear-gradient(to bottom, rgba(6,8,11,.82), rgba(6,8,11,.52));
     }
     html[data-theme="light"] header{
-      background: linear-gradient(to bottom, rgba(246,247,251,.86), rgba(246,247,251,.55));
+      background: linear-gradient(to bottom, rgba(246,247,251,.88), rgba(246,247,251,.58));
     }
 
     .nav{
       max-width: var(--navMax);
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 14px 20px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap: 16px;
+      position:relative;
+      z-index: 2;
     }
 
     .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .mark{
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: var(--phosphor);
+      box-shadow: 0 0 0 6px rgba(120,255,200,.08);
+      opacity: .85;
+    }
+    .wordmark{
       font-size: 12px;
       letter-spacing: .28em;
       text-transform: uppercase;
       opacity:.92;
-      white-space: nowrap;
     }
 
     .navRight{
       display:flex;
       align-items:center;
-      gap: 18px;
+      gap: 14px;
       white-space: nowrap;
     }
 
@@ -118,20 +193,44 @@
       gap: 18px;
       font-size: 13px;
       color: var(--muted);
-      white-space: nowrap;
     }
     nav a{ padding:6px 2px; }
     nav a:hover{ color: var(--text); }
 
-    /* -----------------------------
-       Toggle (quiet)
-    ------------------------------*/
-    .themeToggle{
-      width: 42px;
-      height: 24px;
+    /* ===========================
+       Quiet toggle cluster
+    ============================ */
+    .toggles{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 7px 10px;
       border-radius: 999px;
       border: 1px solid var(--line);
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,.04);
+    }
+    html[data-theme="light"] .pill{
+      background: rgba(0,0,0,.03);
+    }
+    .tinyLabel{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      user-select:none;
+    }
+
+    .themeToggle{
+      width: 40px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
       display:inline-flex;
       align-items:center;
       padding: 3px;
@@ -143,8 +242,8 @@
       background: rgba(0,0,0,.03);
     }
     .toggleDot{
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       border-radius: 999px;
       background: var(--text);
       opacity: .9;
@@ -152,56 +251,110 @@
       transition: transform .18s ease;
     }
 
-    /* -----------------------------
-       Layout
-    ------------------------------*/
+    .havenToggle{
+      width: 34px;
+      height: 22px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html[data-theme="light"] .havenToggle{
+      background: rgba(0,0,0,.03);
+    }
+    .havenGlyph{
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      background: var(--phosphorDim);
+      box-shadow: 0 0 0 1px var(--phosphorLine) inset;
+      transition: background .18s ease, box-shadow .18s ease;
+    }
+    html[data-haven="on"] .havenGlyph{
+      background: var(--phosphor);
+      box-shadow: 0 0 0 1px var(--phosphorLine) inset, 0 0 18px rgba(120,255,200,.25);
+    }
+
+    /* ===========================
+       MAIN
+    ============================ */
     main{
       max-width: var(--max);
       margin: 0 auto;
       padding: 56px 20px 84px;
+      position:relative;
+      z-index: 2;
     }
 
     .hero{
-      padding: 28px 0 18px;
+      padding: 26px 0 18px;
     }
     h1{
       font-size: var(--h1);
-      line-height: 1.05;
-      margin: 0 0 14px;
+      line-height: 1.04;
+      margin: 0 0 12px;
       letter-spacing: -0.03em;
-      font-weight: 650; /* slightly calmer than 700+ */
+      font-weight: 620;
     }
     .lede{
       font-size: var(--body);
-      line-height: 1.65;
+      line-height: 1.72;
       color: var(--muted);
-      max-width: 60ch;
+      max-width: 62ch;
       margin:0;
+    }
+
+    /* Haven-coded “terminal whisper” line */
+    .whisperLine{
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,.06);
+      display:flex;
+      gap: 10px;
+      align-items:flex-start;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    html[data-theme="light"] .whisperLine{
+      border-top: 1px solid rgba(10,20,40,.08);
+    }
+    .whisperTag{
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--phosphor);
+      opacity: .85;
+      margin-top: 2px;
+      white-space: nowrap;
     }
 
     .divider{
       height:1px;
       background: var(--line);
       margin: 28px 0;
-      opacity: .65; /* keep quiet */
+      opacity: .55;
     }
 
     section{ padding: 6px 0; }
 
     .kicker{
-      font-size: 11px;
+      font-size: var(--kicker);
       letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--muted);
       margin: 0 0 14px;
     }
 
+    /* Panels: quieter than “SaaS cards” */
     .item{
       padding: 16px 18px;
-      background: var(--panel);
-      border: 1px solid rgba(255,255,255,.08);
+      background: var(--panel2);
+      border: 1px solid rgba(255,255,255,.06);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
       margin: 14px 0;
     }
     html[data-theme="light"] .item{
@@ -217,8 +370,9 @@
     .item p{
       margin:0;
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.72;
       font-size: 14.5px;
+      max-width: 75ch;
     }
 
     .stack{ display:grid; gap: 10px; }
@@ -231,12 +385,13 @@
     }
     .lineItem span{
       color: var(--muted);
-      line-height: 1.65;
+      line-height: 1.72;
       font-size: 14.5px;
       display:block;
-      max-width: 70ch;
+      max-width: 75ch;
     }
 
+    /* Contact button: mission-control calm */
     .btn{
       display:inline-flex;
       align-items:center;
@@ -244,7 +399,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
+      background: rgba(255,255,255,.04);
       color: var(--text);
       margin-top: 10px;
     }
@@ -252,8 +407,15 @@
       border: 1px solid rgba(10,20,40,.14);
       background: rgba(0,0,0,.03);
     }
-    .btn:hover{ opacity: 1; background: rgba(255,255,255,.08); }
-    html[data-theme="light"] .btn:hover{ background: rgba(0,0,0,.05); }
+    .btn:hover{
+      opacity: 1;
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.16);
+    }
+    html[data-theme="light"] .btn:hover{
+      background: rgba(0,0,0,.05);
+      border-color: rgba(10,20,40,.18);
+    }
 
     footer{
       margin-top: 26px;
@@ -268,40 +430,102 @@
       flex-wrap: wrap;
     }
 
-    /* Accessibility */
-    :focus-visible{
-      outline: 2px solid rgba(120,160,255,.7);
-      outline-offset: 3px;
-      border-radius: 10px;
+    /* ===========================
+       Tiny “Haven console” message (slow scroll)
+    ============================ */
+    .console{
+      margin-top: 22px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(0,0,0,.18);
+      border-radius: 14px;
+      overflow:hidden;
+    }
+    html[data-theme="light"] .console{
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(10,20,40,.10);
+    }
+    .consoleTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    html[data-theme="light"] .consoleTop{
+      border-bottom: 1px solid rgba(10,20,40,.08);
+    }
+    .consoleTitle{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .lights{
+      display:flex; gap:6px; align-items:center;
+    }
+    .light{
+      width: 6px; height: 6px; border-radius: 999px;
+      background: rgba(255,255,255,.14);
+    }
+    .light.on{ background: var(--phosphorDim); box-shadow: 0 0 14px rgba(120,255,200,.15); }
+
+    .consoleBody{
+      padding: 12px 12px 14px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      position: relative;
+      height: 56px; /* small window */
+      overflow: hidden;
+    }
+    .marquee{
+      position:absolute;
+      left: 12px;
+      right: 12px;
+      top: 12px;
+      will-change: transform;
+      animation: drift 26s linear infinite;
+    }
+    @keyframes drift{
+      0%{ transform: translateY(0); opacity:.92; }
+      92%{ opacity:.92; }
+      100%{ transform: translateY(-62px); opacity:.92; }
     }
 
     /* Small screens */
     @media (max-width:520px){
       nav{ display:none; }
       main{ padding-top: 42px; }
-      .item{ box-shadow:none; }
     }
   </style>
 
   <script>
-    // Apply theme ASAP to avoid flash
+    // Apply saved theme ASAP (no flash)
     (function(){
       try{
-        const saved = localStorage.getItem("theme");
+        const savedTheme = localStorage.getItem("theme");
+        const savedHaven = localStorage.getItem("haven"); // "on" | "off"
         const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-        const initial = saved || (prefersLight ? "light" : "dark");
-        document.documentElement.setAttribute("data-theme", initial);
-      }catch(e){
-        // If storage blocked, default stays "dark"
-      }
+
+        document.documentElement.setAttribute("data-theme", savedTheme || (prefersLight ? "light" : "dark"));
+        if (savedHaven) document.documentElement.setAttribute("data-haven", savedHaven);
+      }catch(e){}
     })();
   </script>
 </head>
 
 <body>
+  <div class="havenLayer" aria-hidden="true"></div>
+
   <header>
     <div class="nav">
-      <div class="brand">COLEMAN VII</div>
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="wordmark">COLEMAN VII</span>
+      </div>
 
       <div class="navRight">
         <nav aria-label="Primary">
@@ -310,17 +534,53 @@
           <a href="#contact">Contact</a>
         </nav>
 
-        <button class="themeToggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-          <span class="toggleDot" id="toggleDot" aria-hidden="true"></span>
-        </button>
+        <div class="toggles">
+          <div class="pill" aria-label="Display controls">
+            <span class="tinyLabel">Mode</span>
+
+            <button class="themeToggle" id="themeToggle" aria-label="Toggle light/dark" title="Toggle light/dark">
+              <span class="toggleDot" id="toggleDot" aria-hidden="true"></span>
+            </button>
+
+            <button class="havenToggle" id="havenToggle" aria-label="Toggle Haven layer" title="Toggle Haven layer">
+              <span class="havenGlyph" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+
       </div>
     </div>
   </header>
 
   <main>
     <div class="hero">
-      <h1>Clarity, restraint, usefulness.</h1>
-      <p class="lede">We build durable brand foundations—language, design, and systems that hold up over time.</p>
+      <h1>Clarity that holds.</h1>
+      <p class="lede">A studio for shaping language, design, and systems—quietly, carefully, over time.</p>
+
+      <div class="whisperLine">
+        <div class="whisperTag">Haven</div>
+        <div>
+          Minimal surface. Warm signal. The work should feel calm to use—and hard to forget.
+        </div>
+      </div>
+
+      <div class="console" aria-label="Haven console message">
+        <div class="consoleTop">
+          <div class="consoleTitle">
+            <span style="color:var(--phosphor);opacity:.75;">●</span>
+            SIGNAL WINDOW
+          </div>
+          <div class="lights" aria-hidden="true">
+            <span class="light on"></span><span class="light"></span><span class="light"></span>
+          </div>
+        </div>
+        <div class="consoleBody">
+          <div class="marquee">
+            <div>Fewer words. Deeper truth. Work that holds up in daylight.</div>
+            <div style="margin-top:10px;">If it feels clean, it’s because something false was removed.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="divider"></div>
@@ -330,12 +590,12 @@
 
       <div class="item">
         <h3>Story &amp; Direction</h3>
-        <p>Positioning, narrative, and language. We help you understand what matters, then shape the story around it.</p>
+        <p>We help clarify what matters. Positioning, narrative, and language that give work its spine.</p>
       </div>
 
       <div class="item">
         <h3>Design &amp; Systems</h3>
-        <p>Identities, sites, and tools designed to feel natural to use—and easy to live with.</p>
+        <p>Identities, sites, and tools designed to feel natural—made to last, easy to live with.</p>
       </div>
     </section>
 
@@ -347,12 +607,12 @@
       <div class="stack">
         <div class="lineItem">
           <strong>Listen first.</strong>
-          <span>We start with what’s real: constraints, audience, and the work already in motion.</span>
+          <span>We begin with what’s already there: people, constraints, and the work in motion.</span>
         </div>
 
         <div class="lineItem">
-          <strong>Reduce before adding.</strong>
-          <span>We remove the extra so the signal shows up clean.</span>
+          <strong>Remove the extra.</strong>
+          <span>We pare things back until the signal remains.</span>
         </div>
       </div>
     </section>
@@ -361,8 +621,9 @@
 
     <section id="contact">
       <p class="kicker">Contact</p>
+
       <div class="lineItem">
-        <strong>If the work resonates, get in touch.</strong>
+        <strong>If this feels right, get in touch.</strong>
         <span>
           <a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
         </span>
@@ -380,20 +641,23 @@
   </main>
 
   <script>
-    // Toggle behavior + remember choice
     (function(){
       const root = document.documentElement;
-      const btn = document.getElementById("themeToggle");
+
+      // YEAR
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // THEME
+      const themeBtn = document.getElementById("themeToggle");
       const dot = document.getElementById("toggleDot");
 
       function setDot(){
-        const t = root.getAttribute("data-theme");
+        const t = root.getAttribute("data-theme") || "dark";
         dot.style.transform = (t === "light") ? "translateX(18px)" : "translateX(0)";
       }
-
       setDot();
 
-      btn.addEventListener("click", function(){
+      themeBtn.addEventListener("click", function(){
         const current = root.getAttribute("data-theme") || "dark";
         const next = (current === "dark") ? "light" : "dark";
         root.setAttribute("data-theme", next);
@@ -401,7 +665,16 @@
         setDot();
       });
 
-      // Optional: update if system preference changes AND user hasn't set a preference
+      // HAVEN LAYER TOGGLE (scanline/console vibe)
+      const havenBtn = document.getElementById("havenToggle");
+      havenBtn.addEventListener("click", function(){
+        const current = root.getAttribute("data-haven") || "on";
+        const next = (current === "on") ? "off" : "on";
+        root.setAttribute("data-haven", next);
+        try{ localStorage.setItem("haven", next); }catch(e){}
+      });
+
+      // System preference changes ONLY if user hasn't saved a theme
       try{
         const mq = window.matchMedia("(prefers-color-scheme: light)");
         mq.addEventListener("change", function(){
@@ -411,8 +684,6 @@
           setDot();
         });
       }catch(e){}
-
-      document.getElementById("year").textContent = new Date().getFullYear();
     })();
   </script>
 </body>
