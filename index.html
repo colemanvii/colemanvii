@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-haven="on">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -9,36 +9,39 @@
 
   <style>
     /* ===========================
-       HAVEN-CODED TOKENS
-       Quiet authority, human spark,
-       mission-control warmth.
+       COLEMAN VII — MIDDLE GROUND
+       Cinematic calm + monk-like copy
+       No SaaS artifacts, no cockpit UI.
+       One quiet theme switch (footer).
     ============================ */
+
     :root{
       --max: 760px;
       --navMax: 1100px;
       --radius: 18px;
 
       /* Dark */
-      --bg: #06080b;
+      --bg: #07090c;
       --text: #e9eef6;
       --muted: #a6b0c1;
+      --faint: rgba(255,255,255,.06);
       --line: rgba(255,255,255,.10);
-      --panel: rgba(11,15,21,.50);
-      --panel2: rgba(11,15,21,.32);
-      --shadow: 0 22px 70px rgba(0,0,0,.55);
 
-      /* Haven accent: phosphor */
-      --phosphor: rgba(120, 255, 200, .85);
-      --phosphorDim: rgba(120, 255, 200, .22);
-      --phosphorLine: rgba(120, 255, 200, .12);
+      /* Panels (not cards) */
+      --panel: rgba(255,255,255,.045);
+      --panel2: rgba(255,255,255,.030);
 
-      /* Subtle glow layers */
-      --glowA: rgba(255,255,255,.08);
-      --glowB: rgba(90,140,255,.06);
-      --glowC: rgba(255,170,110,.04);
+      /* Soft bloom */
+      --glowA: rgba(255,255,255,.085);
+      --glowB: rgba(120,160,255,.070);
+      --glowC: rgba(255,160,120,.050);
+
+      /* A single “pilot light” accent */
+      --pilot: rgba(120, 255, 200, .75);
+      --pilotDim: rgba(120, 255, 200, .18);
 
       /* Type */
-      --h1: clamp(34px, 4vw, 52px);
+      --h1: clamp(34px, 4vw, 48px);
       --body: 16px;
       --small: 13px;
       --kicker: 11px;
@@ -48,32 +51,30 @@
       --bg: #f6f7fb;
       --text: #0b1020;
       --muted: #4a566b;
+      --faint: rgba(10,20,40,.06);
       --line: rgba(10,20,40,.12);
-      --panel: rgba(255,255,255,.76);
-      --panel2: rgba(255,255,255,.55);
-      --shadow: 0 18px 55px rgba(10,20,40,.12);
 
-      --phosphor: rgba(0, 120, 85, .90);
-      --phosphorDim: rgba(0, 120, 85, .16);
-      --phosphorLine: rgba(0, 120, 85, .10);
+      --panel: rgba(10,20,40,.035);
+      --panel2: rgba(10,20,40,.025);
 
-      --glowA: rgba(10,20,40,.06);
-      --glowB: rgba(70,110,255,.06);
-      --glowC: rgba(255,150,90,.04);
+      --glowA: rgba(10,20,40,.070);
+      --glowB: rgba(70,110,255,.060);
+      --glowC: rgba(255,150,90,.045);
+
+      --pilot: rgba(0, 120, 85, .75);
+      --pilotDim: rgba(0, 120, 85, .16);
     }
 
-    /* ===========================
-       BASE
-    ============================ */
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
       color: var(--text);
       background:
-        radial-gradient(1200px 650px at 50% 10%, var(--glowA), transparent 60%),
-        radial-gradient(900px 550px at 15% 40%, var(--glowB), transparent 62%),
-        radial-gradient(900px 550px at 85% 55%, var(--glowC), transparent 65%),
+        radial-gradient(1100px 620px at 50% 12%, var(--glowA), transparent 62%),
+        radial-gradient(900px 560px at 18% 42%, var(--glowB), transparent 64%),
+        radial-gradient(900px 560px at 84% 56%, var(--glowC), transparent 66%),
         var(--bg);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
         "Apple Color Emoji","Segoe UI Emoji";
@@ -86,55 +87,14 @@
     a{ color:inherit; text-decoration:none; }
     a:hover{ opacity:.92; }
 
-    /* Quiet focus ring */
     :focus-visible{
-      outline: 2px solid var(--phosphorDim);
+      outline: 2px solid var(--pilotDim);
       outline-offset: 3px;
       border-radius: 10px;
     }
 
     /* ===========================
-       HAVEN LAYER (subtle CRT, scanline, grain)
-       Off by default if data-haven="off"
-    ============================ */
-    .havenLayer{
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 1;
-      z-index: 1;
-    }
-    html[data-haven="off"] .havenLayer{ display:none; }
-
-    /* scanline */
-    .havenLayer::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(to bottom,
-          rgba(255,255,255,.035),
-          rgba(255,255,255,0) 7px);
-      background-size: 100% 9px;
-      opacity: .10;
-      mix-blend-mode: overlay;
-    }
-
-    /* vignette + faint phosphor drift */
-    .havenLayer::after{
-      content:"";
-      position:absolute;
-      inset:-20%;
-      background:
-        radial-gradient(closest-side at 50% 50%, transparent 55%, rgba(0,0,0,.35) 100%),
-        radial-gradient(900px 480px at 35% 35%, var(--phosphorDim), transparent 65%),
-        radial-gradient(900px 480px at 70% 70%, rgba(255,255,255,.03), transparent 70%);
-      opacity: .55;
-      filter: blur(0.3px);
-    }
-
-    /* ===========================
-       HEADER / NAV
+       HEADER
     ============================ */
     header{
       position: sticky;
@@ -143,10 +103,10 @@
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(6,8,11,.82), rgba(6,8,11,.52));
+      background: linear-gradient(to bottom, rgba(7,9,12,.84), rgba(7,9,12,.52));
     }
     html[data-theme="light"] header{
-      background: linear-gradient(to bottom, rgba(246,247,251,.88), rgba(246,247,251,.58));
+      background: linear-gradient(to bottom, rgba(246,247,251,.88), rgba(246,247,251,.60));
     }
 
     .nav{
@@ -157,8 +117,6 @@
       align-items:center;
       justify-content:space-between;
       gap: 16px;
-      position:relative;
-      z-index: 2;
     }
 
     .brand{
@@ -166,26 +124,24 @@
       align-items:center;
       gap: 10px;
       white-space: nowrap;
+      opacity:.95;
     }
-    .mark{
-      width: 10px; height: 10px;
+
+    .pilot{
+      width: 9px; height: 9px;
       border-radius: 999px;
-      background: var(--phosphor);
-      box-shadow: 0 0 0 6px rgba(120,255,200,.08);
+      background: var(--pilot);
+      box-shadow: 0 0 0 6px rgba(120,255,200,.07);
       opacity: .85;
     }
+    html[data-theme="light"] .pilot{
+      box-shadow: 0 0 0 6px rgba(0,120,85,.06);
+    }
+
     .wordmark{
       font-size: 12px;
       letter-spacing: .28em;
       text-transform: uppercase;
-      opacity:.92;
-    }
-
-    .navRight{
-      display:flex;
-      align-items:center;
-      gap: 14px;
-      white-space: nowrap;
     }
 
     nav{
@@ -193,90 +149,10 @@
       gap: 18px;
       font-size: 13px;
       color: var(--muted);
+      white-space: nowrap;
     }
     nav a{ padding:6px 2px; }
     nav a:hover{ color: var(--text); }
-
-    /* ===========================
-       Quiet toggle cluster
-    ============================ */
-    .toggles{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap: 10px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-    }
-    html[data-theme="light"] .pill{
-      background: rgba(0,0,0,.03);
-    }
-    .tinyLabel{
-      font-size: 11px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--muted);
-      user-select:none;
-    }
-
-    .themeToggle{
-      width: 40px;
-      height: 22px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      display:inline-flex;
-      align-items:center;
-      padding: 3px;
-      cursor:pointer;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    html[data-theme="light"] .themeToggle{
-      background: rgba(0,0,0,.03);
-    }
-    .toggleDot{
-      width: 16px;
-      height: 16px;
-      border-radius: 999px;
-      background: var(--text);
-      opacity: .9;
-      transform: translateX(0);
-      transition: transform .18s ease;
-    }
-
-    .havenToggle{
-      width: 34px;
-      height: 22px;
-      border-radius: 10px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      -webkit-tap-highlight-color: transparent;
-    }
-    html[data-theme="light"] .havenToggle{
-      background: rgba(0,0,0,.03);
-    }
-    .havenGlyph{
-      width: 10px; height: 10px;
-      border-radius: 2px;
-      background: var(--phosphorDim);
-      box-shadow: 0 0 0 1px var(--phosphorLine) inset;
-      transition: background .18s ease, box-shadow .18s ease;
-    }
-    html[data-haven="on"] .havenGlyph{
-      background: var(--phosphor);
-      box-shadow: 0 0 0 1px var(--phosphorLine) inset, 0 0 18px rgba(120,255,200,.25);
-    }
 
     /* ===========================
        MAIN
@@ -284,14 +160,13 @@
     main{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 56px 20px 84px;
-      position:relative;
-      z-index: 2;
+      padding: 64px 20px 84px;
     }
 
     .hero{
-      padding: 26px 0 18px;
+      padding: 22px 0 16px;
     }
+
     h1{
       font-size: var(--h1);
       line-height: 1.04;
@@ -299,6 +174,7 @@
       letter-spacing: -0.03em;
       font-weight: 620;
     }
+
     .lede{
       font-size: var(--body);
       line-height: 1.72;
@@ -307,36 +183,32 @@
       margin:0;
     }
 
-    /* Haven-coded “terminal whisper” line */
-    .whisperLine{
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(255,255,255,.06);
+    /* Found note (the “signal” without UI) */
+    .note{
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--faint);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
       display:flex;
       gap: 10px;
       align-items:flex-start;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
+      max-width: 70ch;
     }
-    html[data-theme="light"] .whisperLine{
-      border-top: 1px solid rgba(10,20,40,.08);
-    }
-    .whisperTag{
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--phosphor);
-      opacity: .85;
-      margin-top: 2px;
-      white-space: nowrap;
+    .noteMark{
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: var(--pilotDim);
+      margin-top: 7px;
+      flex: 0 0 auto;
     }
 
     .divider{
       height:1px;
-      background: var(--line);
-      margin: 28px 0;
-      opacity: .55;
+      background: var(--faint);
+      margin: 34px 0;
+      opacity: .9;
     }
 
     section{ padding: 6px 0; }
@@ -349,25 +221,22 @@
       margin: 0 0 14px;
     }
 
-    /* Panels: quieter than “SaaS cards” */
-    .item{
-      padding: 16px 18px;
-      background: var(--panel2);
-      border: 1px solid rgba(255,255,255,.06);
+    /* Panels (quiet blocks) */
+    .panel{
+      padding: 18px 18px;
+      background: linear-gradient(to bottom, var(--panel), var(--panel2));
       border-radius: var(--radius);
       margin: 14px 0;
     }
-    html[data-theme="light"] .item{
-      border: 1px solid rgba(10,20,40,.10);
-    }
 
-    .item h3{
+    .panel h3{
       margin:0 0 8px;
       font-size: 16px;
       letter-spacing: -0.01em;
       font-weight: 600;
     }
-    .item p{
+
+    .panel p{
       margin:0;
       color: var(--muted);
       line-height: 1.72;
@@ -391,36 +260,36 @@
       max-width: 75ch;
     }
 
-    /* Contact button: mission-control calm */
+    /* Contact */
     .btn{
       display:inline-flex;
       align-items:center;
       gap:10px;
       padding: 10px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.03);
       color: var(--text);
       margin-top: 10px;
     }
     html[data-theme="light"] .btn{
-      border: 1px solid rgba(10,20,40,.14);
-      background: rgba(0,0,0,.03);
+      background: rgba(0,0,0,.02);
     }
     .btn:hover{
       opacity: 1;
-      background: rgba(255,255,255,.06);
-      border-color: rgba(255,255,255,.16);
+      background: rgba(255,255,255,.05);
     }
     html[data-theme="light"] .btn:hover{
-      background: rgba(0,0,0,.05);
-      border-color: rgba(10,20,40,.18);
+      background: rgba(0,0,0,.04);
     }
 
+    /* ===========================
+       FOOTER (quiet theme switch)
+    ============================ */
     footer{
-      margin-top: 26px;
+      margin-top: 30px;
       padding-top: 22px;
-      border-top: 1px solid var(--line);
+      border-top: 1px solid var(--faint);
       color: var(--muted);
       font-size: 13px;
       display:flex;
@@ -430,125 +299,82 @@
       flex-wrap: wrap;
     }
 
-    /* ===========================
-       Tiny “Haven console” message (slow scroll)
-    ============================ */
-    .console{
-      margin-top: 22px;
-      border: 1px solid rgba(255,255,255,.06);
-      background: rgba(0,0,0,.18);
-      border-radius: 14px;
-      overflow:hidden;
-    }
-    html[data-theme="light"] .console{
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(10,20,40,.10);
-    }
-    .consoleTop{
+    .footerRight{
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(255,255,255,.06);
+      gap: 14px;
     }
-    html[data-theme="light"] .consoleTop{
-      border-bottom: 1px solid rgba(10,20,40,.08);
+
+    .themeLink{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--faint);
+      background: transparent;
+      color: var(--muted);
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
-    .consoleTitle{
+    .themeLink:hover{ color: var(--text); border-color: var(--line); }
+
+    .switch{
+      width: 34px;
+      height: 18px;
+      border-radius: 999px;
+      border: 1px solid var(--faint);
+      background: rgba(255,255,255,.02);
       display:flex;
       align-items:center;
-      gap:8px;
-      font-size: 10px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: var(--muted);
+      padding: 2px;
     }
-    .lights{
-      display:flex; gap:6px; align-items:center;
+    .switchDot{
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      background: var(--text);
+      opacity:.85;
+      transform: translateX(0);
+      transition: transform .18s ease;
     }
-    .light{
-      width: 6px; height: 6px; border-radius: 999px;
-      background: rgba(255,255,255,.14);
-    }
-    .light.on{ background: var(--phosphorDim); box-shadow: 0 0 14px rgba(120,255,200,.15); }
-
-    .consoleBody{
-      padding: 12px 12px 14px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.7;
-      position: relative;
-      height: 56px; /* small window */
-      overflow: hidden;
-    }
-    .marquee{
-      position:absolute;
-      left: 12px;
-      right: 12px;
-      top: 12px;
-      will-change: transform;
-      animation: drift 26s linear infinite;
-    }
-    @keyframes drift{
-      0%{ transform: translateY(0); opacity:.92; }
-      92%{ opacity:.92; }
-      100%{ transform: translateY(-62px); opacity:.92; }
+    html[data-theme="light"] .switchDot{
+      transform: translateX(16px);
     }
 
-    /* Small screens */
+    /* Mobile */
     @media (max-width:520px){
       nav{ display:none; }
-      main{ padding-top: 42px; }
+      main{ padding-top: 48px; }
     }
   </style>
 
   <script>
-    // Apply saved theme ASAP (no flash)
+    // Apply theme ASAP to avoid flash
     (function(){
       try{
-        const savedTheme = localStorage.getItem("theme");
-        const savedHaven = localStorage.getItem("haven"); // "on" | "off"
+        const saved = localStorage.getItem("theme");
         const prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
-
-        document.documentElement.setAttribute("data-theme", savedTheme || (prefersLight ? "light" : "dark"));
-        if (savedHaven) document.documentElement.setAttribute("data-haven", savedHaven);
+        const initial = saved || (prefersLight ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", initial);
       }catch(e){}
     })();
   </script>
 </head>
 
 <body>
-  <div class="havenLayer" aria-hidden="true"></div>
-
   <header>
     <div class="nav">
       <div class="brand">
-        <span class="mark" aria-hidden="true"></span>
+        <span class="pilot" aria-hidden="true"></span>
         <span class="wordmark">COLEMAN VII</span>
       </div>
 
-      <div class="navRight">
-        <nav aria-label="Primary">
-          <a href="#what">What we do</a>
-          <a href="#how">How we work</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <div class="toggles">
-          <div class="pill" aria-label="Display controls">
-            <span class="tinyLabel">Mode</span>
-
-            <button class="themeToggle" id="themeToggle" aria-label="Toggle light/dark" title="Toggle light/dark">
-              <span class="toggleDot" id="toggleDot" aria-hidden="true"></span>
-            </button>
-
-            <button class="havenToggle" id="havenToggle" aria-label="Toggle Haven layer" title="Toggle Haven layer">
-              <span class="havenGlyph" aria-hidden="true"></span>
-            </button>
-          </div>
-        </div>
-
-      </div>
+      <nav aria-label="Primary">
+        <a href="#what">What we do</a>
+        <a href="#how">How we work</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
   </header>
 
@@ -557,29 +383,9 @@
       <h1>Clarity that holds.</h1>
       <p class="lede">A studio for shaping language, design, and systems—quietly, carefully, over time.</p>
 
-      <div class="whisperLine">
-        <div class="whisperTag">Haven</div>
-        <div>
-          Minimal surface. Warm signal. The work should feel calm to use—and hard to forget.
-        </div>
-      </div>
-
-      <div class="console" aria-label="Haven console message">
-        <div class="consoleTop">
-          <div class="consoleTitle">
-            <span style="color:var(--phosphor);opacity:.75;">●</span>
-            SIGNAL WINDOW
-          </div>
-          <div class="lights" aria-hidden="true">
-            <span class="light on"></span><span class="light"></span><span class="light"></span>
-          </div>
-        </div>
-        <div class="consoleBody">
-          <div class="marquee">
-            <div>Fewer words. Deeper truth. Work that holds up in daylight.</div>
-            <div style="margin-top:10px;">If it feels clean, it’s because something false was removed.</div>
-          </div>
-        </div>
+      <div class="note" aria-label="Found note">
+        <span class="noteMark" aria-hidden="true"></span>
+        <span>Fewer words. Deeper truth.</span>
       </div>
     </div>
 
@@ -588,12 +394,12 @@
     <section id="what">
       <p class="kicker">What we do</p>
 
-      <div class="item">
+      <div class="panel">
         <h3>Story &amp; Direction</h3>
         <p>We help clarify what matters. Positioning, narrative, and language that give work its spine.</p>
       </div>
 
-      <div class="item">
+      <div class="panel">
         <h3>Design &amp; Systems</h3>
         <p>Identities, sites, and tools designed to feel natural—made to last, easy to live with.</p>
       </div>
@@ -621,67 +427,49 @@
 
     <section id="contact">
       <p class="kicker">Contact</p>
-
       <div class="lineItem">
         <strong>If this feels right, get in touch.</strong>
-        <span>
-          <a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
-        </span>
+        <span><a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a></span>
       </div>
     </section>
 
     <footer>
       <div>© <span id="year"></span> Coleman VII</div>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <a href="#what">What we do</a>
-        <span style="opacity:.5;">·</span>
+
+      <div class="footerRight">
         <a href="#contact">Contact</a>
+        <button class="themeLink" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+          <span style="letter-spacing:.22em;text-transform:uppercase;font-size:11px;">Light</span>
+          <span class="switch" aria-hidden="true"><span class="switchDot"></span></span>
+          <span style="letter-spacing:.22em;text-transform:uppercase;font-size:11px;">Dark</span>
+        </button>
       </div>
     </footer>
   </main>
 
   <script>
     (function(){
-      const root = document.documentElement;
-
       // YEAR
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // THEME
-      const themeBtn = document.getElementById("themeToggle");
-      const dot = document.getElementById("toggleDot");
+      // THEME TOGGLE (quiet, footer)
+      const root = document.documentElement;
+      const btn = document.getElementById("themeToggle");
 
-      function setDot(){
-        const t = root.getAttribute("data-theme") || "dark";
-        dot.style.transform = (t === "light") ? "translateX(18px)" : "translateX(0)";
-      }
-      setDot();
-
-      themeBtn.addEventListener("click", function(){
+      btn.addEventListener("click", function(){
         const current = root.getAttribute("data-theme") || "dark";
         const next = (current === "dark") ? "light" : "dark";
         root.setAttribute("data-theme", next);
         try{ localStorage.setItem("theme", next); }catch(e){}
-        setDot();
       });
 
-      // HAVEN LAYER TOGGLE (scanline/console vibe)
-      const havenBtn = document.getElementById("havenToggle");
-      havenBtn.addEventListener("click", function(){
-        const current = root.getAttribute("data-haven") || "on";
-        const next = (current === "on") ? "off" : "on";
-        root.setAttribute("data-haven", next);
-        try{ localStorage.setItem("haven", next); }catch(e){}
-      });
-
-      // System preference changes ONLY if user hasn't saved a theme
+      // If system preference changes and user hasn't chosen
       try{
         const mq = window.matchMedia("(prefers-color-scheme: light)");
         mq.addEventListener("change", function(){
           const saved = localStorage.getItem("theme");
           if (saved) return;
           root.setAttribute("data-theme", mq.matches ? "light" : "dark");
-          setDot();
         });
       }catch(e){}
     })();
