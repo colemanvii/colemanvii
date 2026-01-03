@@ -2,15 +2,15 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Coleman VII</title>
   <meta name="description" content="Clarity that holds. A studio for shaping language, design, and systems. We help decide what matters." />
   <meta name="color-scheme" content="dark light" />
 
   <style>
     :root{
-      --max: 760px;
       --navMax: 1100px;
+      --max: 980px;
       --radius: 18px;
 
       /* Dark */
@@ -19,8 +19,6 @@
       --muted:#a6b0c1;
       --line:rgba(255,255,255,.10);
       --faint:rgba(255,255,255,.06);
-
-      /* Panels (quiet) */
       --panel: rgba(255,255,255,.045);
       --panel2: rgba(255,255,255,.028);
 
@@ -34,8 +32,9 @@
       --pilotDim: rgba(120,255,200,.14);
 
       /* Type */
-      --h1: clamp(34px, 4vw, 50px);
-      --body: 16px;
+      --h1: clamp(28px, 3.4vw, 44px);
+      --body: clamp(14px, 1.35vw, 16px);
+      --small: 12px;
       --kicker: 11px;
     }
 
@@ -45,7 +44,6 @@
       --muted:#4a566b;
       --line:rgba(10,20,40,.12);
       --faint:rgba(10,20,40,.06);
-
       --panel: rgba(10,20,40,.035);
       --panel2: rgba(10,20,40,.022);
 
@@ -59,7 +57,6 @@
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
-
     body{
       margin:0;
       color:var(--text);
@@ -73,7 +70,7 @@
       letter-spacing:-0.01em;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      overflow-x:hidden;
+      overflow: hidden; /* NO PAGE SCROLL */
     }
 
     a{ color:inherit; text-decoration:none; }
@@ -85,9 +82,9 @@
       border-radius: 10px;
     }
 
-    /* Header */
+    /* HEADER */
     header{
-      position:sticky;
+      position: sticky;
       top:0;
       z-index:10;
       border-bottom: 1px solid var(--line);
@@ -102,11 +99,11 @@
     .nav{
       max-width: var(--navMax);
       margin: 0 auto;
-      padding: 14px 20px;
+      padding: 12px 18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 16px;
+      gap: 14px;
     }
 
     .brand{
@@ -115,6 +112,7 @@
       gap: 10px;
       white-space:nowrap;
       opacity:.95;
+      min-width: 190px;
     }
     .pilot{
       width: 9px; height: 9px;
@@ -122,6 +120,7 @@
       background: var(--pilot);
       box-shadow: 0 0 0 6px rgba(120,255,200,.06);
       opacity: .85;
+      flex: 0 0 auto;
     }
     html[data-theme="light"] .pilot{
       box-shadow: 0 0 0 6px rgba(0,120,85,.05);
@@ -135,23 +134,50 @@
     .navRight{
       display:flex;
       align-items:center;
-      gap: 14px;
+      gap: 10px;
     }
 
-    nav{
+    /* Tabs (top, quiet) */
+    .tabs{
       display:flex;
-      gap: 18px;
-      font-size: 13px;
-      color: var(--muted);
-      white-space:nowrap;
+      align-items:center;
+      gap: 6px;
+      padding: 6px;
+      border: 1px solid var(--faint);
+      border-radius: 999px;
+      background: rgba(255,255,255,.02);
     }
-    nav a{ padding:6px 2px; }
-    nav a:hover{ color: var(--text); }
+    html[data-theme="light"] .tabs{
+      background: rgba(0,0,0,.02);
+    }
+    .tab{
+      appearance:none;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      cursor:pointer;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      -webkit-tap-highlight-color: transparent;
+      white-space: nowrap;
+    }
+    .tab:hover{ color: var(--text); }
+    .tab[aria-selected="true"]{
+      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--faint);
+    }
+    html[data-theme="light"] .tab[aria-selected="true"]{
+      background: rgba(10,20,40,.05);
+    }
 
-    /* Tiny theme toggle (icon only) */
+    /* Theme toggle (icon only) */
     .themeBtn{
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border-radius: 999px;
       border: 1px solid transparent;
       background: transparent;
@@ -169,51 +195,91 @@
     html[data-theme="light"] .themeBtn:hover{
       background: rgba(10,20,40,.04);
     }
-    .icon{
-      width: 16px; height: 16px;
-      display:block;
+    .icon{ width: 16px; height: 16px; display:block; }
+
+    /* VIEWPORT LAYOUT (NO SCROLL) */
+    .viewport{
+      height: calc(100vh - 58px); /* header height-ish */
+      height: calc(100dvh - 58px); /* mobile safe */
+      display:flex;
+      align-items:stretch;
+      justify-content:center;
+      padding: 18px;
     }
 
-    /* Main */
-    main{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 68px 20px 84px;
+    .frame{
+      width: min(var(--max), 100%);
+      display:grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 16px;
+      align-items:stretch;
+      min-height: 0; /* allow children to size without scroll */
     }
 
     .hero{
-      padding: 20px 0 16px;
+      border-radius: var(--radius);
+      background: linear-gradient(to bottom, rgba(255,255,255,.030), rgba(255,255,255,.015));
+      border: 1px solid var(--faint);
+      padding: 18px 18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height: 0;
     }
+
     h1{
       font-size: var(--h1);
-      line-height: 1.04;
-      margin: 0 0 12px;
+      line-height: 1.06;
+      margin: 0 0 10px;
       letter-spacing: -0.03em;
       font-weight: 620;
     }
     .lede{
       font-size: var(--body);
-      line-height: 1.72;
+      line-height: 1.65;
       color: var(--muted);
-      max-width: 62ch;
-      margin:0;
+      margin: 0;
+      max-width: 60ch;
     }
-
-    /* Simple value line (no flourish) */
     .valueLine{
-      margin-top: 16px;
+      margin-top: 14px;
+      font-size: calc(var(--body) - 0px);
+      line-height: 1.65;
       color: var(--text);
       opacity: .86;
-      font-size: 14.5px;
-      line-height: 1.7;
-      max-width: 62ch;
+      font-style: italic;
     }
 
-    .divider{
-      height:1px;
-      background: var(--faint);
-      margin: 34px 0;
-      opacity: .95;
+    .meta{
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--faint);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .metaLeft{
+      display:flex; align-items:center; gap:10px;
+    }
+    .metaDot{
+      width: 7px; height: 7px;
+      border-radius: 999px;
+      background: var(--pilotDim);
+    }
+
+    .pane{
+      border-radius: var(--radius);
+      background: linear-gradient(to bottom, var(--panel), var(--panel2));
+      border: 1px solid var(--faint);
+      padding: 18px 18px;
+      min-height: 0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 12px;
     }
 
     .kicker{
@@ -221,55 +287,32 @@
       letter-spacing: .22em;
       text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 14px;
+      margin: 0;
     }
 
-    .panel{
-      padding: 18px 18px;
-      background: linear-gradient(to bottom, var(--panel), var(--panel2));
-      border-radius: var(--radius);
-      margin: 14px 0;
-    }
-    .panel h3{
-      margin:0 0 8px;
-      font-size: 16px;
+    .block h3{
+      margin: 0 0 6px;
+      font-size: 15px;
       letter-spacing: -0.01em;
       font-weight: 600;
     }
-    .panel p{
-      margin:0;
+    .block p{
+      margin: 0;
       color: var(--muted);
-      line-height: 1.72;
-      font-size: 14.5px;
-      max-width: 75ch;
-    }
-
-    .stack{ display:grid; gap: 10px; }
-    .lineItem{ padding: 10px 0; }
-    .lineItem strong{
-      display:block;
-      font-size: 15px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    .lineItem span{
-      color: var(--muted);
-      line-height: 1.72;
-      font-size: 14.5px;
-      display:block;
-      max-width: 75ch;
+      line-height: 1.65;
+      font-size: 14px;
     }
 
     .btn{
       display:inline-flex;
       align-items:center;
-      gap:10px;
+      justify-content:center;
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid var(--line);
       background: rgba(255,255,255,.03);
       color: var(--text);
-      margin-top: 10px;
+      width: fit-content;
     }
     html[data-theme="light"] .btn{
       background: rgba(0,0,0,.02);
@@ -277,22 +320,25 @@
     .btn:hover{ opacity: 1; background: rgba(255,255,255,.05); }
     html[data-theme="light"] .btn:hover{ background: rgba(0,0,0,.04); }
 
-    footer{
-      margin-top: 32px;
-      padding-top: 22px;
-      border-top: 1px solid var(--faint);
-      color: var(--muted);
-      font-size: 13px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      flex-wrap:wrap;
+    /* Panel switching */
+    .panelView{ display:none; }
+    .panelView[data-active="true"]{ display:block; }
+
+    /* Mobile: single column (still NO SCROLL) */
+    @media (max-width:820px){
+      .frame{
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+      .hero, .pane{ padding: 16px; }
     }
 
-    @media (max-width:520px){
-      nav{ display:none; }
-      main{ padding-top: 52px; }
+    /* Tight phones: reduce padding slightly */
+    @media (max-width:420px){
+      .viewport{ padding: 12px; }
+      .hero, .pane{ padding: 14px; }
+      .tabs{ display:none; } /* on very small, keep default tab + footer-free; buttons become in-panel */
+      .navRight{ gap: 6px; }
     }
   </style>
 
@@ -318,11 +364,11 @@
       </div>
 
       <div class="navRight">
-        <nav aria-label="Primary">
-          <a href="#what">What we do</a>
-          <a href="#how">How we work</a>
-          <a href="#contact">Contact</a>
-        </nav>
+        <div class="tabs" role="tablist" aria-label="Page sections">
+          <button class="tab" role="tab" id="t-what" aria-controls="p-what" aria-selected="true">What</button>
+          <button class="tab" role="tab" id="t-how" aria-controls="p-how" aria-selected="false">How</button>
+          <button class="tab" role="tab" id="t-contact" aria-controls="p-contact" aria-selected="false">Contact</button>
+        </div>
 
         <button class="themeBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -333,75 +379,76 @@
     </div>
   </header>
 
-  <main>
-    <div class="hero">
-      <h1>Clarity that holds.</h1>
-      <p class="lede">A studio for shaping language, design, and systems.</p>
-      <p class="valueLine"><em>We help decide what matters.</em></p>
+  <div class="viewport">
+    <div class="frame">
+      <!-- HERO (always visible) -->
+      <section class="hero" aria-label="Intro">
+        <div>
+          <h1>Clarity that holds.</h1>
+          <p class="lede">A studio for shaping language, design, and systems.</p>
+          <div class="valueLine"><em>We help decide what matters.</em></div>
+        </div>
+
+        <div class="meta" aria-label="Meta">
+          <div class="metaLeft">
+            <span class="metaDot" aria-hidden="true"></span>
+            <span>Small studio. Deep focus.</span>
+          </div>
+          <div><span id="year"></span></div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANE (swaps, no scroll) -->
+      <aside class="pane" aria-label="Details">
+        <!-- WHAT -->
+        <div class="panelView" id="p-what" role="tabpanel" aria-labelledby="t-what" data-active="true">
+          <p class="kicker">What we do</p>
+          <div class="block" style="margin-top:10px;">
+            <h3>Story &amp; Direction</h3>
+            <p>Positioning, narrative, language.</p>
+          </div>
+          <div class="block" style="margin-top:10px;">
+            <h3>Design &amp; Systems</h3>
+            <p>Identity, sites, tools—built to last.</p>
+          </div>
+        </div>
+
+        <!-- HOW -->
+        <div class="panelView" id="p-how" role="tabpanel" aria-labelledby="t-how" data-active="false">
+          <p class="kicker">How we work</p>
+          <div class="block" style="margin-top:10px;">
+            <h3>Listen first.</h3>
+            <p>Start with constraints and what’s already true.</p>
+          </div>
+          <div class="block" style="margin-top:10px;">
+            <h3>Remove the extra.</h3>
+            <p>Keep what helps. Drop what doesn’t.</p>
+          </div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="panelView" id="p-contact" role="tabpanel" aria-labelledby="t-contact" data-active="false">
+          <p class="kicker">Contact</p>
+          <div class="block" style="margin-top:10px;">
+            <h3>If this feels right</h3>
+            <p>Email is best.</p>
+            <a class="btn" style="margin-top:12px;" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
+          </div>
+        </div>
+      </aside>
     </div>
-
-    <div class="divider"></div>
-
-    <section id="what">
-      <p class="kicker">What we do</p>
-
-      <div class="panel">
-        <h3>Story &amp; Direction</h3>
-        <p>We help clarify what matters. Positioning, narrative, and language that give work its spine.</p>
-      </div>
-
-      <div class="panel">
-        <h3>Design &amp; Systems</h3>
-        <p>Identities, sites, and tools designed to feel natural—made to last, easy to live with.</p>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section id="how">
-      <p class="kicker">How we work</p>
-
-      <div class="stack">
-        <div class="lineItem">
-          <strong>Listen first.</strong>
-          <span>We begin with what’s already there: people, constraints, and the work in motion.</span>
-        </div>
-
-        <div class="lineItem">
-          <strong>Remove the extra.</strong>
-          <span>We pare things back until the signal remains.</span>
-        </div>
-      </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section id="contact">
-      <p class="kicker">Contact</p>
-      <div class="lineItem">
-        <strong>If this feels right, get in touch.</strong>
-        <span><a class="btn" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a></span>
-      </div>
-    </section>
-
-    <footer>
-      <div>© <span id="year"></span> Coleman VII</div>
-      <div style="display:flex;gap:12px;align-items:center;">
-        <a href="#contact">Contact</a>
-      </div>
-    </footer>
-  </main>
+  </div>
 
   <script>
     (function(){
       const root = document.documentElement;
-      const btn = document.getElementById("themeToggle");
-      const glyph = document.getElementById("glyph");
 
       // Year
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      // Glyph swap: moon in dark, sun in light
+      // Theme glyph swap
+      const btn = document.getElementById("themeToggle");
+      const glyph = document.getElementById("glyph");
       function setGlyph(){
         const t = root.getAttribute("data-theme") || "dark";
         if (t === "light"){
@@ -416,7 +463,6 @@
       }
       setGlyph();
 
-      // Toggle
       btn.addEventListener("click", function(){
         const current = root.getAttribute("data-theme") || "dark";
         const next = (current === "dark") ? "light" : "dark";
@@ -425,7 +471,18 @@
         setGlyph();
       });
 
-      // System preference changes (only if user hasn't saved)
+      // Tabs -> swap panel
+      const tabs = Array.from(document.querySelectorAll(".tab"));
+      const panels = Array.from(document.querySelectorAll(".panelView"));
+
+      function activate(tab){
+        tabs.forEach(t => t.setAttribute("aria-selected", t === tab ? "true" : "false"));
+        panels.forEach(p => p.dataset.active = (p.id === tab.getAttribute("aria-controls")) ? "true" : "false");
+      }
+
+      tabs.forEach(t => t.addEventListener("click", () => activate(t)));
+
+      // System pref changes only if user hasn't saved
       try{
         const mq = window.matchMedia("(prefers-color-scheme: light)");
         mq.addEventListener("change", function(){
