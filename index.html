@@ -57,6 +57,7 @@
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
       color:var(--text);
@@ -137,7 +138,7 @@
       gap: 10px;
     }
 
-    /* Tabs (top, quiet) */
+    /* Tabs */
     .tabs{
       display:flex;
       align-items:center;
@@ -199,8 +200,8 @@
 
     /* VIEWPORT LAYOUT (NO SCROLL) */
     .viewport{
-      height: calc(100vh - 58px); /* header height-ish */
-      height: calc(100dvh - 58px); /* mobile safe */
+      height: calc(100vh - 58px);
+      height: calc(100dvh - 58px);
       display:flex;
       align-items:stretch;
       justify-content:center;
@@ -213,7 +214,7 @@
       grid-template-columns: 1.15fr 1fr;
       gap: 16px;
       align-items:stretch;
-      min-height: 0; /* allow children to size without scroll */
+      min-height: 0;
     }
 
     .hero{
@@ -333,11 +334,11 @@
       .hero, .pane{ padding: 16px; }
     }
 
-    /* Tight phones: reduce padding slightly */
+    /* Very small phones: hide tabs; default to Contact panel (most useful) */
     @media (max-width:420px){
       .viewport{ padding: 12px; }
       .hero, .pane{ padding: 14px; }
-      .tabs{ display:none; } /* on very small, keep default tab + footer-free; buttons become in-panel */
+      .tabs{ display:none; }
       .navRight{ gap: 6px; }
     }
   </style>
@@ -481,6 +482,16 @@
       }
 
       tabs.forEach(t => t.addEventListener("click", () => activate(t)));
+
+      // Very small phones: set default panel to Contact (most useful)
+      function setSmallDefault(){
+        if (window.matchMedia("(max-width: 420px)").matches){
+          const contactTab = document.getElementById("t-contact");
+          if (contactTab) activate(contactTab);
+        }
+      }
+      setSmallDefault();
+      window.addEventListener("resize", setSmallDefault);
 
       // System pref changes only if user hasn't saved
       try{
