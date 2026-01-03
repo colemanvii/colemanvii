@@ -27,6 +27,10 @@
       --glowB: rgba(120,160,255,.070);
       --glowC: rgba(255,160,120,.050);
 
+      /* Header wash (theme-aware) */
+      --headerA: rgba(7,9,12,.82);
+      --headerB: rgba(7,9,12,.50);
+
       /* Pilot light */
       --pilot: rgba(120,255,200,.70);
       --pilotDim: rgba(120,255,200,.14);
@@ -51,6 +55,9 @@
       --glowB: rgba(70,110,255,.060);
       --glowC: rgba(255,150,90,.045);
 
+      --headerA: rgba(246,247,251,.88);
+      --headerB: rgba(246,247,251,.60);
+
       --pilot: rgba(0,120,85,.75);
       --pilotDim: rgba(0,120,85,.12);
     }
@@ -71,7 +78,10 @@
       letter-spacing:-0.01em;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
-      overflow: hidden; /* NO PAGE SCROLL */
+
+      overflow:hidden; /* NO PAGE SCROLL (intentional) */
+      overscroll-behavior: none;
+      touch-action: manipulation;
     }
 
     a{ color:inherit; text-decoration:none; }
@@ -91,10 +101,7 @@
       border-bottom: 1px solid var(--line);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      background: linear-gradient(to bottom, rgba(7,9,12,.82), rgba(7,9,12,.50));
-    }
-    html[data-theme="light"] header{
-      background: linear-gradient(to bottom, rgba(246,247,251,.88), rgba(246,247,251,.60));
+      background: linear-gradient(to bottom, var(--headerA), var(--headerB));
     }
 
     .nav{
@@ -366,9 +373,9 @@
 
       <div class="navRight">
         <div class="tabs" role="tablist" aria-label="Page sections">
-          <button class="tab" role="tab" id="t-what" aria-controls="p-what" aria-selected="true">What</button>
-          <button class="tab" role="tab" id="t-how" aria-controls="p-how" aria-selected="false">How</button>
-          <button class="tab" role="tab" id="t-contact" aria-controls="p-contact" aria-selected="false">Contact</button>
+          <button class="tab" role="tab" id="t-what" aria-controls="p-what" aria-selected="true" tabindex="0">What</button>
+          <button class="tab" role="tab" id="t-how" aria-controls="p-how" aria-selected="false" tabindex="-1">How</button>
+          <button class="tab" role="tab" id="t-contact" aria-controls="p-contact" aria-selected="false" tabindex="-1">Contact</button>
         </div>
 
         <button class="themeBtn" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
@@ -433,7 +440,10 @@
           <div class="block" style="margin-top:10px;">
             <h3>If this feels right</h3>
             <p>Email is best.</p>
-            <a class="btn" style="margin-top:12px;" href="mailto:hello@colemanvii.com">hello@colemanvii.com</a>
+            <a class="btn" style="margin-top:12px;"
+               href="mailto:hello@colemanvii.com?subject=Coleman%20VII%20%E2%80%94%20Inquiry&body=Brand%3A%0AWebsite%3A%0AWhat%20you%20sell%3A%0AWhat%20needs%20to%20be%20true%20in%2030%20days%3A%0ACadence%20you%20want%3A%0ABudget%20range%3A%0AAnything%20else%3A">
+              hello@colemanvii.com
+            </a>
           </div>
         </div>
       </aside>
@@ -472,26 +482,60 @@
         setGlyph();
       });
 
-      // Tabs -> swap panel
+      // Tabs -> swap panel (with keyboard support)
       const tabs = Array.from(document.querySelectorAll(".tab"));
       const panels = Array.from(document.querySelectorAll(".panelView"));
 
-      function activate(tab){
-        tabs.forEach(t => t.setAttribute("aria-selected", t === tab ? "true" : "false"));
-        panels.forEach(p => p.dataset.active = (p.id === tab.getAttribute("aria-controls")) ? "true" : "false");
+      function activate(tab, userInitiated){
+        tabs.forEach(t => {
+          const selected = (t === tab);
+          t.setAttribute("aria-selected", selected ? "true" : "false");
+          t.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach(p => {
+          p.dataset.active = (p.id === tab.getAttribute("aria-controls")) ? "true" : "false";
+        });
+        if (userInitiated) {
+          try { sessionStorage.setItem("tabPicked", "1"); } catch(e){}
+        }
       }
 
-      tabs.forEach(t => t.addEventListener("click", () => activate(t)));
+      tabs.forEach(t => t.addEventListener("click", () => activate(t, true)));
 
-      // Very small phones: set default panel to Contact (most useful)
+      // Keyboard: left/right/home/end, enter/space
+      const tablist = document.querySelector(".tabs");
+      if (tablist){
+        tablist.addEventListener("keydown", (e) => {
+          const currentIndex = tabs.findIndex(t => t.getAttribute("aria-selected") === "true");
+          let nextIndex = currentIndex;
+
+          if (e.key === "ArrowRight") nextIndex = (currentIndex + 1) % tabs.length;
+          else if (e.key === "ArrowLeft") nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+          else if (e.key === "Home") nextIndex = 0;
+          else if (e.key === "End") nextIndex = tabs.length - 1;
+          else if (e.key === "Enter" || e.key === " ") {
+            activate(tabs[currentIndex], true);
+            e.preventDefault();
+            return;
+          } else return;
+
+          tabs[nextIndex].focus();
+          activate(tabs[nextIndex], true);
+          e.preventDefault();
+        });
+      }
+
+      // Very small phones: default to Contact (one-time, unless user already picked)
       function setSmallDefault(){
+        const alreadyPicked = (() => { try { return sessionStorage.getItem("tabPicked"); } catch(e){ return null; } })();
+        if (alreadyPicked) return;
+
         if (window.matchMedia("(max-width: 420px)").matches){
           const contactTab = document.getElementById("t-contact");
-          if (contactTab) activate(contactTab);
+          if (contactTab) activate(contactTab, false);
         }
       }
       setSmallDefault();
-      window.addEventListener("resize", setSmallDefault);
 
       // System pref changes only if user hasn't saved
       try{
