@@ -1,4 +1,4 @@
-#Notes, systems, fragments.#
+Notes, systems, fragments.
 
 Some finished. Most becoming.
 
