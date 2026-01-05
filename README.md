@@ -1,5 +1,8 @@
-Notes, systems, fragments.
+# colemanvii
 
-Some finished. Most becoming.
+Work in progress.
 
-VII
+An index of projects, writing, and experiments
+by Cole.
+
+Nothing here is fixed.
