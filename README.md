@@ -1,6 +1,3 @@
 Notes, systems, fragments.
-
-Some finished.
-Most in progress.
-
+Some finished. Most becoming.
 VII
