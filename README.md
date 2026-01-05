@@ -1,4 +1,4 @@
-# colemanvii
+# ColemanVII
 
 Work in progress.
 
