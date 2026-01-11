@@ -1,8 +1,5 @@
 # ColemanVII
 
-Work in progress.
-
-An index of projects, writing, and experiments
-by Cole.
+A working index of systems, writing, and experiments.
 
 Nothing here is fixed.
