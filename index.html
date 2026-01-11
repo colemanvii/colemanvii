@@ -1,270 +1,1053 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>COLEMAN VII</title>
-  <meta name="description" content="Coleman VII — a doorway: newsletter, portfolio, tangerine, haven." />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0b0f14" />
+
+  <title>Coleman VII — Storytelling with gravity</title>
+  <meta name="description" content="Coleman VII helps builders, makers, and founders tell true stories—cleanly, patiently, without spectacle." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Coleman VII — Storytelling with gravity" />
+  <meta property="og:description" content="We help builders, makers, and founders tell true stories—cleanly, patiently, without spectacle." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="" />
+  <!-- Add your own OG image if you want -->
+  <!-- <meta property="og:image" content="og-image.jpg" /> -->
+
+  <!-- Favicons (optional) -->
+  <!-- <link rel="icon" href="favicon.ico" /> -->
+
   <style>
     :root{
-      --bg:#fbfaf7;
-      --ink:#141312;
-      --muted:#5a5652;
-      --line:#d9d4cd;
-      --shadow: 0 10px 30px rgba(0,0,0,.06);
-      --radius: 18px;
+      --bg:#0b0f14;
+      --bg2:#0e141c;
+      --card:#0f1822;
+      --text:#e8eef6;
+      --muted:#a7b4c4;
+      --hair:#223244;
+      --accent:#9ad0ff;
+      --accent2:#d7b7ff;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius2:28px;
+      --max: 1060px;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-      letter-spacing:.01em;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(900px 600px at 20% 10%, rgba(154,208,255,.12), transparent 55%),
+                  radial-gradient(900px 700px at 80% 30%, rgba(215,183,255,.10), transparent 55%),
+                  linear-gradient(180deg, var(--bg), #070a0e 70%);
+      color:var(--text);
+      line-height:1.45;
+      letter-spacing:.2px;
+      overflow-x:hidden;
     }
 
-    .frame{
-      min-height:100%;
+    a{color:inherit; text-decoration:none}
+    a:hover{color:var(--accent)}
+    p{margin:0 0 14px}
+    h1,h2,h3{margin:0 0 10px; letter-spacing:-.3px}
+    h1{font-size: clamp(40px, 5vw, 56px); line-height:1.05}
+    h2{font-size: clamp(22px, 3.2vw, 30px); line-height:1.15}
+    h3{font-size: 16px; letter-spacing:.2px; text-transform: uppercase}
+    .muted{color:var(--muted)}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}
+
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .spacer{height:64px}
+
+    /* Top bar */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.55);
+      border-bottom:1px solid rgba(34,50,68,.45);
+    }
+    .topbar-inner{
       display:flex;
       align-items:center;
-      justify-content:center;
-      padding:28px 18px;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 0;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 180px;
+    }
+    .mark{
+      width:28px; height:28px;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(154,208,255,.95), rgba(215,183,255,.75));
+      box-shadow: 0 10px 24px rgba(0,0,0,.3);
+    }
+    .brand-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.1;
+    }
+    .brand-title strong{font-size:14px; letter-spacing:.6px}
+    .brand-title span{font-size:12px; color:var(--muted)}
+    nav{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .navlink{
+      padding:8px 10px;
+      border-radius: 999px;
+      border:1px solid transparent;
+      color:var(--muted);
+      font-size: 13px;
+    }
+    .navlink:hover{
+      color:var(--text);
+      border-color: rgba(34,50,68,.6);
+      background: rgba(15,24,34,.6);
     }
 
-    .card{
-      width:min(680px, 100%);
-      border:1px solid var(--line);
-      border-radius: calc(var(--radius) + 6px);
-      background: rgba(255,255,255,.55);
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border:1px solid rgba(34,50,68,.8);
+      background: rgba(15,24,34,.65);
+      color: var(--text);
+      font-size: 13px;
+      box-shadow: none;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+    }
+    .btn:hover{
+      background: rgba(15,24,34,.9);
+      border-color: rgba(154,208,255,.55);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+    .btn.primary{
+      border-color: rgba(154,208,255,.55);
+      background: linear-gradient(135deg, rgba(154,208,255,.18), rgba(215,183,255,.12));
+    }
+    .btn.primary:hover{
+      border-color: rgba(154,208,255,.8);
+      background: linear-gradient(135deg, rgba(154,208,255,.25), rgba(215,183,255,.18));
+    }
+
+    /* Hero */
+    .hero{
+      padding: 54px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+    .panel{
+      border:1px solid rgba(34,50,68,.65);
+      background: linear-gradient(180deg, rgba(15,24,34,.72), rgba(15,24,34,.45));
+      border-radius: var(--radius2);
       box-shadow: var(--shadow);
       overflow:hidden;
-      position:relative;
     }
-
-    /* subtle mission-control scan */
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        linear-gradient(180deg, rgba(20,19,18,.03), rgba(20,19,18,0) 35%),
-        repeating-linear-gradient(
-          0deg,
-          rgba(20,19,18,.03) 0px,
-          rgba(20,19,18,.03) 1px,
-          rgba(20,19,18,0) 6px,
-          rgba(20,19,18,0) 10px
-        );
-      opacity:.35;
-      pointer-events:none;
-      mix-blend-mode:multiply;
-      transform: translateY(-30px);
-      animation: drift 10s ease-in-out infinite;
+    .panel .pad{padding: 26px}
+    .hero .kicker{
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: .9px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
-
-    @keyframes drift{
-      0%,100%{ transform: translateY(-30px); opacity:.28; }
-      50%{ transform: translateY(0px); opacity:.38; }
+    .hero .lead{
+      font-size: 16px;
+      color: var(--muted);
+      max-width: 60ch;
+      margin-top: 10px;
     }
-
-    header{
-      padding:34px 34px 18px;
-      position:relative;
-      z-index:1;
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:18px
     }
-
-    .kicker{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    .chip{
       font-size:12px;
       color:var(--muted);
-      letter-spacing:.14em;
-      text-transform:uppercase;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(34,50,68,.7);
+      background: rgba(11,15,20,.35);
     }
 
-    h1{
-      margin:10px 0 10px;
-      font-size:36px;
-      line-height:1.05;
-      letter-spacing:.02em;
-      font-weight:650;
+    .terminal{
+      border-top:1px solid rgba(34,50,68,.55);
+      background: radial-gradient(600px 200px at 30% 0%, rgba(154,208,255,.08), transparent 55%),
+                  rgba(11,15,20,.55);
     }
-
-    .lede{
-      margin:0;
-      color:var(--muted);
-      font-size:16px;
+    .terminal .pad{padding: 22px}
+    .term-head{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom: 14px;
+      gap: 12px;
+    }
+    .dots{display:flex; gap:6px}
+    .dot{width:10px; height:10px; border-radius:50%; background: rgba(231,241,255,.16); border:1px solid rgba(34,50,68,.7)}
+    .term-title{font-size:12px; color:var(--muted)}
+    .term-body{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      color: rgba(232,238,246,.9);
       line-height:1.55;
-      max-width:56ch;
+      white-space: pre-wrap;
+      margin:0;
     }
+    .term-body .faint{color: rgba(167,180,196,.85)}
 
-    .divider{
-      height:1px;
-      background:linear-gradient(90deg, transparent, var(--line), transparent);
-      margin:0 26px;
-      position:relative;
-      z-index:1;
+    /* Sections */
+    section{padding: 56px 0}
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap: 18px;
+      margin-bottom: 18px;
     }
-
-    main{
-      padding:22px 34px 18px;
-      position:relative;
-      z-index:1;
-    }
+    .section-head p{margin:0; max-width: 70ch}
 
     .grid{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top:14px;
+      gap: 14px;
+    }
+    .grid.two{grid-template-columns: 1fr 1fr}
+    .grid.three{grid-template-columns: repeat(3, 1fr)}
+    @media (max-width: 900px){
+      .hero-grid{grid-template-columns: 1fr}
+      .grid.two, .grid.three{grid-template-columns: 1fr}
+      nav{display:none}
+      .topbar-inner{justify-content:space-between}
     }
 
-    a.btn{
+    .card{
+      border-radius: var(--radius);
+      border:1px solid rgba(34,50,68,.6);
+      background: rgba(15,24,34,.55);
+      box-shadow: none;
+      overflow:hidden;
+    }
+    .card .pad{padding: 18px}
+    .card strong{display:block; margin-bottom:6px}
+    .card p{color:var(--muted); margin-bottom:0; font-size: 14px}
+    .list{
+      margin: 10px 0 0;
+      padding:0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .li{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border:1px solid rgba(34,50,68,.55);
+      border-radius: 14px;
+      background: rgba(11,15,20,.35);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .li b{color: var(--text); font-weight: 600}
+    .badge{
+      font-size:11px;
+      color: rgba(232,238,246,.92);
+      padding: 4px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(34,50,68,.7);
+      background: rgba(154,208,255,.08);
+      white-space:nowrap;
+      margin-top:1px;
+    }
+
+    /* Work grid */
+    .work-grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .work-grid{grid-template-columns: 1fr}
+    }
+    .work-item{
+      display:block;
+      border-radius: var(--radius);
+      border:1px solid rgba(34,50,68,.6);
+      background: linear-gradient(180deg, rgba(15,24,34,.72), rgba(15,24,34,.45));
+      overflow:hidden;
+      transition: transform .12s ease, border-color .2s ease;
+      cursor:pointer;
+    }
+    .work-item:hover{
+      transform: translateY(-2px);
+      border-color: rgba(154,208,255,.55);
+    }
+    .thumb{
+      height: 140px;
+      background:
+        radial-gradient(260px 140px at 20% 30%, rgba(154,208,255,.20), transparent 60%),
+        radial-gradient(260px 140px at 70% 20%, rgba(215,183,255,.18), transparent 60%),
+        linear-gradient(180deg, rgba(34,50,68,.25), rgba(11,15,20,.35));
+      border-bottom:1px solid rgba(34,50,68,.55);
+    }
+    .work-meta{padding: 14px}
+    .work-meta .title{font-weight:650; margin:0 0 6px}
+    .work-meta .desc{margin:0; color:var(--muted); font-size: 13px}
+
+    /* About / contact */
+    .split{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+    @media (max-width: 980px){ .split{grid-template-columns:1fr} }
+
+    /* Footer */
+    footer{
+      padding: 36px 0 44px;
+      border-top: 1px solid rgba(34,50,68,.55);
+      background: rgba(7,10,14,.35);
+    }
+    .footer-inner{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .tiny{font-size: 12px; color: var(--muted)}
+    .hr{height:1px; background: rgba(34,50,68,.55); margin: 16px 0}
+
+    /* Modal */
+    dialog{
+      width:min(860px, calc(100% - 28px));
+      border:none;
+      border-radius: 22px;
+      padding:0;
+      background: linear-gradient(180deg, rgba(15,24,34,.92), rgba(11,15,20,.92));
+      color: var(--text);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      border:1px solid rgba(34,50,68,.75);
+    }
+    dialog::backdrop{
+      background: rgba(0,0,0,.65);
+      backdrop-filter: blur(4px);
+    }
+    .modal-head{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
-      padding:16px 16px;
-      border-radius: var(--radius);
-      border:1px solid var(--line);
-      text-decoration:none;
-      color:var(--ink);
-      background: rgba(255,255,255,.5);
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      padding: 16px 16px 12px;
+      border-bottom:1px solid rgba(34,50,68,.6);
+      gap: 12px;
     }
-
-    a.btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(20,19,18,.35);
-      background: rgba(255,255,255,.75);
+    .modal-head strong{font-size: 14px; letter-spacing:.6px}
+    .x{
+      appearance:none;
+      border:1px solid rgba(34,50,68,.7);
+      background: rgba(11,15,20,.35);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
     }
-
-    .label{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-      min-width:0;
-    }
-
-    .label strong{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:13px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-weight:700;
-    }
-
-    .label span{
-      font-size:13px;
-      color:var(--muted);
-      line-height:1.35;
-    }
-
-    .arrow{
-      flex:0 0 auto;
-      width:34px;
-      height:34px;
-      border-radius: 999px;
-      border:1px solid var(--line);
+    .x:hover{border-color: rgba(154,208,255,.55)}
+    .modal-body{padding: 16px}
+    .kvs{
       display:grid;
-      place-items:center;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      color:var(--muted);
-      transition: color .12s ease, border-color .12s ease;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0 14px;
     }
-
-    a.btn:hover .arrow{
-      color:var(--ink);
-      border-color: rgba(20,19,18,.35);
+    @media (max-width: 720px){ .kvs{grid-template-columns:1fr} }
+    .kv{
+      border:1px solid rgba(34,50,68,.55);
+      border-radius: 16px;
+      padding: 12px;
+      background: rgba(11,15,20,.35);
     }
-
-    footer{
-      padding:18px 34px 26px;
+    .kv .label{font-size:11px; color: var(--muted); text-transform:uppercase; letter-spacing:.8px}
+    .kv .value{margin-top:6px; color: rgba(232,238,246,.92); font-size:14px}
+    .artifacts{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    @media (max-width: 720px){ .artifacts{grid-template-columns:1fr} }
+    .artifact{
+      height: 90px;
+      border-radius: 16px;
+      border:1px dashed rgba(34,50,68,.8);
+      background: rgba(11,15,20,.25);
       display:flex;
-      justify-content:space-between;
-      gap:16px;
-      flex-wrap:wrap;
-      position:relative;
-      z-index:1;
-      color:var(--muted);
-      font-size:12px;
+      align-items:center;
+      justify-content:center;
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    .tiny{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      letter-spacing:.08em;
-      text-transform:uppercase;
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .work-item, .btn{transition:none}
+      html{scroll-behavior:auto}
     }
-
-    @media (max-width: 560px){
-      header{ padding:28px 20px 14px; }
-      main{ padding:18px 20px 12px; }
-      footer{ padding:16px 20px 22px; }
-      h1{ font-size:30px; }
-      .grid{ grid-template-columns: 1fr; }
-    }
+    html{scroll-behavior:smooth}
   </style>
 </head>
+
 <body>
-  <div class="frame">
-    <div class="card" role="region" aria-label="Coleman VII home">
-      <header>
-        <div class="kicker">Doorway</div>
-        <h1>COLEMAN VII</h1>
-        <p class="lede">
-          A small studio for clear thinking, restrained design, and long-view work.
-          <br/>Choose a door.
-        </p>
-      </header>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="topbar-inner">
+        <a class="brand" href="#top" aria-label="Coleman VII home">
+          <div class="mark" aria-hidden="true"></div>
+          <div class="brand-title">
+            <strong>COLEMAN VII</strong>
+            <span>Storytelling with gravity</span>
+          </div>
+        </a>
 
-      <div class="divider" aria-hidden="true"></div>
+        <nav aria-label="Primary">
+          <a class="navlink" href="#what">What we do</a>
+          <a class="navlink" href="#standard">The standard</a>
+          <a class="navlink" href="#process">How we work</a>
+          <a class="navlink" href="#retainer">Retainer</a>
+          <a class="navlink" href="#work">Work</a>
+          <a class="navlink" href="#about">About</a>
+          <a class="navlink" href="#interns">Interns</a>
+          <a class="navlink" href="#contact">Contact</a>
+        </nav>
 
-      <main>
-        <div class="grid">
-          <a class="btn" href="#" aria-label="Newsletter">
-            <div class="label">
-              <strong>Newsletter</strong>
-              <span>Notes on work, attention, and craft.</span>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <a class="btn" href="#work">View Work</a>
+          <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Project">Start a Project</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <div class="wrap hero">
+      <div class="hero-grid">
+        <div class="panel">
+          <div class="pad">
+            <div class="kicker">Brand narrative • Creative direction • Systems</div>
+            <h1>We help builders, makers, and founders tell true stories—<span style="color:var(--accent)">cleanly</span>, <span style="color:var(--accent2)">patiently</span>, without spectacle.</h1>
+            <p class="lead">
+              Coleman VII is a steady partner for brands with real gravity. We find what’s unmistakably yours, translate it into language and visuals you can use daily, and keep it coherent month to month.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#retainer">Request a retainer slot</a>
+              <a class="btn" href="#process">See how we work</a>
+              <a class="btn" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Inquiry">Email</a>
             </div>
-            <div class="arrow" aria-hidden="true">→</div>
+
+            <div class="chips" aria-label="Core traits">
+              <span class="chip">Attention over performance</span>
+              <span class="chip">Clarity over clever</span>
+              <span class="chip">Restraint over noise</span>
+              <span class="chip">Place over trend</span>
+              <span class="chip">Consistency over “campaigns”</span>
+            </div>
+          </div>
+
+          <div class="terminal">
+            <div class="pad">
+              <div class="term-head">
+                <div class="dots" aria-hidden="true">
+                  <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                </div>
+                <div class="term-title mono">Coleman VII / signal check</div>
+              </div>
+              <pre class="term-body"><span class="faint">STATUS</span>  steady
+<span class="faint">FOCUS</span>   story > hype
+<span class="faint">METHOD</span>  orientation → signal → system → output → stewardship
+<span class="faint">AIM</span>     a narrative you can live inside</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="pad">
+            <h2>Quiet authority, built over time.</h2>
+            <p class="muted">
+              We don’t manufacture a vibe. We document a truth—and give it structure.
+            </p>
+
+            <div class="hr"></div>
+
+            <ul class="list">
+              <li class="li"><span class="badge">01</span> <span><b>Orientation</b><br/>We learn your world: people, product, place, stakes.</span></li>
+              <li class="li"><span class="badge">02</span> <span><b>Signal</b><br/>We identify what’s unmistakably yours—then protect it.</span></li>
+              <li class="li"><span class="badge">03</span> <span><b>System</b><br/>We turn truth into language, visuals, and repeatable guidance.</span></li>
+              <li class="li"><span class="badge">04</span> <span><b>Stewardship</b><br/>We keep the story coherent month to month.</span></li>
+            </ul>
+
+            <div class="hr"></div>
+
+            <p class="tiny">
+              Based in Tennessee. Built for the South (and beyond).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHAT WE DO -->
+    <section id="what">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>What we do</h2>
+            <p class="muted">Brand storytelling on retainer. We step inside your world and translate it into clear language, visuals, and narrative systems that hold up over time.</p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <div class="pad">
+              <strong>Core deliverables</strong>
+              <ul class="list" style="margin-top:12px">
+                <li class="li"><span class="badge">Narrative</span> Brand story, positioning, messaging pillars</li>
+                <li class="li"><span class="badge">Direction</span> Creative direction, mood, tone, visual references</li>
+                <li class="li"><span class="badge">Words</span> Website copy, product language, internal clarity docs</li>
+                <li class="li"><span class="badge">Content</span> Editorial cadence, posts, scripts, prompts, outlines</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="pad">
+              <strong>When it fits</strong>
+              <ul class="list" style="margin-top:12px">
+                <li class="li"><span class="badge">Film</span> Short doc-style pieces, studio films, portraits</li>
+                <li class="li"><span class="badge">Launch</span> Quiet launches that feel inevitable</li>
+                <li class="li"><span class="badge">Library</span> Asset + copy libraries you can reuse</li>
+                <li class="li"><span class="badge">Truth check</span> Prevent drift, keep the signal intact</li>
+              </ul>
+              <p class="tiny" style="margin-top:12px">
+                We can be hands-on or advisory—what matters is coherence.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE STANDARD -->
+    <section id="standard">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>The standard</h2>
+            <p class="muted">We don’t chase trends. We build a story you can live inside—steady, specific, alive.</p>
+          </div>
+        </div>
+
+        <div class="grid three">
+          <div class="card"><div class="pad">
+            <strong>Attention</strong>
+            <p>We look until something true appears. No shortcuts. No borrowed voice.</p>
+          </div></div>
+          <div class="card"><div class="pad">
+            <strong>Restraint</strong>
+            <p>Less volume. More signal. The work should feel intact.</p>
+          </div></div>
+          <div class="card"><div class="pad">
+            <strong>Continuity</strong>
+            <p>We build systems that compound: language, tone, decisions, cadence.</p>
+          </div></div>
+          <div class="card"><div class="pad">
+            <strong>Place</strong>
+            <p>Where you’re from matters. We treat it as an asset, not a costume.</p>
+          </div></div>
+          <div class="card"><div class="pad">
+            <strong>Clarity</strong>
+            <p>Words should carry weight. Visuals should have purpose.</p>
+          </div></div>
+          <div class="card"><div class="pad">
+            <strong>Stewardship</strong>
+            <p>We keep your story from getting diluted as the business grows.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW WE WORK -->
+    <section id="process">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>How we work</h2>
+            <p class="muted">A simple sequence. Clear checkpoints. No chaos.</p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card"><div class="pad">
+            <strong>1) Orientation</strong>
+            <p>We listen. We gather context. We map the world you’re actually in: people, product, place, pressure, promise.</p>
+            <div class="hr"></div>
+            <p class="tiny mono">Output: brief, story inventory, constraints, north star</p>
+          </div></div>
+
+          <div class="card"><div class="pad">
+            <strong>2) Signal</strong>
+            <p>We identify what’s unmistakably yours—then we remove what distorts it.</p>
+            <div class="hr"></div>
+            <p class="tiny mono">Output: positioning, voice notes, “do / don’t” rules</p>
+          </div></div>
+
+          <div class="card"><div class="pad">
+            <strong>3) System</strong>
+            <p>We translate truth into language and visuals you can use daily: pillars, phrases, rhythm, references, templates.</p>
+            <div class="hr"></div>
+            <p class="tiny mono">Output: narrative system + messaging kit</p>
+          </div></div>
+
+          <div class="card"><div class="pad">
+            <strong>4) Output + Stewardship</strong>
+            <p>We make the work (or direct it) and keep it coherent month to month so it compounds instead of fragments.</p>
+            <div class="hr"></div>
+            <p class="tiny mono">Output: deliverables, cadence, feedback loop, truth check</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RETAINER -->
+    <section id="retainer">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Retainer model</h2>
+            <p class="muted">Simple and steady. You get a guaranteed slot on our calendar and a living narrative system that compounds.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="card">
+            <div class="pad">
+              <strong>What a retainer includes</strong>
+              <ul class="list" style="margin-top:12px">
+                <li class="li"><span class="badge">Monthly</span> Planning + direction</li>
+                <li class="li"><span class="badge">Weekly</span> Deliverables (agreed scope)</li>
+                <li class="li"><span class="badge">Async</span> Feedback loop</li>
+                <li class="li"><span class="badge">Library</span> Asset + copy repository</li>
+                <li class="li"><span class="badge">Truth check</span> Guardrails to prevent drift</li>
+              </ul>
+
+              <div class="hr"></div>
+
+              <p class="muted" style="margin-bottom:10px">
+                If you want a brand that feels inevitable, you need a story you can actually live.
+              </p>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Retainer%20Request&body=Tell%20me%20about%20your%20brand%20and%20what%20you%20need.%20What%20are%20you%20building%3F%20Where%20are%20you%20from%3F%20What%20must%20remain%20true%20as%20you%20grow%3F">Request a retainer slot</a>
+                <a class="btn" href="#contact">Ask a question</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="pad">
+              <div class="kicker">A good fit</div>
+              <h2>Brands with real work behind them.</h2>
+              <p class="muted">
+                You’re building something that deserves precision: craft, infrastructure, hospitality, outdoors, manufacturing, construction, food, music—anything where the truth is already present.
+              </p>
+
+              <div class="hr"></div>
+
+              <div class="kicker">Not a good fit</div>
+              <p class="muted" style="margin-bottom:0">
+                If you want noise, gimmicks, or quick tricks, we won’t be the right partner.
+              </p>
+            </div>
+
+            <div class="terminal">
+              <div class="pad">
+                <div class="term-head">
+                  <div class="dots" aria-hidden="true">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                  </div>
+                  <div class="term-title mono">Retainer / promise</div>
+                </div>
+                <pre class="term-body">We will:
+- protect the signal
+- build a story you can carry
+- keep it coherent as you grow</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Work</h2>
+            <p class="muted">A few examples. Click to open the case study template. Replace these placeholders with real projects as you go.</p>
+          </div>
+        </div>
+
+        <div class="work-grid" aria-label="Work samples">
+          <a class="work-item" data-case="0" role="button" aria-label="Open case study 1">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project One</p>
+              <p class="desc">One-sentence truth about the work. Keep it clean.</p>
+            </div>
           </a>
 
-          <a class="btn" href="#" aria-label="Portfolio">
-            <div class="label">
-              <strong>Portfolio</strong>
-              <span>Selected work and case studies.</span>
+          <a class="work-item" data-case="1" role="button" aria-label="Open case study 2">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project Two</p>
+              <p class="desc">What changed after the story got structure.</p>
             </div>
-            <div class="arrow" aria-hidden="true">→</div>
           </a>
 
-          <a class="btn" href="#" aria-label="Tangerine">
-            <div class="label">
-              <strong>Tangerine</strong>
-              <span>Film, narrative, and visual mythmaking.</span>
+          <a class="work-item" data-case="2" role="button" aria-label="Open case study 3">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project Three</p>
+              <p class="desc">A quiet launch. A clearer voice. Fewer words.</p>
             </div>
-            <div class="arrow" aria-hidden="true">→</div>
           </a>
 
-          <a class="btn" href="#" aria-label="Haven">
-            <div class="label">
-              <strong>Haven</strong>
-              <span>Systems for clarity, presence, and work.</span>
+          <a class="work-item" data-case="3" role="button" aria-label="Open case study 4">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project Four</p>
+              <p class="desc">A narrative system that compounds month to month.</p>
             </div>
-            <div class="arrow" aria-hidden="true">→</div>
+          </a>
+
+          <a class="work-item" data-case="4" role="button" aria-label="Open case study 5">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project Five</p>
+              <p class="desc">Creative direction built from constraints and place.</p>
+            </div>
+          </a>
+
+          <a class="work-item" data-case="5" role="button" aria-label="Open case study 6">
+            <div class="thumb"></div>
+            <div class="work-meta">
+              <p class="title">Project Six</p>
+              <p class="desc">Clarity without contempt. Truth without spectacle.</p>
+            </div>
           </a>
         </div>
-      </main>
 
-      <footer>
-        <div class="tiny">Nashville, Tennessee</div>
-        <div class="tiny">Working slowly. Building what lasts.</div>
-      </footer>
+        <p class="tiny" style="margin-top:14px">
+          Tip: Replace the thumbnail blocks with real images by swapping <span class="mono">.thumb</span> backgrounds, or add <span class="mono">&lt;img&gt;</span> tags.
+        </p>
+      </div>
+    </section>
+
+    <!-- ABOUT + INTERNS + CONTACT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>About</h2>
+            <p class="muted">Coleman VII is run by Coleman Calfee.</p>
+          </div>
+        </div>
+
+        <div class="split">
+          <div class="card">
+            <div class="pad">
+              <strong>Why this exists</strong>
+              <p>
+                I’m from the South. I care about place, craft, and the quiet authority of work done right.
+                Coleman VII exists to practice attention in a distracted age—and to help brands tell the truth with discipline.
+              </p>
+              <p class="muted">
+                The work is not inventing stories. It’s noticing what’s already there, telling it cleanly, and protecting it from dilution.
+              </p>
+              <div class="hr"></div>
+              <p class="tiny">
+                If you’re building something real and you want a story that holds up over time, let’s talk.
+              </p>
+            </div>
+          </div>
+
+          <div class="panel" id="interns">
+            <div class="pad">
+              <div class="kicker">Interns</div>
+              <h2>A pipeline for observant people.</h2>
+              <p class="muted">
+                Occasionally, I bring on interns. No resumes. No hype.
+              </p>
+              <div class="hr"></div>
+              <p class="muted">
+                Send a short note about what you notice that other people miss—and why it matters.
+              </p>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+                <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Intern%20Note&body=1)%20Name%3A%0A2)%20Where%20you%E2%80%99re%20from%3A%0A3)%20What%20you%20notice%20that%20other%20people%20miss%3A%0A4)%20Why%20it%20matters%3A%0A5)%20A%20link%20to%20anything%20you%E2%80%99ve%20made%20(optional)%3A">Email a note</a>
+                <a class="btn" href="#process">See the standard</a>
+              </div>
+
+              <div class="hr"></div>
+
+              <p class="tiny mono">
+                Filter: attention • patience • care • restraint
+              </p>
+            </div>
+
+            <div class="terminal">
+              <div class="pad">
+                <div class="term-head">
+                  <div class="dots" aria-hidden="true">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                  </div>
+                  <div class="term-title mono">Interns / first assignment</div>
+                </div>
+                <pre class="term-body">Take 10 photos of ordinary work.
+Write 120 words:
+- what it is
+- why it matters
+- what people miss</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <h2>Contact</h2>
+            <p class="muted">Based in Tennessee. Working with clients across the South (and beyond).</p>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <div class="pad">
+              <strong>Email</strong>
+              <p style="margin-bottom:10px"><a href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Inquiry" class="mono">colecalfee@gmail.com</a></p>
+              <p class="muted">Send a few lines about what you’re building and what must remain true as you grow.</p>
+              <div class="hr"></div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Project&body=1)%20What%20are%20you%20building%3F%0A2)%20Where%20are%20you%20from%3F%0A3)%20What%20problem%20are%20you%20solving%3F%0A4)%20What%20must%20remain%20true%20as%20you%20grow%3F%0A5)%20Links%20(optional)%3A">Start a project email</a>
+                <a class="btn" href="#retainer">Retainer details</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="pad">
+              <div class="kicker">Field notes</div>
+              <h2>Be steady. Tell the truth. Protect the signal.</h2>
+              <p class="muted">
+                Strong circles change the world. The work is to tend what matters—until it compounds.
+              </p>
+              <div class="hr"></div>
+              <p class="tiny mono">COLEMAN VII / © <span id="year"></span></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-inner">
+        <div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div class="mark" aria-hidden="true"></div>
+            <div>
+              <div class="mono" style="font-size:13px; letter-spacing:.8px;">COLEMAN VII</div>
+              <div class="tiny">Storytelling with gravity</div>
+            </div>
+          </div>
+          <div class="hr"></div>
+          <div class="tiny">“Be steady. Take care of your people. Strong circles change the world.”</div>
+        </div>
+
+        <div>
+          <div class="tiny" style="margin-bottom:10px;">Navigate</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn" href="#what">What</a>
+            <a class="btn" href="#standard">Standard</a>
+            <a class="btn" href="#process">Process</a>
+            <a class="btn" href="#retainer">Retainer</a>
+            <a class="btn" href="#work">Work</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </footer>
 
-  <!-- Hookup notes: replace each href="#" with your real URLs. -->
+  <!-- Case Study Modal -->
+  <dialog id="caseModal" aria-label="Case study">
+    <div class="modal-head">
+      <strong class="mono" id="caseTitle">CASE STUDY</strong>
+      <button class="x" id="closeModal" aria-label="Close">Close</button>
+    </div>
+    <div class="modal-body">
+      <p class="muted" id="caseTruth" style="margin-bottom:12px;">
+        One-sentence truth goes here.
+      </p>
+
+      <div class="kvs" aria-label="Case study details">
+        <div class="kv">
+          <div class="label">Context</div>
+          <div class="value" id="caseContext">What was happening. What mattered. Constraints.</div>
+        </div>
+        <div class="kv">
+          <div class="label">What we did</div>
+          <div class="value" id="caseDid">Narrative, messaging, direction, deliverables.</div>
+        </div>
+        <div class="kv">
+          <div class="label">What changed</div>
+          <div class="value" id="caseChanged">Clarity, coherence, outcomes, momentum.</div>
+        </div>
+        <div class="kv">
+          <div class="label">Artifacts</div>
+          <div class="value">Replace placeholders with images/links.</div>
+        </div>
+      </div>
+
+      <div class="artifacts" aria-label="Artifacts grid">
+        <div class="artifact">Artifact 01</div>
+        <div class="artifact">Artifact 02</div>
+        <div class="artifact">Artifact 03</div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20Project%20Inquiry">Start a project</a>
+        <a class="btn" href="#retainer" onclick="document.getElementById('caseModal').close();">Retainer model</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Case study data (replace with real projects)
+    const CASES = [
+      {
+        title: "PROJECT ONE",
+        truth: "One-sentence truth about the work. Keep it clean.",
+        context: "A brand with real work behind it needed a clearer voice and steadier cadence.",
+        did: "Built narrative pillars, rewrote web structure, established tone + templates, directed output.",
+        changed: "Less noise, more signal. A story the team could carry daily."
+      },
+      {
+        title: "PROJECT TWO",
+        truth: "What changed after the story got structure.",
+        context: "Growth created drift: too many messages, not enough coherence.",
+        did: "Simplified positioning, wrote a messaging kit, created guardrails and a publishing rhythm.",
+        changed: "Decisions got faster. Communication got quieter and sharper."
+      },
+      {
+        title: "PROJECT THREE",
+        truth: "A quiet launch. A clearer voice. Fewer words.",
+        context: "A good product that didn’t want a loud personality—just truth and clarity.",
+        did: "Wrote a clean launch narrative and minimal site copy. Directed visuals toward restraint.",
+        changed: "The work felt inevitable instead of performative."
+      },
+      {
+        title: "PROJECT FOUR",
+        truth: "A narrative system that compounds month to month.",
+        context: "The team needed a system, not a one-off campaign.",
+        did: "Built repeatable story modules: about, product, proof, and place. Set monthly stewardship.",
+        changed: "Consistency increased. The brand started sounding like itself."
+      },
+      {
+        title: "PROJECT FIVE",
+        truth: "Creative direction built from constraints and place.",
+        context: "The brand’s identity was real, but the visuals were borrowed.",
+        did: "Pulled references from the actual environment, then translated into a visual grammar.",
+        changed: "The work became recognizably theirs—without trying."
+      },
+      {
+        title: "PROJECT SIX",
+        truth: "Clarity without contempt. Truth without spectacle.",
+        context: "A brand surrounded by noise wanted an approach that felt human and steady.",
+        did: "Reduced language, strengthened claims, built a calm cadence, refined the voice.",
+        changed: "Trust increased—because the brand stopped yelling."
+      }
+    ];
+
+    // Modal wiring
+    const modal = document.getElementById("caseModal");
+    const closeBtn = document.getElementById("closeModal");
+
+    function openCase(i){
+      const c = CASES[i];
+      if(!c) return;
+
+      document.getElementById("caseTitle").textContent = c.title;
+      document.getElementById("caseTruth").textContent = c.truth;
+      document.getElementById("caseContext").textContent = c.context;
+      document.getElementById("caseDid").textContent = c.did;
+      document.getElementById("caseChanged").textContent = c.changed;
+
+      modal.showModal();
+    }
+
+    document.querySelectorAll(".work-item").forEach(el => {
+      el.addEventListener("click", () => {
+        const i = Number(el.getAttribute("data-case"));
+        openCase(i);
+      });
+    });
+
+    closeBtn.addEventListener("click", () => modal.close());
+    modal.addEventListener("click", (e) => {
+      // Click outside content closes
+      const rect = modal.getBoundingClientRect();
+      const inDialog = (
+        rect.top <= e.clientY && e.clientY <= rect.bottom &&
+        rect.left <= e.clientX && e.clientX <= rect.right
+      );
+      if(!inDialog) modal.close();
+    });
+  </script>
 </body>
 </html>
