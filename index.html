@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Coleman VII</title>
-  <meta name="description" content="Coleman VII — positioning, language, websites, editorial." />
+  <meta name="description" content="Coleman VII — brand systems." />
   <style>
     :root{
       --bg:#f2ede4;
@@ -43,7 +43,6 @@
     a:hover{ border-bottom-color: color-mix(in srgb, var(--ink) 55%, transparent); }
 
     .wrap{ width:min(860px, 92vw); }
-
     .card{
       background:var(--panel);
       border:1px solid var(--line);
@@ -60,39 +59,27 @@
       border-bottom:1px solid var(--line);
       margin-bottom:12px;
     }
-
     .label{
       font-size:12px;
       letter-spacing:.18em;
       color:var(--muted);
       text-transform:uppercase;
-      display:flex;
-      gap:10px;
-      align-items:center;
     }
-
     .right{
       display:flex;
       align-items:center;
       gap:10px;
     }
-
-    .status{
-      display:flex;
-      gap:8px;
-      align-items:center;
-    }
+    .status{ display:flex; gap:8px; }
     .light{
-      width:8px;
-      height:8px;
-      border-radius:50%;
+      width:8px;height:8px;border-radius:50%;
       background:var(--accent);
       opacity:.25;
       animation:pulse 4s ease-in-out infinite;
     }
     .light:nth-child(2){animation-delay:1.2s}
     .light:nth-child(3){animation-delay:2.4s}
-    @keyframes pulse{ 0%,100%{opacity:.25} 50%{opacity:.9} }
+    @keyframes pulse{0%,100{opacity:.25}50%{opacity:.9}}
 
     .chip{
       border:1px solid var(--line);
@@ -102,24 +89,18 @@
       color:var(--muted);
       background:transparent;
       cursor:pointer;
-      user-select:none;
     }
-    .chip:hover{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
-    [data-theme="night"] .chip:hover{ background: color-mix(in srgb, #fff 6%, transparent); }
 
     .headline{
       margin:2px 0 0;
       font-size:20px;
       line-height:1.35;
-      color:color-mix(in srgb, var(--ink) 92%, transparent);
     }
-
     .sub{
       margin:8px 0 0;
       color:var(--muted);
       font-size:14px;
       line-height:1.65;
-      max-width:72ch;
     }
 
     .pill{
@@ -131,99 +112,30 @@
       padding:7px 10px;
       font-size:12px;
       color:var(--muted);
-      width:fit-content;
       margin-top:10px;
     }
     .pill .dot{
       width:7px;height:7px;border-radius:50%;
-      background: color-mix(in srgb, var(--accent) 90%, transparent);
+      background:var(--accent);
       opacity:.85;
     }
 
-    .hr{
-      height:1px;
-      background:var(--line);
-      margin:14px 0 12px;
-    }
+    .hr{ height:1px;background:var(--line);margin:14px 0 12px; }
 
     .grid{
       display:grid;
       grid-template-columns: 110px 1fr;
       gap:8px 16px;
-      padding:2px 0 4px;
     }
-
     .k{
       color:var(--muted);
       letter-spacing:.06em;
       font-size:12px;
       text-transform:uppercase;
-      padding-top:2px;
     }
-    .v{
-      font-size:14px;
-      line-height:1.6;
-    }
-    ul{ margin:0; padding-left:16px; }
+    .v{ font-size:14px;line-height:1.6; }
+    ul{ margin:0;padding-left:16px; }
     li{ margin:3px 0; }
-
-    .cols{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top:10px;
-    }
-    .box{
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px 10px;
-      background:color-mix(in srgb, var(--panel) 92%, transparent);
-    }
-    .box h3{
-      margin:0 0 8px;
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      font-weight:600;
-    }
-    .box p{
-      margin:0;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.6;
-    }
-
-    .cta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .btn{
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:10px 12px;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      background:transparent;
-      cursor:pointer;
-    }
-    .btn:hover{ background: color-mix(in srgb, var(--ink) 4%, transparent); }
-    [data-theme="night"] .btn:hover{ background: color-mix(in srgb, #fff 6%, transparent); }
-
-    .btn.primary{
-      border-color: color-mix(in srgb, var(--ink) 85%, transparent);
-      background: color-mix(in srgb, var(--ink) 92%, transparent);
-      color: var(--panel);
-    }
-    [data-theme="night"] .btn.primary{
-      border-color: rgba(233,231,226,.18);
-      background: rgba(233,231,226,.92);
-      color:#101112;
-    }
 
     .foot{
       margin-top:12px;
@@ -231,17 +143,10 @@
       border-top:1px solid var(--line);
       display:flex;
       justify-content:space-between;
-      align-items:center;
-      gap:10px;
-      color:var(--muted);
       font-size:12px;
+      color:var(--muted);
     }
-    .stamp{ opacity:.7; }
-
-    @media (max-width:760px){
-      .cols{ grid-template-columns:1fr; }
-      .grid{ grid-template-columns: 96px 1fr; }
-    }
+    .stamp{opacity:.7}
   </style>
 </head>
 
@@ -250,26 +155,25 @@
     <main class="card">
       <div class="top">
         <div class="label">COLEMAN VII</div>
-
         <div class="right">
           <div class="status" aria-hidden="true">
             <span class="light"></span><span class="light"></span><span class="light"></span>
           </div>
-          <button class="chip" id="themeBtn" type="button" aria-label="Toggle theme">Night</button>
+          <button class="chip" id="themeBtn">Night</button>
         </div>
       </div>
 
       <div class="headline">Brand systems.</div>
       <p class="sub">Positioning, language, websites, editorial.</p>
 
-      <div class="pill" aria-label="Availability">
-        <span class="dot" aria-hidden="true"></span>
+      <div class="pill">
+        <span class="dot"></span>
         <span><strong>Status:</strong> at capacity (Hestia, Crispi)</span>
       </div>
 
       <div class="hr"></div>
 
-      <section class="grid" aria-label="Briefing">
+      <section class="grid">
         <div class="k">Work</div>
         <div class="v">
           <ul>
@@ -290,28 +194,11 @@
 
         <div class="k">Links</div>
         <div class="v">
-          <a href="https://substack.com/@colemanvii" target="_blank" rel="noopener noreferrer">Writing → Substack</a><br/>
-          <a href="https://github.com/colemanvii" target="_blank" rel="noopener noreferrer">Open work → GitHub</a><br/>
+          <a href="https://substack.com/@colemanvii" target="_blank">Writing → Substack</a><br/>
+          <a href="https://github.com/colemanvii" target="_blank">Open work → GitHub</a><br/>
           <a href="mailto:colecalfee@gmail.com">Email →</a>
         </div>
       </section>
-
-      <div class="cols" aria-label="Modules">
-        <div class="box">
-          <h3>Engagement</h3>
-          <p>Onboard (30 days). Then retainer: build, publish, maintain.</p>
-        </div>
-        <div class="box">
-          <h3>Artifacts</h3>
-          <p>Language system, site, templates, launch notes, living briefing.</p>
-        </div>
-      </div>
-
-      <div class="cta" aria-label="Call to action">
-        <a class="btn primary" href="mailto:colecalfee@gmail.com?subject=Coleman%20VII%20—%20waitlist">Waitlist →</a>
-        <a class="btn" href="https://substack.com/@colemanvii" target="_blank" rel="noopener noreferrer">Notes →</a>
-        <a class="btn" href="https://github.com/colemanvii" target="_blank" rel="noopener noreferrer">Work →</a>
-      </div>
 
       <div class="foot">
         <div>© 2026</div>
@@ -321,41 +208,20 @@
   </div>
 
   <script>
-    // Timestamp (local)
     const ts = document.getElementById('timestamp');
-    const now = new Date();
-    ts.textContent = now.toLocaleString(undefined, {
-      hour: 'numeric',
-      minute: '2-digit',
-      hour12: true,
-      month: 'short',
-      day: 'numeric'
+    ts.textContent = new Date().toLocaleString(undefined,{
+      hour:'numeric',minute:'2-digit',hour12:true,month:'short',day:'numeric'
     });
-
-    // Theme toggle (remembers preference)
-    const themeBtn = document.getElementById('themeBtn');
-    const root = document.documentElement;
-
-    const saved = localStorage.getItem('cvii_theme');
-    if (saved === 'night') root.setAttribute('data-theme', 'night');
-
-    const syncLabel = () => {
-      const night = root.getAttribute('data-theme') === 'night';
-      themeBtn.textContent = night ? 'Day' : 'Night';
+    const btn=document.getElementById('themeBtn');
+    const root=document.documentElement;
+    if(localStorage.getItem('cvii_theme')==='night')root.setAttribute('data-theme','night');
+    btn.textContent=root.getAttribute('data-theme')==='night'?'Day':'Night';
+    btn.onclick=()=>{ 
+      const n=root.getAttribute('data-theme')==='night';
+      root.toggleAttribute('data-theme',!n);
+      localStorage.setItem('cvii_theme',n?'day':'night');
+      btn.textContent=n?'Night':'Day';
     };
-    syncLabel();
-
-    themeBtn.addEventListener('click', () => {
-      const night = root.getAttribute('data-theme') === 'night';
-      if (night) {
-        root.removeAttribute('data-theme');
-        localStorage.setItem('cvii_theme', 'day');
-      } else {
-        root.setAttribute('data-theme', 'night');
-        localStorage.setItem('cvii_theme', 'night');
-      }
-      syncLabel();
-    });
   </script>
 </body>
 </html>
