@@ -6,89 +6,134 @@
   <title>Coleman VII</title>
   <style>
     :root{
-      --bg:#0b0f0c;
-      --ink:#efe7d6;
-      --muted:rgba(239,231,214,.72);
-      --line:rgba(239,231,214,.18);
-      --accent:#d8b77b;
+      --bg:#070b08;                 /* pine-shadow */
+      --ink:rgba(239,231,214,.92);  /* bone */
+      --line:rgba(239,231,214,.14); /* worn engraving */
+      --line2:rgba(239,231,214,.08);
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
       background:var(--bg);
       color:var(--ink);
-      line-height:1.7;
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-    .wrap{max-width:860px;margin:0 auto;padding:96px 24px}
-    .kicker{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-    h1{font-size:40px;margin:12px 0 10px;letter-spacing:.2px}
-    p{font-size:18px;color:var(--muted);margin:0 0 22px}
-    .card{
-      border:1px solid var(--line);
-      border-radius:22px;
-      padding:44px 40px;
-      background:rgba(255,255,255,.03);
+
+    /* faint “stone” texture */
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      pointer-events:none;
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(900px 700px at 85% 35%, rgba(255,255,255,.04), transparent 55%),
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 35%, rgba(0,0,0,.35));
+      mix-blend-mode: overlay;
+      opacity:.9;
     }
+
+    .wrap{
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 96px 24px;
+      min-height:100%;
+      display:flex;
+      align-items:center;
+    }
+
+    .frame{
+      width:100%;
+      border:1px solid var(--line2);
+      border-radius:28px;
+      padding:56px 52px;
+      background:rgba(255,255,255,.02);
+    }
+
+    .kicker{
+      letter-spacing:.32em;
+      text-transform:uppercase;
+      font-size:12px;
+      opacity:.75;
+      margin:0 0 18px;
+    }
+
+    h1{
+      margin:0 0 34px;
+      font-size:52px;
+      letter-spacing:.02em;
+      font-weight:700;
+    }
+
     .grid{
       display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-      margin-top:18px;
+      grid-template-columns: 1fr;
+      gap:14px;
+      margin-top:12px;
     }
-    a.btn{
+
+    a.door{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:16px 18px;
-      border-radius:16px;
       text-decoration:none;
-      border:1px solid var(--line);
       color:var(--ink);
+      padding:18px 20px;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:transparent;
       font-weight:700;
-      letter-spacing:.2px;
+      letter-spacing:.01em;
+      font-size:20px;
     }
-    a.btn:hover{border-color:rgba(239,231,214,.30)}
-    .hint{font-weight:400;color:var(--muted);margin-left:12px}
-    footer{margin-top:18px;font-size:13px;color:var(--muted)}
-    @media (min-width:720px){
-      .grid{grid-template-columns:1fr 1fr}
+
+    .arrow{
+      opacity:.75;
+      font-weight:700;
+      letter-spacing:.02em;
+    }
+
+    /* no hover theatrics — only slight clarity */
+    a.door:hover{ border-color:rgba(239,231,214,.22); }
+
+    @media (min-width: 820px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      h1{ font-size:56px; }
+      a.door{ font-size:22px; padding:20px 22px; }
+    }
+
+    @media (max-width: 420px){
+      .frame{ padding:44px 22px; border-radius:24px; }
+      h1{ font-size:44px; }
     }
   </style>
 </head>
 <body>
   <main class="wrap">
-    <div class="kicker">Coleman VII</div>
-    <h1>Gateway</h1>
-    <p>Choose a door.</p>
+    <section class="frame" aria-label="Coleman VII Gateway">
+      <div class="kicker">Coleman VII</div>
+      <h1>Gateway</h1>
 
-    <section class="card">
-      <div class="grid">
+      <nav class="grid">
         <!-- Replace these href values with your real URLs -->
-        <a class="btn" href="https://YOUR_HAVEN_DOMAIN_OR_URL">
-          Haven <span class="hint">alignment</span>
-          <span>→</span>
+        <a class="door" href="https://YOUR_HAVEN_DOMAIN_OR_URL">
+          <span>Haven</span><span class="arrow">→</span>
         </a>
 
-        <a class="btn" href="https://YOUR_WESTOVER_DOMAIN_OR_URL">
-          Westover <span class="hint">a place</span>
-          <span>→</span>
+        <a class="door" href="https://YOUR_WESTOVER_DOMAIN_OR_URL">
+          <span>Westover</span><span class="arrow">→</span>
         </a>
 
-        <a class="btn" href="https://YOUR_FESTINA_LENTE_DOMAIN_OR_URL">
-          Festina Lente <span class="hint">pace</span>
-          <span>→</span>
+        <a class="door" href="https://YOUR_FESTINA_LENTE_DOMAIN_OR_URL">
+          <span>Festina Lente</span><span class="arrow">→</span>
         </a>
 
-        <a class="btn" href="https://YOUR_MINT_CONDITION_DOMAIN_OR_URL">
-          Mint Condition <span class="hint">release</span>
-          <span>→</span>
+        <a class="door" href="https://YOUR_MINT_CONDITION_DOMAIN_OR_URL">
+          <span>Mint Condition</span><span class="arrow">→</span>
         </a>
-      </div>
-
-      <footer>
-        If nothing calls you, leave freely. If something does, take your time.
-      </footer>
+      </nav>
     </section>
   </main>
 </body>
