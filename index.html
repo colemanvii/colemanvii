@@ -3,190 +3,123 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coleman VII</title>
+  <title>Coleman VII — Gateway</title>
+
   <style>
     :root{
-      /* Southern futurist: pine-black + bone + brass */
-      --bg:#060906;
-      --ink:rgba(246,240,226,.92);
-      --muted:rgba(246,240,226,.62);
-      --line:rgba(246,240,226,.14);
-      --line2:rgba(246,240,226,.08);
-      --brass:rgba(216,183,123,.55);
+      --bg:#0b0d0a;
+      --panel:#0f120e;
+      --ink:#e9e6dd;
+      --muted:rgba(233,230,221,.55);
+      --line:rgba(233,230,221,.12);
+      --accent:#d87a2c; /* TBPn orange */
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
-
     body{
       margin:0;
-      background: radial-gradient(1200px 700px at 25% 10%, rgba(255,255,255,.05), transparent 60%),
-                  radial-gradient(900px 600px at 80% 35%, rgba(216,183,123,.05), transparent 55%),
-                  linear-gradient(180deg, rgba(255,255,255,.02), transparent 35%, rgba(0,0,0,.45)),
-                  var(--bg);
-      color:var(--ink);
-      /* Thick, enduring, “built for speed” */
-      font-family: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-    }
-
-    /* subtle “machined” grain */
-    body:before{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          rgba(255,255,255,.018) 0px,
-          rgba(255,255,255,.018) 1px,
-          transparent 1px,
-          transparent 7px
-        );
-      opacity:.22;
-      mix-blend-mode: overlay;
-    }
-
-    .wrap{
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 84px 22px;
-      min-height:100%;
+      min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
+      background:
+        radial-gradient(1200px 600px at 30% -10%, #151a14 0%, transparent 60%),
+        linear-gradient(#090b08, #050604);
+      color:var(--ink);
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      letter-spacing:.01em;
     }
 
-    .frame{
-      width:min(1020px, 100%);
-      border:1px solid var(--line2);
-      border-radius:22px; /* less bubbly */
-      padding:52px 54px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.015));
+    .gate{
+      width:min(920px, 92vw);
+      padding:48px 52px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent),
+                 var(--panel);
+      border:1px solid var(--line);
+      border-radius:18px;
       box-shadow:
-        0 0 0 1px rgba(0,0,0,.55) inset,
-        0 30px 90px rgba(0,0,0,.55);
+        0 40px 120px rgba(0,0,0,.75),
+        inset 0 1px 0 rgba(255,255,255,.03);
     }
 
     .kicker{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      letter-spacing:.42em;
+      font-size:11px;
+      letter-spacing:.28em;
       text-transform:uppercase;
-      font-size:12px;
       color:var(--muted);
-      margin:0 0 16px;
+      margin-bottom:12px;
     }
 
     h1{
-      margin:0 0 28px;
+      margin:0 0 28px 0;
       font-size:56px;
-      line-height:1.03;
-      font-weight:900;           /* thicker */
-      letter-spacing:-.02em;     /* faster */
+      line-height:1;
+      font-weight:700;
     }
 
-    .grid{
+    .doors{
       display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-      margin-top:10px;
+      grid-template-columns:1fr 1fr;
+      gap:18px 22px;
     }
 
-    a.door{
+    .door{
+      position:relative;
+      padding:22px 26px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      text-decoration:none;
+      color:var(--ink);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      text-decoration:none;
-      color:var(--ink);
-
-      padding:18px 20px;
-      border-radius:16px;
-
-      /* “machined plaque” */
-      border:1px solid var(--line);
-      background:
-        linear-gradient(180deg, rgba(0,0,0,.22), rgba(255,255,255,.02));
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,.55) inset;
-
-      font-size:22px;
-      font-weight:850;
-      letter-spacing:-.01em;
-    }
-
-    .label{
-      display:flex;
-      gap:12px;
-      align-items:baseline;
-    }
-
-    .name{
-      text-transform:uppercase;
-      letter-spacing:.08em; /* sign-paint + mission control */
-      font-weight:900;
       font-size:18px;
-    }
-
-    .arrow{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-weight:600;
       letter-spacing:.08em;
-      opacity:.85;
+      text-transform:uppercase;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.03), transparent);
+      transition:transform .15s ease, border-color .15s ease;
     }
 
-    /* No theatrics; just “tightening” */
-    a.door:hover{
-      border-color:rgba(246,240,226,.22);
-      box-shadow:
-        0 0 0 1px rgba(0,0,0,.65) inset,
-        0 0 0 1px rgba(216,183,123,.14);
+    .door::after{
+      content:"→";
+      font-size:20px;
+      color:var(--muted);
     }
 
-    @media (min-width: 860px){
-      .grid{ grid-template-columns: 1fr 1fr; gap:14px; }
-      h1{ font-size:64px; }
-      .frame{ padding:58px 62px; }
+    .door:hover{
+      transform:translateY(-1px);
+      border-color:var(--accent);
     }
 
-    @media (max-width: 430px){
-      .frame{ padding:44px 20px; border-radius:18px; }
-      h1{ font-size:48px; }
-      a.door{ padding:16px 16px; font-size:20px; }
-      .name{ font-size:16px; }
+    .door:hover::after{
+      color:var(--accent);
+    }
+
+    @media (max-width:720px){
+      h1{font-size:42px}
+      .doors{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-  <main class="wrap">
-    <section class="frame" aria-label="Coleman VII Gateway">
-      <div class="kicker">COLEMAN VII</div>
-      <h1>Gateway</h1>
+  <section class="gate">
+    <div class="kicker">Coleman VII</div>
+    <h1>Gateway</h1>
 
-      <nav class="grid">
-        <a class="door" href="https://YOUR_HAVEN_DOMAIN_OR_URL">
-          <span class="label"><span class="name">Haven</span></span>
-          <span class="arrow">→</span>
-        </a>
-
-        <a class="door" href="https://YOUR_WESTOVER_DOMAIN_OR_URL">
-          <span class="label"><span class="name">Westover</span></span>
-          <span class="arrow">→</span>
-        </a>
-
-        <a class="door" href="https://YOUR_FESTINA_LENTE_DOMAIN_OR_URL">
-          <span class="label"><span class="name">Festina&nbsp;Lente</span></span>
-          <span class="arrow">→</span>
-        </a>
-
-        <a class="door" href="https://YOUR_MINT_CONDITION_DOMAIN_OR_URL">
-          <span class="label"><span class="name">Mint&nbsp;Condition</span></span>
-          <span class="arrow">→</span>
-        </a>
-      </nav>
-    </section>
-  </main>
+    <div class="doors">
+      <a class="door" href="/haven/">Haven</a>
+      <a class="door" href="/333-westover/">Westover</a>
+      <a class="door" href="/festina-lente/">Festina Lente</a>
+      <a class="door"
+         href="https://mntcondition.substack.com/?utm_campaign=profile_chips"
+         target="_blank"
+         rel="noopener">
+        Mint Condition
+      </a>
+    </div>
+  </section>
 </body>
 </html>
