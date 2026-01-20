@@ -3,122 +3,132 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Coleman VII — Gateway</title>
+  <title>COLEMAN VII — SYSTEM</title>
 
   <style>
-    :root{
-      --bg:#0b0d0a;
-      --panel:#0f120e;
-      --ink:#e9e6dd;
-      --muted:rgba(233,230,221,.55);
-      --line:rgba(233,230,221,.12);
-      --accent:#d87a2c; /* TBPn orange */
+    :root {
+      --bg: #F4F4F2; /* Bone / Gateway Hardware */
+      --ink: #000000;
+      --accent: #d87a2c; /* TPPN Orange */
+      --line: #000000;
     }
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:
-        radial-gradient(1200px 600px at 30% -10%, #151a14 0%, transparent 60%),
-        linear-gradient(#090b08, #050604);
-      color:var(--ink);
-      font-family: ui-serif, Georgia, "Times New Roman", serif;
-      letter-spacing:.01em;
+    * { box-sizing: border-box; }
+    
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Courier New", Courier, monospace;
+      letter-spacing: -0.02em;
     }
 
-    .gate{
-      width:min(920px, 92vw);
-      padding:48px 52px;
-      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent),
-                 var(--panel);
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:
-        0 40px 120px rgba(0,0,0,.75),
-        inset 0 1px 0 rgba(255,255,255,.03);
+    /* THE MONITOR */
+    .gate {
+      width: min(800px, 92vw);
+      border: 2px solid var(--line);
+      background: #FFFFFF;
+      padding: 0; /* Header-controlled */
     }
 
-    .kicker{
-      font-size:11px;
-      letter-spacing:.28em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:12px;
+    .status-bar {
+      background: var(--line);
+      color: var(--bg);
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      justify-content: space-between;
     }
 
-    h1{
-      margin:0 0 28px 0;
-      font-size:56px;
-      line-height:1;
-      font-weight:700;
+    .main-well {
+      padding: 60px 50px;
     }
 
-    .doors{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px 22px;
+    h1 {
+      margin: 0 0 40px 0;
+      font-size: 64px;
+      line-height: 0.9;
+      font-weight: 900;
+      font-family: "Times New Roman", Times, serif;
+      text-transform: uppercase;
+      font-style: italic;
     }
 
-    .door{
-      position:relative;
-      padding:22px 26px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      text-decoration:none;
-      color:var(--ink);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      font-size:18px;
-      font-weight:600;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.03), transparent);
-      transition:transform .15s ease, border-color .15s ease;
+    .doors {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0; /* Merged borders for crispy grid */
     }
 
-    .door::after{
-      content:"→";
-      font-size:20px;
-      color:var(--muted);
+    .door {
+      position: relative;
+      padding: 20px;
+      border: 1px solid var(--line);
+      text-decoration: none;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.1s;
     }
 
-    .door:hover{
-      transform:translateY(-1px);
-      border-color:var(--accent);
+    .door-label {
+      font-size: 10px;
+      margin-bottom: 8px;
+      opacity: 0.6;
     }
 
-    .door:hover::after{
-      color:var(--accent);
+    .door:hover {
+      background: var(--accent);
+      color: #FFF;
     }
 
-    @media (max-width:720px){
-      h1{font-size:42px}
-      .doors{grid-template-columns:1fr}
+    @media (max-width:720px) {
+      h1 { font-size: 42px; }
+      .doors { grid-template-columns: 1fr; }
+      .main-well { padding: 30px 20px; }
     }
   </style>
 </head>
 
 <body>
   <section class="gate">
-    <div class="kicker">Coleman VII</div>
-    <h1>Gateway</h1>
+    <div class="status-bar">
+      <span>Coleman VII OS v.1.0</span>
+      <span>READY_</span>
+    </div>
 
-    <div class="doors">
-      <a class="door" href="/haven/">Haven</a>
-      <a class="door" href="/333-westover/">Westover</a>
-      <a class="door" href="/festina-lente/">Festina Lente</a>
-      <a class="door"
-         href="https://mntcondition.substack.com/?utm_campaign=profile_chips"
-         target="_blank"
-         rel="noopener">
-        Mint Condition
-      </a>
+    <div class="main-well">
+      <h1>Gateway</h1>
+
+      <div class="doors">
+        <a class="door" href="/haven/">
+          <span class="door-label">01 // STRUCTURE</span>
+          HAVEN
+        </a>
+        <a class="door" href="/333-westover/">
+          <span class="door-label">02 // TRANSMISSION</span>
+          WESTOVER
+        </a>
+        <a class="door" href="/festina-lente/">
+          <span class="door-label">03 // PHILOSOPHY</span>
+          FESTINA LENTE
+        </a>
+        <a class="door"
+           href="https://mntcondition.substack.com/"
+           target="_blank">
+          <span class="door-label">04 // ARCHIVE</span>
+          MINT CONDITION
+        </a>
+      </div>
     </div>
   </section>
 </body>
