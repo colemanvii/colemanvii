@@ -3,133 +3,540 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>COLEMAN VII — SYSTEM</title>
+  <title>COLEMAN VII</title>
+  <meta name="description" content="Coleman VII — storytelling systems for brands." />
 
   <style>
-    :root {
-      --bg: #F4F4F2; /* Bone / Gateway Hardware */
-      --ink: #000000;
-      --accent: #d87a2c; /* TPPN Orange */
-      --line: #000000;
+    :root{
+      --bg:#f4f2ee;
+      --paper:#ffffff;
+      --ink:#111;
+      --muted:#5b5b5b;
+      --line:#222;
+      --bar:#000;
+      --apricot:#F4A261;
+      --shadow: 0 0 0 1px rgba(0,0,0,.04);
     }
 
-    * { box-sizing: border-box; }
-    
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: "Courier New", Courier, monospace;
-      letter-spacing: -0.02em;
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: .2px;
     }
 
-    /* THE MONITOR */
-    .gate {
-      width: min(800px, 92vw);
+    a{ color:inherit; }
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: clamp(18px, 4vw, 44px);
+    }
+
+    .panel{
+      width: min(1100px, 100%);
+      background: var(--paper);
       border: 2px solid var(--line);
-      background: #FFFFFF;
-      padding: 0; /* Header-controlled */
+      box-shadow: var(--shadow);
     }
 
-    .status-bar {
-      background: var(--line);
-      color: var(--bg);
-      padding: 8px 12px;
-      font-size: 11px;
-      font-weight: bold;
+    .topbar{
+      height: 38px;
+      background: var(--bar);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 0 14px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      display: flex;
-      justify-content: space-between;
+      letter-spacing: 1px;
+      gap:12px;
     }
 
-    .main-well {
-      padding: 60px 50px;
+    .topbar .right{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      letter-spacing: 2px;
+      white-space:nowrap;
     }
 
-    h1 {
-      margin: 0 0 40px 0;
-      font-size: 64px;
-      line-height: 0.9;
-      font-weight: 900;
-      font-family: "Times New Roman", Times, serif;
-      text-transform: uppercase;
+    .cursor{
+      display:inline-block;
+      width: 8px;
+      height: 12px;
+      background:#fff;
+      transform: translateY(2px);
+      animation: blink 1s steps(1,end) infinite;
+      opacity:.9;
+    }
+    @keyframes blink{ 50%{ opacity:0; } }
+
+    .content{
+      padding: clamp(20px, 4vw, 46px);
+    }
+
+    /* Header */
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: clamp(16px, 3vw, 26px);
+      align-items:start;
+      margin-bottom: 22px;
+    }
+
+    .brand{
+      margin: 6px 0 10px 0;
+      font-family: Georgia, "Times New Roman", Times, serif;
       font-style: italic;
+      font-weight: 700;
+      font-size: clamp(44px, 6.5vw, 86px);
+      letter-spacing: .5px;
+      line-height: 1;
     }
 
-    .doors {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0; /* Merged borders for crispy grid */
+    .brand .accent{ color: var(--apricot); }
+
+    .lede{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      max-width: 64ch;
+      margin: 0;
     }
 
-    .door {
-      position: relative;
-      padding: 20px;
-      border: 1px solid var(--line);
-      text-decoration: none;
-      color: var(--ink);
-      display: flex;
-      flex-direction: column;
-      font-size: 14px;
-      font-weight: bold;
-      transition: background 0.1s;
+    .ctaRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 10px 14px;
+      margin-top: 16px;
+      align-items:center;
     }
 
-    .door-label {
-      font-size: 10px;
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      border: 2px solid var(--line);
+      padding: 10px 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+      background:#fff;
+    }
+    .btn:hover{ background:#f1efe9; }
+    .btn.primary{
+      background: var(--bar);
+      color:#fff;
+      border-color: var(--bar);
+    }
+    .btn.primary:hover{ filter: brightness(0.95); }
+
+    .sidecard{
+      border: 2px solid var(--line);
+      padding: 14px;
+    }
+
+    .sidecard .label{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--muted);
       margin-bottom: 8px;
-      opacity: 0.6;
     }
 
-    .door:hover {
-      background: var(--accent);
-      color: #FFF;
+    .sidecard .mono{
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 0;
     }
 
-    @media (max-width:720px) {
-      h1 { font-size: 42px; }
-      .doors { grid-template-columns: 1fr; }
-      .main-well { padding: 30px 20px; }
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .pill{
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background:#fff;
+    }
+
+    /* Grid modules */
+    .gridbox{
+      border: 2px solid var(--line);
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: 18px;
+    }
+
+    .cell{
+      padding: 18px 20px;
+      min-height: 92px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap: 8px;
+      position:relative;
+    }
+
+    .cell:nth-child(1),
+    .cell:nth-child(2){ border-bottom: 2px solid var(--line); }
+    .cell:nth-child(1),
+    .cell:nth-child(3){ border-right: 2px solid var(--line); }
+
+    .meta{
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .title{
+      display:inline-flex;
+      align-items:baseline;
+      gap: 10px;
+      text-decoration:none;
+      color: var(--ink);
+      font-weight: 900;
+      letter-spacing: .8px;
+      text-transform: uppercase;
+      font-size: 16px;
+      width: fit-content;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 2px;
+    }
+
+    .sub{
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      margin:0;
+      max-width: 62ch;
+    }
+
+    .cell:hover{ background:#f1efe9; }
+    .cell:hover .title{ border-bottom-color: var(--ink); }
+
+    /* Full-tile click */
+    .cell > a.hit{
+      position:absolute;
+      inset:0;
+      border:0;
+      text-decoration:none;
+      color:inherit;
+    }
+    .cell > a.hit:focus-visible{
+      outline: 2px solid #000;
+      outline-offset: -2px;
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 24px;
+      border-top: 2px solid var(--line);
+      padding-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .section h2{
+      margin:0 0 10px 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+    .section p, .section li{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    .section ul{
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+
+    .box{
+      border: 2px solid var(--line);
+      padding: 14px;
+      background:#fff;
+    }
+
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .kpi .k{
+      border: 1px solid var(--line);
+      padding: 10px;
+      background:#fff;
+    }
+    .k .small{
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 6px;
+    }
+    .k .big{
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    /* Footer */
+    .footer{
+      margin-top: 22px;
+      border-top: 2px solid var(--line);
+      padding-top: 14px;
+      display:flex;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .footer a{
+      text-decoration:none;
+      border-bottom:1px solid var(--line);
+      padding-bottom:1px;
+      color: var(--ink);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 11px;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px){
+      .hero{ grid-template-columns: 1fr; }
+      .section{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px){
+      .gridbox{ grid-template-columns: 1fr; }
+      .cell:nth-child(1),
+      .cell:nth-child(2),
+      .cell:nth-child(3){
+        border-right: none;
+        border-bottom: 2px solid var(--line);
+      }
+      .cell:nth-child(4){ border-bottom: none; }
     }
   </style>
 </head>
 
 <body>
-  <section class="gate">
-    <div class="status-bar">
-      <span>Coleman VII OS v.1.0</span>
-      <span>READY_</span>
-    </div>
-
-    <div class="main-well">
-      <h1>Gateway</h1>
-
-      <div class="doors">
-        <a class="door" href="/haven/">
-          <span class="door-label">01 // STRUCTURE</span>
-          HAVEN
-        </a>
-        <a class="door" href="/333-westover/">
-          <span class="door-label">02 // TRANSMISSION</span>
-          WESTOVER
-        </a>
-        <a class="door" href="/festina-lente/">
-          <span class="door-label">03 // PHILOSOPHY</span>
-          FESTINA LENTE
-        </a>
-        <a class="door"
-           href="https://mntcondition.substack.com/"
-           target="_blank">
-          <span class="door-label">04 // ARCHIVE</span>
-          MINT CONDITION
-        </a>
+  <main class="wrap">
+    <section class="panel" aria-label="Coleman VII">
+      <div class="topbar">
+        <div>COLEMAN VII</div>
+        <div class="right">READY_<span class="cursor" aria-hidden="true"></span></div>
       </div>
-    </div>
-  </section>
+
+      <div class="content">
+        <!-- HERO -->
+        <div class="hero">
+          <div>
+            <h1 class="brand">
+              COLE<span class="accent">M</span>AN VII
+            </h1>
+
+            <p class="lede">
+              Storytelling systems for brands: clear positioning, strong narrative, repeatable output.
+              Built for retainers—steady work, clean communication, no fluff.
+            </p>
+
+            <div class="ctaRow">
+              <!-- Update email + booking link -->
+              <a class="btn primary" href="mailto:hello@colemanvii.com">Start a conversation</a>
+              <a class="btn" href="#work">See the system</a>
+              <a class="btn" href="#retainer">Retainer</a>
+              <!-- Optional: link to your portal page if you make one -->
+              <a class="btn" href="#portal">Client portal</a>
+            </div>
+          </div>
+
+          <aside class="sidecard">
+            <div class="label">Status</div>
+            <p class="mono" style="margin:0;">
+              Operating model: <strong>retainer</strong><br/>
+              Output cadence: <strong>weekly</strong><br/>
+              Tone: <strong>calm / direct</strong>
+            </p>
+
+            <div class="pillRow">
+              <span class="pill">Strategy</span>
+              <span class="pill">Story</span>
+              <span class="pill">Design</span>
+              <span class="pill">Launch</span>
+              <span class="pill">Systems</span>
+            </div>
+          </aside>
+        </div>
+
+        <!-- NAV GRID -->
+        <div id="work" class="gridbox" role="navigation" aria-label="Primary modules">
+          <div class="cell">
+            <a class="hit" href="#retainer" aria-label="Go to Retainer module"></a>
+            <div class="meta">01 // OFFER</div>
+            <div class="title">RETainer</div>
+            <p class="sub">Monthly partnership. You get a steady slot and a clean pipeline of story + assets.</p>
+          </div>
+
+          <div class="cell">
+            <a class="hit" href="#system" aria-label="Go to System module"></a>
+            <div class="meta">02 // METHOD</div>
+            <div class="title">SYSTEM</div>
+            <p class="sub">A simple framework to turn raw brand truth into repeatable, publishable output.</p>
+          </div>
+
+          <div class="cell">
+            <a class="hit" href="#worktypes" aria-label="Go to Work module"></a>
+            <div class="meta">03 // OUTPUT</div>
+            <div class="title">WORK</div>
+            <p class="sub">Films, landing pages, brand docs, and narrative kits—built for real use.</p>
+          </div>
+
+          <div class="cell">
+            <a class="hit" href="#contact" aria-label="Go to Contact module"></a>
+            <div class="meta">04 // CONTACT</div>
+            <div class="title">CONTACT</div>
+            <p class="sub">Short note. Clear goal. We’ll decide quickly if it’s a fit.</p>
+          </div>
+        </div>
+
+        <!-- SECTIONS -->
+        <div class="section" id="retainer">
+          <div class="box">
+            <h2>Retainer</h2>
+            <p style="margin:0;">
+              You’re buying <strong>continuity</strong>. I help you keep telling the truth about your brand—cleanly,
+              consistently, with assets that match the story.
+            </p>
+
+            <div class="kpi">
+              <div class="k">
+                <div class="small">Cadence</div>
+                <div class="big">Weekly deliverables</div>
+              </div>
+              <div class="k">
+                <div class="small">Focus</div>
+                <div class="big">Story → Output</div>
+              </div>
+              <div class="k">
+                <div class="small">Workflow</div>
+                <div class="big">One thread, one source of truth</div>
+              </div>
+              <div class="k">
+                <div class="small">Fit</div>
+                <div class="big">Brands who value restraint</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="box" id="system">
+            <h2>System</h2>
+            <p style="margin:0;">
+              A practical chain that keeps things from getting vague:
+            </p>
+            <ul>
+              <li><strong>Position</strong> — the sentence you can actually defend.</li>
+              <li><strong>Narrative</strong> — what you stand for + what you refuse to be.</li>
+              <li><strong>Assets</strong> — pages, films, decks, posts, kits.</li>
+              <li><strong>Cadence</strong> — publish rhythm; keep the signal clean.</li>
+            </ul>
+
+            <p style="margin:10px 0 0 0;">
+              Result: you stop “starting over” every month.
+            </p>
+          </div>
+        </div>
+
+        <div class="section" id="worktypes">
+          <div class="box">
+            <h2>Work</h2>
+            <ul>
+              <li>Brand narrative + messaging system (one document, real language)</li>
+              <li>Landing pages (structure first, beauty second, speed always)</li>
+              <li>Short film + documentary-style storytelling</li>
+              <li>Launch kits: story, visuals, sequencing, distribution plan</li>
+              <li>Client portal / dashboard setup (simple, useful, alive)</li>
+            </ul>
+          </div>
+
+          <div class="box" id="portal">
+            <h2>Client portal</h2>
+            <p style="margin:0;">
+              If you want, I’ll build a lightweight portal so you can:
+            </p>
+            <ul>
+              <li>see what’s in progress</li>
+              <li>drop feedback in one place</li>
+              <li>book your monthly slot</li>
+              <li>keep assets organized</li>
+            </ul>
+            <p style="margin:10px 0 0 0;">
+              (This can live here as <code>/portal</code> when you’re ready.)
+            </p>
+          </div>
+        </div>
+
+        <div class="section" id="contact">
+          <div class="box">
+            <h2>Contact</h2>
+            <p style="margin:0 0 10px 0;">
+              Send three lines:
+              <br/>1) what you sell
+              <br/>2) what’s not working
+              <br/>3) what “good” looks like in 30 days
+            </p>
+            <div class="ctaRow">
+              <a class="btn primary" href="mailto:hello@colemanvii.com?subject=Coleman%20VII%20—%20Retainer&body=1)%20What%20we%20sell:%0D%0A2)%20What%E2%80%99s%20not%20working:%0D%0A3)%20What%20good%20looks%20like%20in%2030%20days:%0D%0A">Email</a>
+              <!-- Optional: add your calendly/booking link -->
+              <a class="btn" href="#" onclick="alert('Add your booking link (Calendly, etc.) to this button.'); return false;">Book</a>
+            </div>
+          </div>
+
+          <div class="box">
+            <h2>Notes</h2>
+            <ul style="margin-top:0;">
+              <li>I work best with one decision-maker.</li>
+              <li>Small team is fine. Slow and steady is preferred.</li>
+              <li>We protect attention. We ship what matters.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div>© <span id="y"></span> COLEMAN VII</div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <!-- Update these -->
+            <a href="https://github.com/colemanvii" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://westovr.substack.com/" target="_blank" rel="noreferrer">Westover</a>
+            <a href="/" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Top</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
