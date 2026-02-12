@@ -3,38 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>COLEMAN VII</title>
+  <title>COLEMAN VII — GATEWAY</title>
+  <meta name="description" content="Coleman VII — Gateway." />
+
   <style>
     :root{
       --bg:#f4f2ee;
       --paper:#fff;
       --ink:#111;
-      --muted:#555;
-      --line:#222;
+      --muted:#666;
+      --line:#1f1f1f;
       --bar:#000;
+      --hover:#f1efe9;
+      --apricot:#F4A261;
     }
+
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
+
     body{
       margin:0;
       background:var(--bg);
       color:var(--ink);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       letter-spacing:.2px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
+
     .wrap{
       min-height:100%;
       display:grid;
       place-items:center;
-      padding: clamp(18px, 4vw, 44px);
+      padding: clamp(18px, 4vw, 52px);
     }
+
     .panel{
       width: min(980px, 100%);
       background: var(--paper);
       border: 2px solid var(--line);
     }
+
     .topbar{
-      height: 36px;
+      height: 38px;
       background: var(--bar);
       color:#fff;
       display:flex;
@@ -43,36 +54,62 @@
       padding: 0 14px;
       font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
     }
-    .topbar .right{ letter-spacing:2px; }
 
-    .content{ padding: clamp(22px, 4vw, 46px); }
+    .right{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing: 2px;
+      white-space:nowrap;
+    }
+
+    .cursor{
+      width: 9px;
+      height: 12px;
+      background:#fff;
+      display:inline-block;
+      opacity:.95;
+      transform: translateY(1px);
+      animation: blink 1s steps(1,end) infinite;
+    }
+    @keyframes blink{ 50%{ opacity:0; } }
+
+    .content{
+      padding: clamp(24px, 4vw, 52px);
+    }
 
     .gateway{
-      margin: 6px 0 26px 0;
+      margin: 2px 0 28px 0;
       font-family: Georgia, "Times New Roman", Times, serif;
       font-style: italic;
-      font-weight: 600;
-      font-size: clamp(44px, 7vw, 86px);
-      letter-spacing: .5px;
+      font-weight: 650;
+      font-size: clamp(46px, 7vw, 92px);
+      letter-spacing: .6px;
       line-height: 1;
     }
 
-    .gridbox{
+    .gateway .accent{
+      color: var(--apricot);
+    }
+
+    .grid{
       border: 2px solid var(--line);
       display:grid;
       grid-template-columns: 1fr 1fr;
     }
+
     .cell{
+      position:relative;
       padding: 18px 20px;
-      min-height: 86px;
+      min-height: 92px;
       display:flex;
       flex-direction:column;
       justify-content:center;
       gap: 8px;
-      position:relative;
     }
+
     .cell:nth-child(1),
     .cell:nth-child(2){ border-bottom: 2px solid var(--line); }
     .cell:nth-child(1),
@@ -82,36 +119,67 @@
       font-size: 11px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 1.2px;
+      letter-spacing: 1.4px;
     }
+
     .link{
       display:inline-flex;
       width: fit-content;
       text-decoration:none;
       color: var(--ink);
-      font-weight: 800;
-      letter-spacing: .8px;
+      font-weight: 900;
+      letter-spacing: 1px;
       text-transform: uppercase;
       font-size: 16px;
       border-bottom: 1px solid transparent;
       padding-bottom: 2px;
     }
 
-    /* Full-tile click */
-    .cell > a.hit{
+    .hint{
+      margin:0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .hit{
       position:absolute;
       inset:0;
       text-decoration:none;
       color:inherit;
     }
 
-    /* Hover: quiet */
-    .cell:hover{ background:#f1efe9; }
+    .cell:hover{ background: var(--hover); }
     .cell:hover .link{ border-bottom-color: var(--ink); }
 
-    /* Mobile: stack */
+    .hit:focus-visible{
+      outline: 2px solid #000;
+      outline-offset: -2px;
+    }
+
+    .footer{
+      margin-top: 18px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .footer a{
+      text-decoration:none;
+      border-bottom:1px solid var(--line);
+      padding-bottom:1px;
+      color: var(--ink);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 11px;
+    }
+
     @media (max-width: 640px){
-      .gridbox{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
       .cell:nth-child(1),
       .cell:nth-child(2),
       .cell:nth-child(3){
@@ -125,4 +193,61 @@
 
 <body>
   <main class="wrap">
-    <section class
+    <section class="panel" aria-label="Coleman VII Gateway">
+      <div class="topbar">
+        <div>COLEMAN VII OS v1.0</div>
+        <div class="right">READY_<span class="cursor" aria-hidden="true"></span></div>
+      </div>
+
+      <div class="content">
+        <h1 class="gateway">GATE<span class="accent">W</span>AY</h1>
+
+        <div class="grid" role="navigation" aria-label="Primary links">
+          <!-- 01 HAVEN (repo) -->
+          <div class="cell">
+            <a class="hit" href="https://github.com/colemanvii/haven" target="_blank" rel="noreferrer" aria-label="Open Haven repository"></a>
+            <div class="meta">01 // STRUCTURE</div>
+            <a class="link" href="https://github.com/colemanvii/haven" target="_blank" rel="noreferrer">HAVEN</a>
+            <p class="hint">Repository / system notes.</p>
+          </div>
+
+          <!-- 02 GITHUB (profile) -->
+          <div class="cell">
+            <a class="hit" href="https://github.com/colemanvii" target="_blank" rel="noreferrer" aria-label="Open GitHub profile"></a>
+            <div class="meta">02 // CODE</div>
+            <a class="link" href="https://github.com/colemanvii" target="_blank" rel="noreferrer">GITHUB</a>
+            <p class="hint">Profile / work log.</p>
+          </div>
+
+          <!-- 03 TANGERINE (internal page) -->
+          <div class="cell">
+            <a class="hit" href="/tangerine/" aria-label="Open Tangerine"></a>
+            <div class="meta">03 // STUDIO</div>
+            <a class="link" href="/tangerine/">TANGERINE</a>
+            <p class="hint">Studio page.</p>
+          </div>
+
+          <!-- 04 WESTOVER (substack) -->
+          <div class="cell">
+            <a class="hit" href="https://westovr.substack.com/" target="_blank" rel="noreferrer" aria-label="Open Westover Substack"></a>
+            <div class="meta">04 // JOURNAL</div>
+            <a class="link" href="https://westovr.substack.com/" target="_blank" rel="noreferrer">WESTOVER</a>
+            <p class="hint">Writing / notes.</p>
+          </div>
+        </div>
+
+        <div class="footer">
+          <div>© <span id="y"></span> COLEMAN VII</div>
+          <div>
+            <a href="mailto:hello@colemanvii.com">Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
