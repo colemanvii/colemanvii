@@ -2,252 +2,278 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>COLEMAN VII — GATEWAY</title>
-  <meta name="description" content="Coleman VII — Gateway." />
-
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>COLEMAN VII OS v1.0 — GATEWAY</title>
+  <meta name="description" content="COLEMAN VII OS v1.0 — Gateway" />
   <style>
     :root{
-      --bg:#f4f2ee;
-      --paper:#fff;
-      --ink:#111;
-      --muted:#666;
-      --line:#1f1f1f;
-      --bar:#000;
-      --hover:#f1efe9;
-      --apricot:#F4A261;
+      --bg:#f4f1ea;
+      --paper:#faf7f0;
+      --ink:#0e0e10;
+      --muted:#6b6b73;
+      --line:#1a1a1f;
+      --accent:#d7a06a;
+      --shadow:rgba(0,0,0,.08);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       background:var(--bg);
       color:var(--ink);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       letter-spacing:.2px;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     .wrap{
       min-height:100%;
-      display:grid;
-      place-items:center;
-      padding: clamp(18px, 4vw, 52px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
     }
 
-    .panel{
-      width: min(980px, 100%);
-      background: var(--paper);
-      border: 2px solid var(--line);
+    .frame{
+      width:min(820px, 100%);
+      background:var(--paper);
+      border:3px solid var(--ink);
+      box-shadow: 0 14px 40px var(--shadow);
     }
 
     .topbar{
-      height: 38px;
-      background: var(--bar);
-      color:#fff;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding: 0 14px;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
+      background:var(--ink);
+      color:var(--paper);
+      padding:14px 16px;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:1.2px;
     }
 
-    .right{
+    .topbar .right{
       display:flex;
       align-items:center;
       gap:10px;
-      letter-spacing: 2px;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      opacity:.95;
+    }
+
+    .dot{
+      width:10px;height:10px;
+      border:2px solid var(--paper);
+      display:inline-block;
+    }
+
+    .content{
+      padding:26px 22px 18px;
+    }
+
+    .title{
+      margin:0 0 18px;
+      font-family: Georgia, "Times New Roman", Times, serif;
+      font-weight:600;
+      font-size:72px;
+      line-height:1;
+      letter-spacing:.5px;
+    }
+    .title .gate{color:var(--ink)}
+    .title .way{color:var(--accent)}
+
+    .grid{
+      border:2px solid var(--line);
+      background:transparent;
+    }
+
+    .item{
+      display:flex;
+      align-items:stretch;
+      justify-content:space-between;
+      gap:18px;
+      padding:18px 18px 16px;
+      border-top:2px solid var(--line);
+    }
+    .item:first-child{border-top:none}
+
+    .meta{
+      min-width:160px;
+      font-size:14px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:1.1px;
+      padding-top:2px;
       white-space:nowrap;
     }
 
-    .cursor{
-      width: 9px;
-      height: 12px;
-      background:#fff;
-      display:inline-block;
-      opacity:.95;
-      transform: translateY(1px);
-      animation: blink 1s steps(1,end) infinite;
-    }
-    @keyframes blink{ 50%{ opacity:0; } }
-
-    .content{
-      padding: clamp(24px, 4vw, 52px);
+    .main{
+      flex:1;
     }
 
-    .gateway{
-      margin: 2px 0 28px 0;
-      font-family: Georgia, "Times New Roman", Times, serif;
-      font-style: italic;
-      font-weight: 650;
-      font-size: clamp(46px, 7vw, 92px);
-      letter-spacing: .6px;
-      line-height: 1;
-    }
-
-    .gateway .accent{
-      color: var(--apricot);
-    }
-
-    .grid{
-      border: 2px solid var(--line);
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .cell{
-      position:relative;
-      padding: 18px 20px;
-      min-height: 92px;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      gap: 8px;
-    }
-
-    .cell:nth-child(1),
-    .cell:nth-child(2){ border-bottom: 2px solid var(--line); }
-    .cell:nth-child(1),
-    .cell:nth-child(3){ border-right: 2px solid var(--line); }
-
-    .meta{
-      font-size: 11px;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1.4px;
-    }
-
-    .link{
-      display:inline-flex;
-      width: fit-content;
-      text-decoration:none;
-      color: var(--ink);
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-size: 16px;
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-    }
-
-    .hint{
+    .name{
       margin:0;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
+      font-size:28px;
+      letter-spacing:1.2px;
+      font-weight:700;
+      color:var(--ink);
+      text-transform:uppercase;
     }
 
-    .hit{
-      position:absolute;
-      inset:0;
+    .desc{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.4;
+    }
+
+    a.cardlink{
+      display:flex;
+      gap:18px;
       text-decoration:none;
       color:inherit;
+      width:100%;
     }
 
-    .cell:hover{ background: var(--hover); }
-    .cell:hover .link{ border-bottom-color: var(--ink); }
-
-    .hit:focus-visible{
-      outline: 2px solid #000;
-      outline-offset: -2px;
+    /* CLIENT PORTAL button style — still feels like a module row */
+    .portal{
+      position:relative;
+    }
+    .portal .name{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .pill{
+      font-size:12px;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      border:2px solid var(--ink);
+      padding:3px 8px;
+      background:transparent;
     }
 
     .footer{
-      margin-top: 18px;
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-      font-size: 12px;
-      color: var(--muted);
+      padding:14px 18px 16px;
+      border-top:2px solid var(--line);
+      font-size:14px;
+      color:var(--muted);
     }
 
     .footer a{
+      color:var(--ink);
       text-decoration:none;
-      border-bottom:1px solid var(--line);
-      padding-bottom:1px;
-      color: var(--ink);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 11px;
+      border-bottom:2px solid var(--ink);
+      padding-bottom:2px;
+      text-transform:uppercase;
+      letter-spacing:1.1px;
     }
 
-    @media (max-width: 640px){
-      .grid{ grid-template-columns: 1fr; }
-      .cell:nth-child(1),
-      .cell:nth-child(2),
-      .cell:nth-child(3){
-        border-right:none;
-        border-bottom: 2px solid var(--line);
-      }
-      .cell:nth-child(4){ border-bottom:none; }
+    /* Subtle hover: command, not playful */
+    .item:hover{
+      background:rgba(0,0,0,.03);
+    }
+    .item:hover .name{letter-spacing:1.35px}
+    .item:active{
+      background:rgba(0,0,0,.05);
+    }
+
+    /* Mobile */
+    @media (max-width:560px){
+      .title{font-size:54px}
+      .item{flex-direction:column; gap:10px}
+      .meta{min-width:auto}
+      a.cardlink{flex-direction:column}
     }
   </style>
 </head>
-
 <body>
-  <main class="wrap">
-    <section class="panel" aria-label="Coleman VII Gateway">
-      <div class="topbar">
+  <div class="wrap">
+    <main class="frame" role="main" aria-label="COLEMAN VII OS Gateway">
+      <header class="topbar">
         <div>COLEMAN VII OS v1.0</div>
-        <div class="right">READY_<span class="cursor" aria-hidden="true"></span></div>
-      </div>
+        <div class="right">
+          <div class="status">READY_<span class="dot" aria-hidden="true"></span></div>
+        </div>
+      </header>
 
-      <div class="content">
-        <h1 class="gateway">GATE<span class="accent">W</span>AY</h1>
+      <section class="content">
+        <h1 class="title" aria-label="Gateway">
+          <span class="gate">GATE</span><span class="way">WAY</span>
+        </h1>
 
-        <div class="grid" role="navigation" aria-label="Primary links">
-          <!-- 01 HAVEN (repo) -->
-          <div class="cell">
-            <a class="hit" href="https://github.com/colemanvii/haven" target="_blank" rel="noreferrer" aria-label="Open Haven repository"></a>
-            <div class="meta">01 // STRUCTURE</div>
-            <a class="link" href="https://github.com/colemanvii/haven" target="_blank" rel="noreferrer">HAVEN</a>
-            <p class="hint">Repository / system notes.</p>
+        <div class="grid" role="list">
+          <div class="item" role="listitem">
+            <a class="cardlink" href="/haven" aria-label="Haven">
+              <div class="meta">01 // STRUCTURE</div>
+              <div class="main">
+                <p class="name">HAVEN</p>
+                <p class="desc">Repository / system notes.</p>
+              </div>
+            </a>
           </div>
 
-          <!-- 02 GITHUB (profile) -->
-          <div class="cell">
-            <a class="hit" href="https://github.com/colemanvii" target="_blank" rel="noreferrer" aria-label="Open GitHub profile"></a>
-            <div class="meta">02 // CODE</div>
-            <a class="link" href="https://github.com/colemanvii" target="_blank" rel="noreferrer">GITHUB</a>
-            <p class="hint">Profile / work log.</p>
+          <div class="item" role="listitem">
+            <a class="cardlink" href="https://github.com/" aria-label="GitHub">
+              <div class="meta">02 // CODE</div>
+              <div class="main">
+                <p class="name">GITHUB</p>
+                <p class="desc">Profile / work log.</p>
+              </div>
+            </a>
           </div>
 
-          <!-- 03 TANGERINE (internal page) -->
-          <div class="cell">
-            <a class="hit" href="/tangerine/" aria-label="Open Tangerine"></a>
-            <div class="meta">03 // STUDIO</div>
-            <a class="link" href="/tangerine/">TANGERINE</a>
-            <p class="hint">Studio page.</p>
+          <div class="item" role="listitem">
+            <a class="cardlink" href="/tangerine" aria-label="Tangerine">
+              <div class="meta">03 // STUDIO</div>
+              <div class="main">
+                <p class="name">TANGERINE</p>
+                <p class="desc">Studio page.</p>
+              </div>
+            </a>
           </div>
 
-          <!-- 04 WESTOVER (substack) -->
-          <div class="cell">
-            <a class="hit" href="https://westovr.substack.com/" target="_blank" rel="noreferrer" aria-label="Open Westover Substack"></a>
-            <div class="meta">04 // JOURNAL</div>
-            <a class="link" href="https://westovr.substack.com/" target="_blank" rel="noreferrer">WESTOVER</a>
-            <p class="hint">Writing / notes.</p>
+          <div class="item" role="listitem">
+            <a class="cardlink" href="/westover" aria-label="Westover">
+              <div class="meta">04 // JOURNAL</div>
+              <div class="main">
+                <p class="name">WESTOVER</p>
+                <p class="desc">Writing / notes.</p>
+              </div>
+            </a>
+          </div>
+
+          <!-- NEW: Client Portal -->
+          <div class="item portal" role="listitem">
+            <a class="cardlink" href="/client-portal" aria-label="Client Portal">
+              <div class="meta">05 // ACCESS</div>
+              <div class="main">
+                <p class="name">CLIENT PORTAL <span class="pill">ENTER</span></p>
+                <p class="desc">Secure / workspace.</p>
+              </div>
+            </a>
           </div>
         </div>
+      </section>
 
-        <div class="footer">
-          <div>© <span id="y"></span> COLEMAN VII</div>
-          <div>
-            <a href="mailto:hello@colemanvii.com">Contact</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+      <footer class="footer">
+        <div>© <span id="year"></span> COLEMAN VII</div>
+        <a href="/contact" aria-label="Contact">CONTACT</a>
+      </footer>
+    </main>
+  </div>
 
   <script>
-    document.getElementById("y").textContent = new Date().getFullYear();
+    // Set year (tiny, utilitarian)
+    document.getElementById("year").textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
