@@ -1,301 +1,268 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>COLEMAN VII OS v1.0 — GATEWAY</title>
-  <meta name="description" content="COLEMAN VII OS v1.0 — Gateway" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>colemanvii</title>
 
-  <style>
-    :root{
-      --bg:#f4f1ea;
-      --paper:#faf7f0;
-      --ink:#0e0e10;
-      --muted:#6b6b73;
-      --line:#1a1a1f;
-      --accent:#d7a06a;
-      --shadow:rgba(0,0,0,.08);
-    }
+<style>
+:root{
+  --bg:#e9e1d3;
+  --bg2:#efe7d9;
+  --panel:#f4ecde;
+  --ink:#1c1a17;
+  --muted:#6e685f;
+  --line:#cfc6b8;
+  --line2:#bdb3a4;
+  --shadow:0 30px 80px rgba(0,0,0,.12);
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+  --mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Courier New",monospace;
+  --sans:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+}
 
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--ink);
-      font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
-      letter-spacing:.2px;
-    }
+*{box-sizing:border-box}
 
-    .wrap{
-      min-height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }
+body{
+  margin:0;
+  font-family:var(--sans);
+  color:var(--ink);
+  background:
+    radial-gradient(900px 600px at 50% 10%, rgba(0,0,0,.05), transparent 60%),
+    var(--bg);
+}
 
-    .frame{
-      width:min(820px,100%);
-      background:var(--paper);
-      border:3px solid var(--ink);
-      box-shadow:0 14px 40px var(--shadow);
-    }
+/* subtle paper grain */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+  mix-blend-mode:multiply;
+}
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      background:var(--ink);
-      color:var(--paper);
-      padding:14px 16px;
-      font-size:14px;
-      text-transform:uppercase;
-      letter-spacing:1.2px;
-    }
+/* top bar */
+.topbar{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(900px,94vw);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  border-radius:16px;
+  background:linear-gradient(var(--panel),var(--bg2));
+  border:1px solid var(--line);
+  box-shadow:0 12px 30px rgba(0,0,0,.08);
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:lowercase;
+}
 
-    .console-status{
-      display:flex;
-      align-items:center;
-      gap:14px;
-    }
+.brand{letter-spacing:.15em;}
 
-    .lights{
-      display:flex;
-      gap:6px;
-    }
+.indicator{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ff8c1a;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.12),
+    0 0 14px rgba(255,140,26,.65),
+    0 0 36px rgba(255,140,26,.45),
+    0 0 70px rgba(255,140,26,.30);
+  animation:ember 2s ease-in-out infinite;
+}
 
-    .light{
-      width:8px;
-      height:8px;
-      border:2px solid var(--paper);
-      background:var(--paper);
-      opacity:.15;
-    }
+@keyframes ember{
+  0%{opacity:.6; transform:scale(.95);}
+  50%{opacity:1; transform:scale(1.08);}
+  100%{opacity:.6; transform:scale(.95);}
+}
 
-    .light-1{animation:blink 2.4s infinite}
-    .light-2{animation:blink 2.4s infinite .4s}
-    .light-3{animation:blink 2.4s infinite .8s}
+.status{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
 
-    @keyframes blink{
-      0%,100%{opacity:.15}
-      50%{opacity:1}
-    }
+.status a{
+  text-decoration:none;
+  color:var(--ink);
+  border-bottom:1px solid var(--line2);
+}
+.status a:hover{border-bottom-color:var(--ink);}
 
-    .content{
-      padding:26px 22px 18px;
-    }
+/* layout */
+.wrap{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:110px 22px 60px;
+}
 
-    .title{
-      margin:0 0 18px;
-      font-family:Georgia,"Times New Roman",Times,serif;
-      font-weight:600;
-      font-size:72px;
-      line-height:1;
-      letter-spacing:.5px;
-    }
+.frame{
+  width:min(900px,94vw);
+  border-radius:28px;
+  background:linear-gradient(var(--panel),var(--bg2));
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  padding:30px;
+  position:relative;
+}
 
-    .title .gate{color:var(--ink)}
-    .title .way{color:var(--accent)}
+.frame::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  border-radius:20px;
+  border:1px solid rgba(0,0,0,.05);
+  pointer-events:none;
+}
 
-    .grid{
-      border:2px solid var(--line);
-    }
+/* navigation */
+.stack{
+  border-radius:22px;
+  border:1px solid var(--line);
+  overflow:hidden;
+}
 
-    .item{
-      display:flex;
-      align-items:stretch;
-      gap:18px;
-      padding:18px 18px 16px;
-      border-top:2px solid var(--line);
-    }
+.card{
+  display:grid;
+  grid-template-columns:90px 1fr 50px;
+  align-items:center;
+  gap:16px;
+  padding:34px 26px;
+  text-decoration:none;
+  color:inherit;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(var(--panel),var(--bg2));
+  transition:background .15s ease, transform .1s ease;
+}
 
-    .item:first-child{border-top:none}
+.card:last-child{border-bottom:none;}
 
-    .meta{
-      min-width:160px;
-      font-size:14px;
-      color:var(--muted);
-      text-transform:uppercase;
-      letter-spacing:1.1px;
-      padding-top:2px;
-      white-space:nowrap;
-    }
+.card:hover{
+  background:linear-gradient(#fffaf1,#efe7d9);
+  transform:translateY(-1px);
+}
 
-    .main{flex:1}
+.num{
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
 
-    .name{
-      margin:0;
-      font-size:28px;
-      letter-spacing:1.2px;
-      font-weight:700;
-      color:var(--ink);
-      text-transform:uppercase;
-    }
+.title{
+  font-family:var(--mono);
+  font-weight:700;
+  font-size:clamp(20px,2.4vw,28px);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
 
-    .desc{
-      margin:6px 0 0;
-      color:var(--muted);
-      font-size:15px;
-      line-height:1.4;
-    }
+.title.tight{letter-spacing:.10em;}
 
-    a.cardlink{
-      display:flex;
-      gap:18px;
-      text-decoration:none;
-      color:inherit;
-      width:100%;
-    }
+.sub{
+  margin-top:6px;
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--muted);
+}
 
-    .portal .name{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-    }
+.arrow{
+  text-align:right;
+  font-family:var(--mono);
+  font-size:14px;
+  color:rgba(110,104,95,.55);
+}
 
-    .pill{
-      font-size:12px;
-      letter-spacing:1.2px;
-      text-transform:uppercase;
-      border:2px solid var(--ink);
-      padding:3px 8px;
-    }
+/* footer */
+.footer{
+  margin-top:28px;
+  font-family:var(--mono);
+  font-size:12px;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:flex;
+  justify-content:space-between;
+}
 
-    .footer{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 18px 16px;
-      border-top:2px solid var(--line);
-      font-size:14px;
-      color:var(--muted);
-    }
-
-    .footer a{
-      color:var(--ink);
-      text-decoration:none;
-      border-bottom:2px solid var(--ink);
-      padding-bottom:2px;
-      text-transform:uppercase;
-      letter-spacing:1.1px;
-    }
-
-    .item:hover{
-      background:rgba(0,0,0,.03);
-    }
-
-    .item:hover .name{
-      letter-spacing:1.35px;
-    }
-
-    @media (max-width:560px){
-      .title{font-size:54px}
-      .item{flex-direction:column;gap:10px}
-      .meta{min-width:auto}
-      a.cardlink{flex-direction:column}
-    }
-  </style>
+.footer a{
+  text-decoration:none;
+  color:var(--ink);
+  border-bottom:1px solid var(--line2);
+}
+.footer a:hover{border-bottom-color:var(--ink);}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <main class="frame">
 
-      <header class="topbar">
-        <div>COLEMAN VII OS v1.0</div>
-        <div class="console-status">
-          <span>READY</span>
-          <div class="lights">
-            <span class="light light-1"></span>
-            <span class="light light-2"></span>
-            <span class="light light-3"></span>
-          </div>
-        </div>
-      </header>
+<div class="topbar">
+  <div class="brand">colemanvii</div>
+  <div class="status">
+    <a href="/logout">log out</a>
+    <span class="indicator"></span>
+  </div>
+</div>
 
-      <section class="content">
-        <h1 class="title">
-          <span class="gate">GATE</span><span class="way">WAY</span>
-        </h1>
+<main class="wrap">
+<section class="frame">
 
-        <div class="grid">
+  <nav class="stack">
+    <a class="card" href="https://westovr.substack.com/" target="_blank">
+      <div class="num">01 //</div>
+      <div>
+        <div class="title">Westover</div>
+        <div class="sub">writing</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
 
-          <div class="item">
-            <a class="cardlink"
-               href="https://colemanvii.github.io/haven/"
-               target="_blank"
-               rel="noopener noreferrer">
-              <div class="meta">01 // STRUCTURE</div>
-              <div class="main">
-                <p class="name">HAVEN</p>
-                <p class="desc">Repository / system notes.</p>
-              </div>
-            </a>
-          </div>
+    <a class="card" href="/monk">
+      <div class="num">02 //</div>
+      <div>
+        <div class="title">Monk</div>
+        <div class="sub">film · building</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
 
-          <div class="item">
-            <a class="cardlink"
-               href="https://github.com/colemanvii"
-               target="_blank"
-               rel="noopener noreferrer">
-              <div class="meta">02 // CODE</div>
-              <div class="main">
-                <p class="name">GITHUB</p>
-                <p class="desc">Profile / work log.</p>
-              </div>
-            </a>
-          </div>
+    <a class="card" href="https://github.com/colemanvii" target="_blank">
+      <div class="num">03 //</div>
+      <div>
+        <div class="title">Github</div>
+        <div class="sub">system log</div>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
 
-          <div class="item">
-            <a class="cardlink" href="/tangerine/">
-              <div class="meta">03 // STUDIO</div>
-              <div class="main">
-                <p class="name">TANGERINE</p>
-                <p class="desc">Studio page.</p>
-              </div>
-            </a>
-          </div>
+    <a class="card" href="/404">
+      <div class="num">04 //</div>
+      <div>
+        <div class="title tight">Client Portal</div>
+        <div class="sub">secure workspace</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </nav>
 
-          <div class="item">
-            <a class="cardlink"
-               href="https://westovr.substack.com/"
-               target="_blank"
-               rel="noopener noreferrer">
-              <div class="meta">04 // JOURNAL</div>
-              <div class="main">
-                <p class="name">WESTOVER</p>
-                <p class="desc">Writing / notes.</p>
-              </div>
-            </a>
-          </div>
-
-          <div class="item portal">
-            <a class="cardlink" href="/client-portal/">
-              <div class="meta">05 // ACCESS</div>
-              <div class="main">
-                <p class="name">CLIENT PORTAL <span class="pill">ENTER</span></p>
-                <p class="desc">Secure / workspace.</p>
-              </div>
-            </a>
-          </div>
-
-        </div>
-      </section>
-
-      <footer class="footer">
-        <div>© <span id="year"></span> COLEMAN VII</div>
-        <a href="mailto:colecalfee@gmail.com">CONTACT</a>
-      </footer>
-
-    </main>
+  <div class="footer">
+    <span>© 2026 colemanvii</span>
+    <a href="/contact">contact</a>
   </div>
 
-  <script>
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
-  </script>
+</section>
+</main>
 
 </body>
 </html>
