@@ -1,3 +1,3 @@
 # ColemanVII
 
-A working index of systems, writing, and experiments.
+A working index of systems and experiments.
