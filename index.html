@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>colemanvii</title>
+<title>COLEMANVII</title>
 
 <style>
 :root{
@@ -29,6 +29,10 @@ body{
   background:
     radial-gradient(900px 600px at 50% 10%, rgba(0,0,0,.05), transparent 60%),
     var(--bg);
+  display:grid;
+  place-items:center;
+  min-height:100vh;
+  padding:40px 20px;
 }
 
 /* subtle paper grain */
@@ -43,86 +47,32 @@ body::after{
   mix-blend-mode:multiply;
 }
 
-/* top bar */
-.topbar{
-  position:fixed;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  width:min(900px,94vw);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:14px 18px;
-  border-radius:16px;
-  background:linear-gradient(var(--panel),var(--bg2));
-  border:1px solid var(--line);
-  box-shadow:0 12px 30px rgba(0,0,0,.08);
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.15em;
-  text-transform:lowercase;
-}
-
-.brand{letter-spacing:.15em;}
-
-.indicator{
-  width:12px;
-  height:12px;
-  border-radius:50%;
-  background:#ff8c1a;
-  box-shadow:
-    0 0 0 1px rgba(0,0,0,.12),
-    0 0 14px rgba(255,140,26,.65),
-    0 0 36px rgba(255,140,26,.45),
-    0 0 70px rgba(255,140,26,.30);
-  animation:ember 2s ease-in-out infinite;
-}
-
-@keyframes ember{
-  0%{opacity:.6; transform:scale(.95);}
-  50%{opacity:1; transform:scale(1.08);}
-  100%{opacity:.6; transform:scale(.95);}
-}
-
-.status{
-  display:flex;
-  align-items:center;
-  gap:18px;
-}
-
-.status a{
-  text-decoration:none;
-  color:var(--ink);
-  border-bottom:1px solid var(--line2);
-}
-.status a:hover{border-bottom-color:var(--ink);}
-
-/* layout */
-.wrap{
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:110px 22px 60px;
-}
-
 .frame{
   width:min(900px,94vw);
   border-radius:28px;
   background:linear-gradient(var(--panel),var(--bg2));
   border:1px solid var(--line);
   box-shadow:var(--shadow);
-  padding:30px;
+  padding:40px;
   position:relative;
 }
 
 .frame::before{
   content:"";
   position:absolute;
-  inset:14px;
+  inset:16px;
   border-radius:20px;
   border:1px solid rgba(0,0,0,.05);
   pointer-events:none;
+}
+
+/* header */
+.header{
+  font-family:var(--mono);
+  font-size:14px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  margin-bottom:36px;
 }
 
 /* navigation */
@@ -142,14 +92,13 @@ body::after{
   color:inherit;
   border-bottom:1px solid var(--line);
   background:linear-gradient(var(--panel),var(--bg2));
-  transition:background .15s ease, transform .1s ease;
+  transition:background .15s ease;
 }
 
 .card:last-child{border-bottom:none;}
 
 .card:hover{
   background:linear-gradient(#fffaf1,#efe7d9);
-  transform:translateY(-1px);
 }
 
 .num{
@@ -186,10 +135,10 @@ body::after{
 
 /* footer */
 .footer{
-  margin-top:28px;
+  margin-top:36px;
   font-family:var(--mono);
   font-size:12px;
-  letter-spacing:.15em;
+  letter-spacing:.2em;
   text-transform:uppercase;
   color:var(--muted);
   display:flex;
@@ -207,16 +156,9 @@ body::after{
 
 <body>
 
-<div class="topbar">
-  <div class="brand">colemanvii</div>
-  <div class="status">
-    <a href="/logout">log out</a>
-    <span class="indicator"></span>
-  </div>
-</div>
-
-<main class="wrap">
 <section class="frame">
+
+  <div class="header">COLEMANVII</div>
 
   <nav class="stack">
     <a class="card" href="https://westovr.substack.com/" target="_blank">
@@ -257,12 +199,11 @@ body::after{
   </nav>
 
   <div class="footer">
-    <span>© 2026 colemanvii</span>
-    <a href="/contact">contact</a>
+    <span>© 2026 COLEMANVII</span>
+    <a href="/contact">CONTACT</a>
   </div>
 
 </section>
-</main>
 
 </body>
 </html>
