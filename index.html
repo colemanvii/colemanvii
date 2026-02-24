@@ -3,150 +3,467 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Coleman VII</title>
+<title>COLEMANVII</title>
+
 <style>
-  * {
-    box-sizing: border-box;
+  * { box-sizing: border-box; }
+
+  :root{
+    --bg1:#e9dfcf;
+    --bg2:#d8cbb8;
+    --card:#efe6d6;
+    --ink:#1a1a1a;
+    --line: rgba(0,0,0,0.06);
+    --shadow: rgba(0,0,0,0.08);
+    --dot:#d97b30;
   }
 
   body {
     margin: 0;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to bottom, #e9dfcf, #d8cbb8);
+    display: grid;
+    place-items: center;
+    background: linear-gradient(to bottom, var(--bg1), var(--bg2));
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    transition: background 480ms ease;
   }
 
   .frame {
     width: 100%;
-    max-width: 420px;
-    padding: 24px;
+    max-width: 560px;
+    padding: 28px;
     display: flex;
     justify-content: center;
   }
 
   .card {
     width: 100%;
+    max-width: 420px;
+    position: relative;
     border-radius: 28px;
-    background: #efe6d6;
+    background: var(--card);
     padding: 28px 24px;
     box-shadow:
-      0 10px 30px rgba(0,0,0,0.08),
+      0 12px 32px var(--shadow),
       inset 0 0 0 1px rgba(0,0,0,0.04);
+    overflow: hidden;
+  }
+
+  /* subtle “surface noise” */
+  .card::before{
+    content:"";
+    position:absolute;
+    inset:-40%;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255,255,255,0.22), transparent 55%),
+      radial-gradient(circle at 75% 65%, rgba(0,0,0,0.06), transparent 60%);
+    transform: rotate(6deg);
+    pointer-events:none;
+    opacity: .55;
+    transition: opacity 380ms ease;
   }
 
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
     letter-spacing: 1px;
     font-size: 12px;
     opacity: 0.7;
+    position: relative;
+    z-index: 1;
   }
 
   .router-dot {
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #d97b30;
+    background: var(--dot);
     margin-right: 6px;
     display: inline-block;
+    transform: translateY(-1px);
   }
 
   .menu-item {
     padding: 18px 0;
-    border-top: 1px solid rgba(0,0,0,0.06);
+    border-top: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+    z-index: 1;
   }
+  .menu-item:first-of-type { border-top: none; }
 
-  .menu-item:first-of-type {
-    border-top: none;
-  }
-
-  .menu-left {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .menu-title {
-    font-weight: 600;
-    letter-spacing: 2px;
-  }
-
-  .menu-sub {
-    font-size: 13px;
-    opacity: 0.6;
-    margin-top: 4px;
-  }
-
-  .chevron {
-    opacity: 0.35;
-    font-size: 18px;
-  }
+  .menu-title { font-weight: 600; letter-spacing: 2px; }
+  .menu-sub { font-size: 13px; opacity: 0.6; margin-top: 4px; }
+  .chevron { opacity: 0.32; font-size: 18px; }
 
   .footer {
-    margin-top: 28px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(0,0,0,0.06);
+    margin-top: 24px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
     font-size: 12px;
     display: flex;
     justify-content: space-between;
     opacity: 0.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---------------------------
+     VEIL VARIANT A: Top 60% sheet
+  ---------------------------- */
+  .veil.sheet {
+    position: absolute;
+    left: 0; right: 0; top: 0;
+    height: 62%;
+    padding: 22px 22px 18px 22px;
+    background: rgba(239, 230, 214, 0.58);
+    backdrop-filter: blur(11px);
+    -webkit-backdrop-filter: blur(11px);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,0.04);
+    border-radius: 28px 28px 22px 22px;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+    z-index: 3;
+    transition: opacity 220ms ease, transform 260ms ease;
+  }
+
+  .veil.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+  }
+
+  .veil-topline{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: .6;
+  }
+
+  .veil-close{
+    appearance:none;
+    border:none;
+    background: transparent;
+    font-size: 18px;
+    line-height: 1;
+    opacity: .45;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 10px;
+  }
+  .veil-close:hover{ opacity: .7; }
+
+  .veil-title{
+    margin: 2px 0 0 0;
+    font-size: 20px;
+    letter-spacing: 1px;
+  }
+
+  .veil-copy{
+    margin: 0;
+    font-size: 13.5px;
+    opacity: .72;
+    line-height: 1.45;
+  }
+
+  .veil-cta{
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 12px 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.35);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    letter-spacing: 1px;
+    font-size: 13px;
+  }
+  .veil-cta:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(0,0,0,0.12);
+  }
+  .veil-cta span{
+    opacity: 0.7;
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+
+  /* ---------------------------
+     VEIL VARIANT B: Thin strip notif
+  ---------------------------- */
+  .veil.strip {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    top: 14px;
+    padding: 12px 14px;
+    border-radius: 18px;
+    background: rgba(239, 230, 214, 0.62);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.10);
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transform: translateY(-2px);
+    transition: opacity 220ms ease, transform 260ms ease;
+  }
+
+  .strip-left{
+    min-width: 0;
+  }
+  .strip-title{
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: .75;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .strip-link{
+    font-size: 12px;
+    letter-spacing: 1px;
+    opacity: .65;
+    text-decoration: none;
+    color: var(--ink);
+    padding: 8px 10px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.30);
+  }
+  .strip-link:hover{ opacity: .85; }
+
+  /* toggle which veil is shown */
+  .veil-mode { display:none; }
+  .veil-mode[data-active="true"]{ display:grid; }
+  .veil-strip-mode { display:none; }
+  .veil-strip-mode[data-active="true"]{ display:flex; }
+
+  /* ---------------------------
+     IMAGINATIVE SWITCH
+  ---------------------------- */
+  .switch-row{
+    margin-top: 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 12px;
+    opacity: .72;
+    user-select: none;
+  }
+
+  .switch-label{
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+
+  .switch{
+    position: relative;
+    width: 46px;
+    height: 26px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.30);
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.06), 0 8px 18px rgba(0,0,0,0.10);
+    cursor: pointer;
+    transition: background 260ms ease;
+  }
+
+  .switch::after{
+    content:"";
+    position:absolute;
+    top: 4px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(239, 230, 214, 0.95);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+    transition: transform 260ms ease;
+  }
+
+  body.signal .switch{
+    background: rgba(255,255,255,0.40);
+  }
+  body.signal .switch::after{
+    transform: translateX(20px);
+  }
+
+  /* imaginative effect: “Signal” mode */
+  body.signal{
+    background: radial-gradient(circle at 50% 20%, #efe6d6 0%, #d9ccb7 55%, #cdbca5 100%);
+  }
+  body.signal .card::before{ opacity: .85; }
+
+  /* “wayfinding light” */
+  .beacon{
+    position: absolute;
+    inset: -120px;
+    background: radial-gradient(circle at var(--x,50%) var(--y,35%), rgba(217,123,48,0.18), transparent 45%);
+    pointer-events:none;
+    opacity: 0;
+    transition: opacity 380ms ease;
+    z-index: 2;
+  }
+  body.signal .beacon{ opacity: 1; }
+
+  /* router dot heartbeat in signal mode */
+  body.signal .router-dot{
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ transform: translateY(-1px) scale(1); opacity: .95; }
+    50%{ transform: translateY(-1px) scale(1.45); opacity: .65; }
+  }
+
+  /* reduced motion respect */
+  @media (prefers-reduced-motion: reduce){
+    * { transition: none !important; animation: none !important; }
   }
 </style>
 </head>
+
 <body>
+  <div class="frame">
+    <div class="card" id="card">
 
-<div class="frame">
-  <div class="card">
-    <div class="header">
-      <div>COLEMANVII</div>
-      <div><span class="router-dot"></span>ROUTER</div>
-    </div>
+      <div class="beacon" id="beacon"></div>
 
-    <div class="menu-item">
-      <div class="menu-left">
-        <div class="menu-title">WESTOVER</div>
-        <div class="menu-sub">writing</div>
+      <!-- VEIL A (top sheet) -->
+      <div class="veil sheet veil-mode" id="veilSheet" data-active="true">
+        <div class="veil-topline">
+          <div>HAVEN</div>
+          <button class="veil-close" id="closeSheet" aria-label="Close">×</button>
+        </div>
+
+        <h1 class="veil-title">Welcome to Haven.</h1>
+        <p class="veil-copy">Click here to log in to the system:</p>
+
+        <a class="veil-cta" href="/login">
+          <span>ENTER</span>
+          <div>Log In</div>
+        </a>
+
+        <p class="veil-copy" style="opacity:.55; margin-top:6px;">
+          (Switch below toggles “Signal.”)
+        </p>
       </div>
-      <div class="chevron">›</div>
-    </div>
 
-    <div class="menu-item">
-      <div class="menu-left">
-        <div class="menu-title">MONK</div>
-        <div class="menu-sub">film · building</div>
+      <!-- VEIL B (thin strip) -->
+      <div class="veil strip veil-strip-mode" id="veilStrip" data-active="false">
+        <div class="strip-left">
+          <p class="strip-title">Welcome to Haven — log in to the system</p>
+        </div>
+        <a class="strip-link" href="/login">ENTER ›</a>
       </div>
-      <div class="chevron">›</div>
-    </div>
 
-    <div class="menu-item">
-      <div class="menu-left">
-        <div class="menu-title">GITHUB</div>
-        <div class="menu-sub">system log</div>
+      <!-- ROUTER UI -->
+      <div class="header">
+        <div>COLEMANVII</div>
+        <div><span class="router-dot"></span>ROUTER</div>
       </div>
-      <div class="chevron">›</div>
-    </div>
 
-    <div class="menu-item">
-      <div class="menu-left">
-        <div class="menu-title">CLIENT PORTAL</div>
-        <div class="menu-sub">secure workspace</div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-title">WESTOVER</div>
+          <div class="menu-sub">writing</div>
+        </div>
+        <div class="chevron">›</div>
       </div>
-      <div class="chevron">›</div>
-    </div>
 
-    <div class="footer">
-      <div>© 2026 COLEMANVII</div>
-      <div>CONTACT</div>
+      <div class="menu-item">
+        <div>
+          <div class="menu-title">MONK</div>
+          <div class="menu-sub">film · building</div>
+        </div>
+        <div class="chevron">›</div>
+      </div>
+
+      <div class="menu-item">
+        <div>
+          <div class="menu-title">GITHUB</div>
+          <div class="menu-sub">system log</div>
+        </div>
+        <div class="chevron">›</div>
+      </div>
+
+      <div class="menu-item">
+        <div>
+          <div class="menu-title">CLIENT PORTAL</div>
+          <div class="menu-sub">secure workspace</div>
+        </div>
+        <div class="chevron">›</div>
+      </div>
+
+      <div class="footer">
+        <div>© 2026 COLEMANVII</div>
+        <div>CONTACT</div>
+      </div>
+
+      <!-- Switch lives “below” the panel, still inside the one surface -->
+      <div class="switch-row" style="position:relative; z-index:5;">
+        <div class="switch-label">SIGNAL</div>
+        <div class="switch" id="signalSwitch" role="switch" aria-checked="false" tabindex="0"></div>
+        <div class="switch-label" style="opacity:.55;">(wayfinding light)</div>
+      </div>
+
     </div>
   </div>
-</div>
+
+<script>
+  const body = document.body;
+  const card = document.getElementById('card');
+
+  const veilSheet = document.getElementById('veilSheet');
+  const veilStrip  = document.getElementById('veilStrip');
+  const closeSheet = document.getElementById('closeSheet');
+
+  const signalSwitch = document.getElementById('signalSwitch');
+
+  // Close sheet -> replace with thin strip (still “one surface”)
+  closeSheet.addEventListener('click', () => {
+    veilSheet.classList.add('hidden');
+    setTimeout(() => {
+      veilSheet.dataset.active = "false";
+      veilStrip.dataset.active = "true";
+    }, 220);
+  });
+
+  // Signal toggle: turns on “wayfinding light”, dot heartbeat, warmer glow
+  function toggleSignal(){
+    const on = body.classList.toggle('signal');
+    signalSwitch.setAttribute('aria-checked', on ? 'true' : 'false');
+  }
+
+  signalSwitch.addEventListener('click', toggleSignal);
+  signalSwitch.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleSignal();
+    }
+  });
+
+  // Move the beacon (subtle, only visible in Signal mode)
+  window.addEventListener('pointermove', (e) => {
+    const r = card.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    card.style.setProperty('--x', `${Math.max(0, Math.min(100, x))}%`);
+    card.style.setProperty('--y', `${Math.max(0, Math.min(100, y))}%`);
+  }, { passive: true });
+</script>
 
 </body>
 </html>
