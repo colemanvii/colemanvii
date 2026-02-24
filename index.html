@@ -2,266 +2,236 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>COLEMANVII</title>
 
 <style>
 :root{
-  /* Manila / Stark Frost */
-  --bg:#e9e1d3;
-  --bg2:#efe7d9;
-  --panel:#f4ecde;
-
-  --ink:#1c1a17;
-  --muted:#6e685f;
-
-  /* refined line system */
-  --line:rgba(28,26,23,.18);
-  --lineSoft:rgba(28,26,23,.10);
-  --lineFaint:rgba(28,26,23,.06);
-
-  --shadow:0 34px 90px rgba(0,0,0,.13);
-
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-  --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  --bg-0:#d8cbb6;
+  --bg-1:#cfc0a9;
+  --panel:#e8dcc7;
+  --panel-2:#e1d3bd;
+  --ink:#141210;
+  --muted:rgba(20,18,16,.55);
+  --hair:rgba(20,18,16,.12);
+  --hair-2:rgba(20,18,16,.08);
+  --amber:#ff6a00;
 }
 
 *{box-sizing:border-box}
+html,body{height:100%}
 
 body{
   margin:0;
-  min-height:100vh;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+  color:var(--ink);
+  background:
+    radial-gradient(1000px 600px at 50% 35%, rgba(255,255,255,.35), rgba(255,255,255,0) 60%),
+    radial-gradient(900px 500px at 50% 70%, rgba(0,0,0,.06), rgba(0,0,0,0) 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
   display:grid;
   place-items:center;
-  padding:44px 22px;
-  color:var(--ink);
-  font-family:var(--sans);
-  background:
-    radial-gradient(950px 620px at 50% 12%, rgba(0,0,0,.055), transparent 62%),
-    radial-gradient(900px 600px at 50% 110%, rgba(0,0,0,.035), transparent 60%),
-    var(--bg);
+  padding:32px;
 }
 
-/* ultra-subtle paper grain */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.045;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='170' height='170' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-  background-size:240px 240px;
-  mix-blend-mode:multiply;
-}
-
-/* main panel */
 .frame{
-  width:min(920px, 94vw);
-  border-radius:30px;
-  background: linear-gradient(180deg, #f7f0e5 0%, var(--panel) 45%, var(--bg2) 100%);
-  border:1px solid var(--lineSoft);
-  box-shadow: var(--shadow);
-  padding:44px 44px 32px;
-  position:relative;
-}
-
-/* inner hairline + soft inner vignette */
-.frame::before{
-  content:"";
-  position:absolute;
-  inset:16px;
+  width:min(820px,92vw);
   border-radius:22px;
-  border:1px solid var(--lineFaint);
-  pointer-events:none;
-}
-.frame::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:30px;
-  pointer-events:none;
-  background: radial-gradient(900px 520px at 50% 35%, rgba(0,0,0,.03), transparent 58%);
+  background:linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.12));
+  border:1px solid rgba(255,255,255,.5);
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.12),
+    inset 0 1px 0 rgba(255,255,255,.4);
+  padding:22px;
 }
 
-/* header */
-.header{
-  position:relative;
-  z-index:1;
+.shell{
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.16), rgba(255,255,255,.06));
+  border:1px solid rgba(20,18,16,.08);
+  padding:20px;
+}
+
+.topline{
   display:flex;
   justify-content:space-between;
-  align-items:flex-end;
-  margin-bottom:28px;
-}
-.brand{
-  font-family:var(--mono);
-  font-size:14px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-}
-.version{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-
-/* nav block */
-.stack{
-  position:relative;
-  z-index:1;
-  border-radius:22px;
-  border:1px solid var(--lineSoft);
-  overflow:hidden;
-  background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.16));
-}
-
-/* each button */
-.card{
-  display:grid;
-  grid-template-columns: 96px 1fr 54px;
   align-items:center;
-  gap:18px;
-  padding:30px 28px;
+  padding:2px 4px 16px;
+  letter-spacing:.16em;
+  font-size:11px;
+  text-transform:uppercase;
+  color:rgba(20,18,16,.65);
+}
+
+.router{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.pulse{
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:var(--amber);
+  opacity:.25;
+  animation:pulse 6s ease-in-out infinite;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:.25}
+  50%{opacity:.65}
+}
+
+.card{
+  border-radius:14px;
+  background:linear-gradient(180deg,var(--panel),var(--panel-2));
+  border:1px solid rgba(20,18,16,.08);
+  box-shadow:
+    0 16px 50px rgba(0,0,0,.08),
+    inset 0 1px 0 rgba(255,255,255,.45);
+  overflow:hidden;
+}
+
+.row{
+  display:grid;
+  grid-template-columns:70px 1fr 18px;
+  gap:14px;
+  align-items:center;
+  padding:20px 22px;
   text-decoration:none;
   color:inherit;
-
-  /* refined separators */
-  border-bottom:1px solid var(--lineFaint);
-
-  /* ultra-subtle surface */
-  background: linear-gradient(180deg, rgba(255,255,255,.24), rgba(255,255,255,.10));
-  transition: background .14s ease, transform .10s ease;
 }
 
-.card:last-child{ border-bottom:none; }
-
-.card:hover{
-  background: linear-gradient(180deg, rgba(255,255,255,.44), rgba(255,255,255,.16));
-  transform: translateY(-1px);
+.row + .row{
+  border-top:1px solid var(--hair-2);
 }
 
-/* left index */
-.num{
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.24em;
-  text-transform:uppercase;
-  color:rgba(28,26,23,.55);
-}
-
-/* label */
-.title{
-  font-family:var(--mono);
-  font-weight:700;
-  font-size: clamp(20px, 2.35vw, 28px);
+.idx{
+  font-size:11px;
   letter-spacing:.16em;
+  color:rgba(20,18,16,.45);
+}
+
+.title{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.name{
+  font-size:18px;
+  font-weight:500;
+  letter-spacing:.08em;
   text-transform:uppercase;
-  line-height:1.05;
-}
-.title.tight{ letter-spacing:.11em; }
-
-.sub{
-  margin-top:7px;
-  font-family:var(--mono);
-  font-size:13px;
-  letter-spacing:.02em;
-  color:rgba(28,26,23,.55);
+  transition:letter-spacing .25s ease;
 }
 
-/* right arrow */
+.desc{
+  font-size:12px;
+  letter-spacing:.04em;
+  color:var(--muted);
+  text-transform:lowercase;
+}
+
 .arrow{
-  text-align:right;
-  font-family:var(--mono);
+  justify-self:end;
+  color:rgba(20,18,16,.28);
   font-size:14px;
-  letter-spacing:.10em;
-  color:rgba(28,26,23,.35);
 }
 
-/* footer */
+.row:hover .name{
+  letter-spacing:.095em;
+}
+
+.row:hover .arrow{
+  color:var(--amber);
+}
+
 .footer{
-  position:relative;
-  z-index:1;
-  margin-top:30px;
-  padding-top:18px;
-  border-top:1px solid var(--lineFaint);
   display:flex;
   justify-content:space-between;
   align-items:center;
-
-  font-family:var(--mono);
-  font-size:12px;
-  letter-spacing:.22em;
+  margin-top:16px;
+  padding:12px 4px 2px;
+  font-size:11px;
+  letter-spacing:.14em;
   text-transform:uppercase;
-  color:rgba(28,26,23,.55);
+  color:rgba(20,18,16,.55);
+  border-top:1px solid var(--hair);
 }
 
 .footer a{
   text-decoration:none;
-  color:rgba(28,26,23,.75);
-  border-bottom:1px solid rgba(28,26,23,.22);
-  padding-bottom:1px;
+  color:inherit;
+  border-bottom:1px solid rgba(20,18,16,.22);
+  padding-bottom:2px;
 }
-.footer a:hover{ border-bottom-color: rgba(28,26,23,.55); }
 
-@media (max-width: 720px){
-  .frame{ padding:34px 24px 26px; }
-  .card{ grid-template-columns: 78px 1fr 42px; padding:26px 18px; }
+.footer a:hover{
+  border-bottom-color:var(--amber);
 }
 </style>
 </head>
 
 <body>
+<main class="frame">
+  <section class="shell">
 
-<section class="frame" aria-label="COLEMANVII gateway">
-  <header class="header">
-    <div class="brand">COLEMANVII</div>
-    <div class="version">ROUTER</div>
-  </header>
-
-  <nav class="stack" aria-label="Destinations">
-    <a class="card" href="https://westovr.substack.com/" target="_blank" rel="noreferrer">
-      <div class="num">01 //</div>
-      <div>
-        <div class="title">Westover</div>
-        <div class="sub">writing</div>
+    <header class="topline">
+      <div>COLEMANVII</div>
+      <div class="router">
+        <span class="pulse"></span>
+        <span>ROUTER</span>
       </div>
-      <div class="arrow">↗</div>
-    </a>
+    </header>
 
-    <a class="card" href="/monk">
-      <div class="num">02 //</div>
-      <div>
-        <div class="title">Monk</div>
-        <div class="sub">film · building</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
+    <nav class="card">
 
-    <a class="card" href="https://github.com/colemanvii" target="_blank" rel="noreferrer">
-      <div class="num">03 //</div>
-      <div>
-        <div class="title">Github</div>
-        <div class="sub">system log</div>
-      </div>
-      <div class="arrow">↗</div>
-    </a>
+      <a class="row" href="https://westovr.substack.com/" target="_blank">
+        <div class="idx">01 //</div>
+        <div class="title">
+          <div class="name">WESTOVER</div>
+          <div class="desc">writing</div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
 
-    <a class="card" href="/404">
-      <div class="num">04 //</div>
-      <div>
-        <div class="title tight">Client Portal</div>
-        <div class="sub">secure workspace</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-  </nav>
+      <a class="row" href="#">
+        <div class="idx">02 //</div>
+        <div class="title">
+          <div class="name">MONK</div>
+          <div class="desc">film · building</div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
 
-  <footer class="footer">
-    <span>© 2026 COLEMANVII</span>
-    <a href="/contact">CONTACT</a>
-  </footer>
-</section>
+      <a class="row" href="https://github.com/colemanvii" target="_blank">
+        <div class="idx">03 //</div>
+        <div class="title">
+          <div class="name">GITHUB</div>
+          <div class="desc">system log</div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
 
+      <a class="row" href="/404">
+        <div class="idx">04 //</div>
+        <div class="title">
+          <div class="name">CLIENT PORTAL</div>
+          <div class="desc">secure workspace</div>
+        </div>
+        <div class="arrow">›</div>
+      </a>
+
+    </nav>
+
+    <footer class="footer">
+      <div>© 2026 COLEMANVII</div>
+      <a href="mailto:hello@colemanvii.com">CONTACT</a>
+    </footer>
+
+  </section>
+</main>
 </body>
 </html>
