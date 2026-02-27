@@ -1,157 +1,342 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>COLEMANVII — Router</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COLEMANVII — ROUTER</title>
+
   <style>
     :root{
-      --bg:#d8cfbf;
-      --card:#e9e1d2;
-      --card2:#efe7d8;
-      --ink:#1c1a16;
-      --muted:#6f675c;
-      --rule:#cfc4b3;
-      --dot:#d6a38c;
-      --shadow: 0 18px 40px rgba(0,0,0,.10);
-      --radius:22px;
-      --track:.22em;
+      /* default = TAN */
+      --page-bg: #d7cbbd;
+      --card-bg: #efe4d6;
+      --card-outline: rgba(0,0,0,.10);
+      --hairline: rgba(0,0,0,.12);
+
+      --text: #111111;
+      --muted: rgba(0,0,0,.55);
+
+      --shadow-1: 0 28px 80px rgba(0,0,0,.12);
+      --shadow-2: 0 10px 30px rgba(0,0,0,.10);
+
+      --pill-bg: rgba(0,0,0,.05);
+      --pill-outline: rgba(0,0,0,.16);
+      --pill-text: rgba(0,0,0,.75);
+
+      --dot-off: rgba(0,0,0,.18);
+      --dot-on: rgba(0,0,0,.55);
+
+      --toggle-track: rgba(0,0,0,.10);
+      --toggle-thumb: #ffffff;
+      --toggle-label: rgba(0,0,0,.55);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    /* BLACK MODE */
+    [data-theme="black"]{
+      --page-bg: #0b0b0b;
+      --card-bg: #121212;
+      --card-outline: rgba(255,255,255,.10);
+      --hairline: rgba(255,255,255,.12);
+
+      --text: #f2f2f2;
+      --muted: rgba(255,255,255,.58);
+
+      --shadow-1: 0 28px 80px rgba(0,0,0,.55);
+      --shadow-2: 0 10px 30px rgba(0,0,0,.45);
+
+      --pill-bg: rgba(255,255,255,.06);
+      --pill-outline: rgba(255,255,255,.18);
+      --pill-text: rgba(255,255,255,.72);
+
+      --dot-off: rgba(255,255,255,.18);
+      --dot-on: rgba(255,255,255,.60);
+
+      --toggle-track: rgba(255,255,255,.14);
+      --toggle-thumb: #ffffff;
+      --toggle-label: rgba(255,255,255,.55);
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
+
     body{
-      margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",
-      Roboto,Helvetica,Arial;
-      background: radial-gradient(1200px 700px at 50% 40%, var(--bg) 0%, #d3c8b8 55%, #cdbfae 100%);
-      color:var(--ink);
+      background: var(--page-bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:24px;
+      padding: 26px 18px;
+      transition: background .25s ease, color .25s ease;
     }
-    .frame{
-      width:min(520px,92vw);
-      padding:22px 22px 26px;
-      border-radius:30px;
-      background:rgba(255,255,255,.12);
-      backdrop-filter:blur(2px);
+
+    .stage{
+      width: min(420px, 92vw);
+      position: relative;
     }
+
+    /* soft outer glow / inset frame like your screenshot */
+    .outer{
+      background: rgba(255,255,255,.08);
+      border-radius: 28px;
+      padding: 18px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    [data-theme="black"] .outer{
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+
     .card{
-      background:linear-gradient(180deg,var(--card2),var(--card));
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      border:1px solid rgba(255,255,255,.35);
-      overflow:hidden;
+      background: var(--card-bg);
+      border-radius: 22px;
+      border: 1px solid var(--card-outline);
+      box-shadow: var(--shadow-2);
+      padding: 18px 18px 16px 18px;
+      transition: background .25s ease, border-color .25s ease;
     }
+
     .topbar{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:18px 20px 14px;
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
+      padding: 2px 2px 12px 2px;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 6px;
     }
-    .right{display:flex;align-items:center;gap:10px}
-    .dot{
-      width:8px;height:8px;border-radius:999px;
-      background:var(--dot);
-      box-shadow:0 0 0 4px rgba(214,163,140,.18);
+
+    .brand, .mode{
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
     }
-    .rule{height:1px;background:var(--rule);margin:0 18px}
-    .list{padding:6px 6px 0}
-    .item{
+
+    .modewrap{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .statusdot{
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: var(--dot-off);
+      box-shadow: 0 0 0 3px rgba(0,0,0,.03);
+      transition: background .25s ease;
+    }
+    [data-theme="black"] .statusdot{
+      box-shadow: 0 0 0 3px rgba(255,255,255,.03);
+    }
+
+    /* rows */
+    .list{
+      margin-top: 10px;
+    }
+
+    .row{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      padding:18px 16px;
-      border-bottom:1px solid var(--rule);
+      padding: 16px 6px;
+      border-bottom: 1px solid var(--hairline);
       text-decoration:none;
-      color:inherit;
+      color: inherit;
+      transition: opacity .15s ease;
     }
-    .item:last-of-type{border-bottom:none}
-    .label{display:flex;flex-direction:column;gap:6px}
-    .name{
-      font-weight:700;
-      letter-spacing:var(--track);
-      text-transform:uppercase;
-      font-size:18px;
+    .row:last-of-type{
+      border-bottom:none;
     }
-    .sub{font-size:14px;color:var(--muted)}
+    .row:hover{ opacity:.75; }
+
+    .title{
+      font-size: 22px;
+      letter-spacing: .26em;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .subtitle{
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      text-transform: lowercase;
+      font-weight: 500;
+    }
+
     .chev{
-      color:rgba(28,26,22,.35);
-      font-size:22px;
+      font-size: 22px;
+      color: var(--muted);
+      line-height: 1;
+      transform: translateY(-2px);
+      user-select:none;
     }
-    .bottom{
+
+    /* contact button */
+    .footer{
+      margin-top: 14px;
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .pill{
+      appearance:none;
+      border: 1px solid var(--pill-outline);
+      background: var(--pill-bg);
+      color: var(--pill-text);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-weight: 700;
+      cursor:pointer;
+      text-decoration:none;
+      transition: transform .15s ease, opacity .15s ease, background .25s ease, border-color .25s ease;
+    }
+    .pill:hover{ opacity:.85; }
+    .pill:active{ transform: translateY(1px); }
+
+    /* theme toggle (tan/black) */
+    .togglebar{
+      margin-top: 14px;
       display:flex;
       align-items:center;
-      justify-content:flex-end;
-      padding:14px 20px 16px;
-      border-top:1px solid var(--rule);
-      background:rgba(255,255,255,.06);
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 6px 2px 6px;
     }
-    .bottom a{
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--muted);
-      text-decoration:none;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid rgba(111,103,92,.22);
-      background:rgba(255,255,255,.14);
+
+    .togglelabel{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--toggle-label);
+      font-weight: 650;
+      user-select:none;
+    }
+
+    .switch{
+      position: relative;
+      width: 54px;
+      height: 30px;
+      border-radius: 999px;
+      background: var(--toggle-track);
+      border: 1px solid var(--hairline);
+      cursor:pointer;
+      transition: background .25s ease, border-color .25s ease;
+      flex: 0 0 auto;
+    }
+
+    .thumb{
+      position:absolute;
+      top: 3px;
+      left: 3px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--toggle-thumb);
+      box-shadow: 0 6px 16px rgba(0,0,0,.22);
+      transition: transform .25s ease;
+    }
+
+    [data-theme="black"] .thumb{
+      transform: translateX(24px);
+    }
+
+    /* small nicety: make dot "on" in black mode */
+    [data-theme="black"] .statusdot{
+      background: var(--dot-on);
     }
   </style>
 </head>
+
 <body>
-  <div class="frame">
-    <div class="card">
-      <div class="topbar">
-        <div>COLEMANVII</div>
-        <div class="right"><span class="dot"></span><span>ROUTER</span></div>
-      </div>
-      <div class="rule"></div>
-
-      <div class="list">
-        <a class="item" href="/westover">
-          <div class="label">
-            <div class="name">WESTOVER</div>
-            <div class="sub">writing</div>
+  <div class="stage">
+    <div class="outer">
+      <div class="card">
+        <div class="topbar">
+          <div class="brand">COLEMANVII</div>
+          <div class="modewrap">
+            <div class="statusdot" aria-hidden="true"></div>
+            <div class="mode">ROUTER</div>
           </div>
-          <div class="chev">›</div>
-        </a>
+        </div>
 
-        <a class="item" href="/monk">
-          <div class="label">
-            <div class="name">MONK</div>
-            <div class="sub">film</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
+        <div class="list">
+          <a class="row" href="https://westovr.substack.com/" target="_blank" rel="noopener">
+            <div>
+              <div class="title">WESTOVER</div>
+              <div class="subtitle">writing</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
 
-        <a class="item" href="/github">
-          <div class="label">
-            <div class="name">GITHUB</div>
-            <div class="sub">system log</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
+          <a class="row" href="/monk">
+            <div>
+              <div class="title">MONK</div>
+              <div class="subtitle">film</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
 
-        <a class="item" href="/portal">
-          <div class="label">
-            <div class="name">HAVEN PAY</div>
-            <div class="sub">secure workspace</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
-      </div>
+          <a class="row" href="https://github.com/colemanvii" target="_blank" rel="noopener">
+            <div>
+              <div class="title">GITHUB</div>
+              <div class="subtitle">system log</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
 
-      <div class="bottom">
-        <a href="/hit-and-pay">Hit and Pay</a>
+          <a class="row" href="https://github.com/colemanvii/haven-pay" target="_blank" rel="noopener">
+            <div>
+              <div class="title">HAVEN PAY</div>
+              <div class="subtitle">repository</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
+        </div>
+
+        <div class="togglebar" aria-label="Theme toggle">
+          <div class="togglelabel">TAN / BLACK</div>
+          <button class="switch" id="themeToggle" type="button" aria-label="Toggle theme">
+            <span class="thumb" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="footer">
+          <a class="pill" href="mailto:colecalfee@gmail.com">CONTACT</a>
+        </div>
       </div>
     </div>
   </div>
+
+<script>
+  (function () {
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+
+    // Load saved theme (defaults to tan)
+    const saved = localStorage.getItem('cvii_theme');
+    if (saved === 'black') root.setAttribute('data-theme', 'black');
+
+    function toggleTheme() {
+      const isBlack = root.getAttribute('data-theme') === 'black';
+      if (isBlack) {
+        root.removeAttribute('data-theme');
+        localStorage.setItem('cvii_theme', 'tan');
+      } else {
+        root.setAttribute('data-theme', 'black');
+        localStorage.setItem('cvii_theme', 'black');
+      }
+    }
+
+    btn.addEventListener('click', toggleTheme);
+  })();
+</script>
 </body>
 </html>
