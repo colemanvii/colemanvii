@@ -1,271 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>COLEMANVII — ROUTER</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>COLEMANVII — ROUTER</title>
 
-  <style>
-    :root{
-      /* DEFAULT = TAN (no data-theme set) */
-      --page-bg: #d7cbbd;
-      --outer-bg: rgba(255,255,255,.08);
+<style>
+:root{
+  /* DEFAULT = TAN */
+  --page-bg:#d7cbbd;
+  --outer-bg:rgba(255,255,255,.08);
+  --card-bg:#efe4d6;
+  --card-outline:rgba(0,0,0,.10);
+  --hairline:rgba(0,0,0,.12);
+  --text:#111;
+  --muted:rgba(0,0,0,.55);
+  --shadow-1:0 28px 80px rgba(0,0,0,.12);
+  --shadow-2:0 10px 30px rgba(0,0,0,.10);
+  --pill-bg:rgba(0,0,0,.05);
+  --pill-outline:rgba(0,0,0,.16);
+  --pill-text:rgba(0,0,0,.75);
+  --dot-off:rgba(0,0,0,.18);
+  --dot-on:rgba(0,0,0,.55);
+}
 
-      --card-bg: #efe4d6;
-      --card-outline: rgba(0,0,0,.10);
-      --hairline: rgba(0,0,0,.12);
+/* BLACK MODE */
+html[data-theme="black"]{
+  --page-bg:#0b0b0b;
+  --outer-bg:rgba(255,255,255,.03);
+  --card-bg:#121212;
+  --card-outline:rgba(255,255,255,.10);
+  --hairline:rgba(255,255,255,.12);
+  --text:#f2f2f2;
+  --muted:rgba(255,255,255,.58);
+  --shadow-1:0 28px 80px rgba(0,0,0,.55);
+  --shadow-2:0 10px 30px rgba(0,0,0,.45);
+  --pill-bg:rgba(255,255,255,.06);
+  --pill-outline:rgba(255,255,255,.18);
+  --pill-text:rgba(255,255,255,.72);
+  --dot-off:rgba(255,255,255,.18);
+  --dot-on:rgba(255,255,255,.60);
+}
 
-      --text: #111111;
-      --muted: rgba(0,0,0,.55);
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
 
-      --shadow-1: 0 28px 80px rgba(0,0,0,.12);
-      --shadow-2: 0 10px 30px rgba(0,0,0,.10);
+body{
+  background:var(--page-bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:26px 18px;
+  transition:background .22s ease,color .22s ease;
+}
 
-      --pill-bg: rgba(0,0,0,.05);
-      --pill-outline: rgba(0,0,0,.16);
-      --pill-text: rgba(0,0,0,.75);
+.stage{width:min(420px,92vw);}
 
-      --dot-off: rgba(0,0,0,.18);
-      --dot-on: rgba(0,0,0,.55);
-    }
+.outer{
+  background:var(--outer-bg);
+  border-radius:28px;
+  padding:18px;
+  box-shadow:var(--shadow-1);
+  border:1px solid rgba(255,255,255,.06);
+}
 
-    /* BLACK MODE (only when attribute is present) */
-    html[data-theme="black"]{
-      --page-bg: #0b0b0b;
-      --outer-bg: rgba(255,255,255,.03);
+.card{
+  background:var(--card-bg);
+  border-radius:22px;
+  border:1px solid var(--card-outline);
+  box-shadow:var(--shadow-2);
+  padding:18px;
+  transition:background .22s ease,border-color .22s ease;
+}
 
-      --card-bg: #121212;
-      --card-outline: rgba(255,255,255,.10);
-      --hairline: rgba(255,255,255,.12);
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--hairline);
+  margin-bottom:6px;
+}
 
-      --text: #f2f2f2;
-      --muted: rgba(255,255,255,.58);
+.brand,.mode{
+  font-size:12px;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--muted);
+  font-weight:650;
+}
 
-      --shadow-1: 0 28px 80px rgba(0,0,0,.55);
-      --shadow-2: 0 10px 30px rgba(0,0,0,.45);
+.modewrap{display:flex;align-items:center;gap:10px;}
 
-      --pill-bg: rgba(255,255,255,.06);
-      --pill-outline: rgba(255,255,255,.18);
-      --pill-text: rgba(255,255,255,.72);
+.statusdot{
+  width:8px;height:8px;border-radius:999px;
+  background:var(--dot-off);
+  border:none;cursor:pointer;
+  transition:background .22s ease,transform .15s ease;
+}
+.statusdot:hover{transform:scale(1.15);}
+html[data-theme="black"] .statusdot{background:var(--dot-on);}
 
-      --dot-off: rgba(255,255,255,.18);
-      --dot-on: rgba(255,255,255,.60);
-    }
+.list{margin-top:10px;}
 
-    *{ box-sizing:border-box; margin:0; padding:0; }
-    html,body{ height:100%; }
+.row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 6px;
+  border-bottom:1px solid var(--hairline);
+  text-decoration:none;color:inherit;
+  transition:opacity .15s ease;
+}
+.row:last-of-type{border-bottom:none;}
+.row:hover{opacity:.75;}
 
-    body{
-      background: var(--page-bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", system-ui, sans-serif;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 26px 18px;
-      transition: background .22s ease, color .22s ease;
-    }
+.title{
+  font-size:22px;
+  letter-spacing:.26em;
+  font-weight:800;
+  text-transform:uppercase;
+}
 
-    .stage{ width: min(420px, 92vw); }
+.subtitle{
+  margin-top:6px;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:.04em;
+}
 
-    .outer{
-      background: var(--outer-bg);
-      border-radius: 28px;
-      padding: 18px;
-      box-shadow: var(--shadow-1);
-      border: 1px solid rgba(255,255,255,.06);
-      transition: background .22s ease;
-    }
+.chev{
+  font-size:22px;
+  color:var(--muted);
+  transform:translateY(-2px);
+}
 
-    .card{
-      background: var(--card-bg);
-      border-radius: 22px;
-      border: 1px solid var(--card-outline);
-      box-shadow: var(--shadow-2);
-      padding: 18px 18px 16px 18px;
-      transition: background .22s ease, border-color .22s ease;
-    }
+.footer{
+  margin-top:14px;
+  display:flex;
+  justify-content:flex-end;
+}
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 2px 2px 12px 2px;
-      border-bottom: 1px solid var(--hairline);
-      margin-bottom: 6px;
-    }
-
-    .brand, .mode{
-      font-size: 12px;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 650;
-      user-select:none;
-    }
-
-    .modewrap{ display:flex; align-items:center; gap: 10px; }
-
-    /* subtle theme toggle: tiny dot */
-    .statusdot{
-      width:8px;
-      height:8px;
-      border-radius:999px;
-      background: var(--dot-off);
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      transition: background .22s ease, transform .15s ease, opacity .15s ease;
-      opacity: .9;
-    }
-    .statusdot:hover{ transform: scale(1.15); opacity: 1; }
-    .statusdot:active{ transform: scale(1.05); }
-    html[data-theme="black"] .statusdot{ background: var(--dot-on); }
-
-    .list{ margin-top: 10px; }
-
-    .row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding: 16px 6px;
-      border-bottom: 1px solid var(--hairline);
-      text-decoration:none;
-      color: inherit;
-      transition: opacity .15s ease;
-    }
-    .row:last-of-type{ border-bottom:none; }
-    .row:hover{ opacity:.75; }
-
-    .title{
-      font-size: 22px;
-      letter-spacing: .26em;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .subtitle{
-      margin-top: 6px;
-      font-size: 13px;
-      color: var(--muted);
-      letter-spacing: .04em;
-      text-transform: lowercase;
-      font-weight: 500;
-    }
-
-    .chev{
-      font-size: 22px;
-      color: var(--muted);
-      line-height: 1;
-      transform: translateY(-2px);
-      user-select:none;
-    }
-
-    .footer{
-      margin-top: 14px;
-      display:flex;
-      justify-content:flex-end;
-    }
-
-    .pill{
-      border: 1px solid var(--pill-outline);
-      background: var(--pill-bg);
-      color: var(--pill-text);
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 12px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      font-weight: 750;
-      cursor:pointer;
-      text-decoration:none;
-      transition: transform .15s ease, opacity .15s ease, background .22s ease, border-color .22s ease;
-      user-select:none;
-    }
-    .pill:hover{ opacity:.85; }
-    .pill:active{ transform: translateY(1px); }
-  </style>
+.pill{
+  border:1px solid var(--pill-outline);
+  background:var(--pill-bg);
+  color:var(--pill-text);
+  border-radius:999px;
+  padding:10px 16px;
+  font-size:12px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  font-weight:750;
+  text-decoration:none;
+  transition:opacity .15s ease;
+}
+.pill:hover{opacity:.85;}
+</style>
 </head>
 
 <body>
-  <div class="stage">
-    <div class="outer">
-      <div class="card">
+<div class="stage">
+  <div class="outer">
+    <div class="card">
 
-        <div class="topbar">
-          <div class="brand">COLEMANVII</div>
-          <div class="modewrap">
-            <button class="statusdot" id="themeToggle" aria-label="Toggle theme"></button>
-            <div class="mode">ROUTER</div>
-          </div>
+      <div class="topbar">
+        <div class="brand">COLEMANVII</div>
+        <div class="modewrap">
+          <button class="statusdot" id="themeToggle" aria-label="Toggle theme"></button>
+          <div class="mode">ROUTER</div>
         </div>
-
-        <div class="list">
-          <a class="row" href="https://westovr.substack.com/" target="_blank" rel="noopener">
-            <div>
-              <div class="title">WESTOVER</div>
-              <div class="subtitle">writing</div>
-            </div>
-            <div class="chev">›</div>
-          </a>
-
-          <a class="row" href="/monk">
-            <div>
-              <div class="title">MONK</div>
-              <div class="subtitle">film</div>
-            </div>
-            <div class="chev">›</div>
-          </a>
-
-          <a class="row" href="https://github.com/colemanvii" target="_blank" rel="noopener">
-            <div>
-              <div class="title">GITHUB</div>
-              <div class="subtitle">system log</div>
-            </div>
-            <div class="chev">›</div>
-          </a>
-
-          <a class="row" href="https://github.com/colemanvii/haven-pay" target="_blank" rel="noopener">
-            <div>
-              <div class="title">HAVEN PAY</div>
-              <div class="subtitle">repository</div>
-            </div>
-            <div class="chev">›</div>
-          </a>
-        </div>
-
-        <div class="footer">
-          <a class="pill" href="mailto:colecalfee@gmail.com">CONTACT</a>
-        </div>
-
       </div>
+
+      <div class="list">
+        <a class="row" href="https://westovr.substack.com/" target="_blank">
+          <div>
+            <div class="title">WESTOVER</div>
+            <div class="subtitle">writing</div>
+          </div>
+          <div class="chev">›</div>
+        </a>
+
+        <a class="row" href="/monk">
+          <div>
+            <div class="title">MONK</div>
+            <div class="subtitle">film</div>
+          </div>
+          <div class="chev">›</div>
+        </a>
+
+        <a class="row" href="https://github.com/colemanvii" target="_blank">
+          <div>
+            <div class="title">GITHUB</div>
+            <div class="subtitle">system log</div>
+          </div>
+          <div class="chev">›</div>
+        </a>
+
+        <a class="row" href="https://github.com/colemanvii/haven-pay" target="_blank">
+          <div>
+            <div class="title">HAVEN PAY</div>
+            <div class="subtitle">repository</div>
+          </div>
+          <div class="chev">›</div>
+        </a>
+      </div>
+
+      <div class="footer">
+        <a class="pill" href="mailto:colecalfee@gmail.com">CONTACT</a>
+      </div>
+
     </div>
   </div>
+</div>
 
-  <script>
-    (function () {
-      const root = document.documentElement;
-      const btn = document.getElementById('themeToggle');
+<script>
+(function(){
+  const root=document.documentElement;
+  const btn=document.getElementById('themeToggle');
 
-      // FAILSAFE (uncomment while testing to force TAN always)
-      // localStorage.removeItem('cvii_theme');
-      // root.removeAttribute('data-theme');
+  // ALWAYS START TAN
+  root.removeAttribute('data-theme');
 
-      // Default is TAN. Only switch to black if user explicitly saved it.
-      const saved = localStorage.getItem('cvii_theme');
-      if (saved === 'black') root.setAttribute('data-theme', 'black');
+  btn.addEventListener('click',()=>{
+    const isBlack=root.getAttribute('data-theme')==='black';
+    if(isBlack){
+      root.removeAttribute('data-theme');
+    }else{
+      root.setAttribute('data-theme','black');
+    }
+  });
+})();
+</script>
 
-      btn.addEventListener('click', () => {
-        const isBlack = root.getAttribute('data-theme') === 'black';
-        if (isBlack) {
-          root.removeAttribute('data-theme');       // back to TAN (default)
-          localStorage.setItem('cvii_theme', 'tan');
-        } else {
-          root.setAttribute('data-theme', 'black'); // set BLACK
-          localStorage.setItem('cvii_theme', 'black');
-        }
-      });
-    })();
-  </script>
 </body>
 </html>
