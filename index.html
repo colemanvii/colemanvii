@@ -1,236 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>COLEMANVII — SIGNAL LIVE</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>COLEMANVII — ROUTER</title>
 
-<style>
-:root{
-  /* DEFAULT = TAN */
-  --page-bg:#d7cbbd;
-  --outer-bg:rgba(255,255,255,.08);
-  --card-bg:#efe4d6;
-  --card-outline:rgba(0,0,0,.10);
-  --hairline:rgba(0,0,0,.12);
-  --text:#111;
-  --muted:rgba(0,0,0,.55);
-  --shadow-1:0 28px 80px rgba(0,0,0,.12);
-  --shadow-2:0 10px 30px rgba(0,0,0,.10);
-  --pill-bg:rgba(0,0,0,.05);
-  --pill-outline:rgba(0,0,0,.16);
-  --pill-text:rgba(0,0,0,.75);
-  --dot-off:rgba(0,0,0,.18);
-  --dot-on:rgba(0,0,0,.55);
-}
+  <style>
+    :root{
+      --page-bg:#e7ddce;
+      --page-grad-1:rgba(255,255,255,.30);
+      --page-grad-2:rgba(0,0,0,.04);
 
-/* BLACK MODE */
-html[data-theme="black"]{
-  --page-bg:#0b0b0b;
-  --outer-bg:rgba(255,255,255,.03);
-  --card-bg:#121212;
-  --card-outline:rgba(255,255,255,.10);
-  --hairline:rgba(255,255,255,.12);
-  --text:#f2f2f2;
-  --muted:rgba(255,255,255,.58);
-  --shadow-1:0 28px 80px rgba(0,0,0,.55);
-  --shadow-2:0 10px 30px rgba(0,0,0,.45);
-  --pill-bg:rgba(255,255,255,.06);
-  --pill-outline:rgba(255,255,255,.18);
-  --pill-text:rgba(255,255,255,.72);
-  --dot-off:rgba(255,255,255,.18);
-  --dot-on:rgba(255,255,255,.60);
-}
+      --card-bg:#efe4d6;
+      --card-outline:rgba(0,0,0,.10);
+      --hairline:rgba(0,0,0,.11);
 
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;}
+      --text:#111;
+      --muted:rgba(0,0,0,.58);
 
-body{
-  background:var(--page-bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:26px 18px;
-  transition:background .22s ease,color .22s ease;
-}
+      --shadow: 0 35px 90px rgba(0,0,0,.16);
+      --shadow-soft: 0 16px 40px rgba(0,0,0,.10);
 
-.stage{width:min(420px,92vw);}
+      --radius-outer:34px;
+      --radius-card:28px;
 
-.outer{
-  background:var(--outer-bg);
-  border-radius:28px;
-  padding:18px;
-  box-shadow:var(--shadow-1);
-  border:1px solid rgba(255,255,255,.06);
-}
+      --accent:#d58b55; /* router dot */
+      --chev:rgba(0,0,0,.35);
+      --hover:rgba(0,0,0,.04);
 
-.card{
-  background:var(--card-bg);
-  border-radius:22px;
-  border:1px solid var(--card-outline);
-  box-shadow:var(--shadow-2);
-  padding:18px;
-  transition:background .22s ease,border-color .22s ease;
-}
+      --track:rgba(255,255,255,.20);
+    }
 
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding-bottom:12px;
-  border-bottom:1px solid var(--hairline);
-  margin-bottom:6px;
-}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{height:100%;}
 
-.brand,.mode{
-  font-size:12px;
-  letter-spacing:.28em;
-  text-transform:uppercase;
-  color:var(--muted);
-  font-weight:650;
-}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 40% 20%, var(--page-grad-1), transparent 60%),
+        radial-gradient(900px 700px at 60% 85%, var(--page-grad-2), transparent 55%),
+        var(--page-bg);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 18px;
+    }
 
-.modewrap{display:flex;align-items:center;gap:10px;}
+    .stage{
+      width:min(520px, 92vw);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
 
-.statusdot{
-  width:8px;height:8px;border-radius:999px;
-  background:var(--dot-off);
-  border:none;cursor:pointer;
-  transition:background .22s ease,transform .15s ease;
-}
-.statusdot:hover{transform:scale(1.15);}
-html[data-theme="black"] .statusdot{background:var(--dot-on);}
+    .shell{
+      width:min(420px, 92vw);
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:var(--radius-outer);
+      padding:20px;
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
 
-.list{margin-top:10px;}
+    .card{
+      background:var(--card-bg);
+      border:1px solid var(--card-outline);
+      border-radius:var(--radius-card);
+      box-shadow:var(--shadow-soft);
+      padding:18px 18px 14px;
+    }
 
-.row{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:16px 6px;
-  border-bottom:1px solid var(--hairline);
-  text-decoration:none;color:inherit;
-  transition:opacity .15s ease;
-}
-.row:last-of-type{border-bottom:none;}
-.row:hover{opacity:.75;}
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:4px 2px 14px;
+      border-bottom:1px solid var(--hairline);
+      margin-bottom:6px;
+    }
 
-.title{
-  font-size:22px;
-  letter-spacing:.26em;
-  font-weight:800;
-  text-transform:uppercase;
-}
+    .brand{
+      font-size:13px;
+      letter-spacing:.28em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:650;
+    }
 
-.subtitle{
-  margin-top:6px;
-  font-size:13px;
-  color:var(--muted);
-  letter-spacing:.04em;
-}
+    .status{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:13px;
+      letter-spacing:.26em;
+      text-transform:uppercase;
+      color:var(--muted);
+      font-weight:650;
+    }
 
-.chev{
-  font-size:22px;
-  color:var(--muted);
-  transform:translateY(-2px);
-}
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background:var(--accent);
+      box-shadow:0 0 0 3px rgba(213,139,85,.15);
+      transform:translateY(-1px);
+    }
 
-.footer{
-  margin-top:14px;
-  display:flex;
-  justify-content:flex-end;
-}
+    .list{
+      margin-top:10px;
+    }
 
-.pill{
-  border:1px solid var(--pill-outline);
-  background:var(--pill-bg);
-  color:var(--pill-text);
-  border-radius:999px;
-  padding:10px 16px;
-  font-size:12px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  font-weight:750;
-  text-decoration:none;
-  transition:opacity .15s ease;
-}
-.pill:hover{opacity:.85;}
-</style>
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:18px 4px;
+      text-decoration:none;
+      color:inherit;
+      border-bottom:1px solid var(--hairline);
+      border-radius:14px;
+      transition:background .12s ease, transform .12s ease, opacity .12s ease;
+    }
+    .row:hover{
+      background:var(--hover);
+      transform:translateY(-1px);
+    }
+    .row:active{
+      transform:translateY(0px);
+      opacity:.9;
+    }
+    .row:last-child{
+      border-bottom:none;
+    }
+
+    .left{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .title{
+      font-size:22px;
+      letter-spacing:.26em;
+      text-transform:uppercase;
+      font-weight:800;
+      line-height:1.05;
+    }
+
+    .subtitle{
+      font-size:14px;
+      color:var(--muted);
+      letter-spacing:.02em;
+      line-height:1.2;
+    }
+
+    .chev{
+      font-size:26px;
+      color:var(--chev);
+      line-height:1;
+      transform:translateY(-1px);
+      padding-left:12px;
+      user-select:none;
+    }
+
+    .footer{
+      margin-top:14px;
+      padding-top:14px;
+      border-top:1px solid var(--hairline);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-size:14px;
+      color:var(--muted);
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+
+    .footer a{
+      color:inherit;
+      text-decoration:none;
+      transition:opacity .12s ease;
+    }
+    .footer a:hover{opacity:.75;}
+
+    /* Small refinement for very narrow screens */
+    @media (max-width: 360px){
+      .title{font-size:20px;}
+      .subtitle{font-size:13px;}
+      .card{padding:16px 14px 12px;}
+      .shell{padding:16px;}
+    }
+  </style>
 </head>
 
 <body>
-<div class="stage">
-  <div class="outer">
-    <div class="card">
+  <div class="stage">
+    <div class="shell">
+      <div class="card">
 
-      <div class="topbar">
-        <div class="brand">COLEMANVII</div>
-        <div class="modewrap">
-          <button class="statusdot" id="themeToggle" aria-label="Toggle theme"></button>
-          <div class="mode">SIGNAL LIVE</div>
+        <div class="topbar">
+          <div class="brand">COLEMANVII</div>
+          <div class="status">
+            <span class="dot" aria-hidden="true"></span>
+            <span>ROUTER</span>
+          </div>
         </div>
+
+        <div class="list">
+          <a class="row" href="https://westovr.substack.com/" target="_blank" rel="noopener">
+            <div class="left">
+              <div class="title">WESTOVER</div>
+              <div class="subtitle">writing</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
+
+          <a class="row" href="/monk">
+            <div class="left">
+              <div class="title">MONK</div>
+              <div class="subtitle">film · building</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
+
+          <a class="row" href="https://github.com/colemanvii" target="_blank" rel="noopener">
+            <div class="left">
+              <div class="title">GITHUB</div>
+              <div class="subtitle">system log</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
+
+          <a class="row" href="/portal">
+            <div class="left">
+              <div class="title">CLIENT PORTAL</div>
+              <div class="subtitle">secure workspace</div>
+            </div>
+            <div class="chev">›</div>
+          </a>
+        </div>
+
+        <div class="footer">
+          <div>© 2026 COLEMANVII</div>
+          <a href="mailto:colecalfee@gmail.com">CONTACT</a>
+        </div>
+
       </div>
-
-      <div class="list">
-        <a class="row" href="https://westovr.substack.com/" target="_blank">
-          <div>
-            <div class="title">WESTOVER</div>
-            <div class="subtitle">writing</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
-
-        <a class="row" href="/monk">
-          <div>
-            <div class="title">MONK</div>
-            <div class="subtitle">film</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
-
-        <a class="row" href="https://github.com/colemanvii" target="_blank">
-          <div>
-            <div class="title">GITHUB</div>
-            <div class="subtitle">system log</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
-
-        <a class="row" href="https://github.com/colemanvii/haven-pay" target="_blank">
-          <div>
-            <div class="title">HAVEN PAY</div>
-            <div class="subtitle">repository</div>
-          </div>
-          <div class="chev">›</div>
-        </a>
-      </div>
-
-      <div class="footer">
-        <a class="pill" href="mailto:colecalfee@gmail.com">CONTACT</a>
-      </div>
-
     </div>
   </div>
-</div>
-
-<script>
-(function(){
-  const root=document.documentElement;
-  const btn=document.getElementById('themeToggle');
-
-  // Always start TAN
-  root.removeAttribute('data-theme');
-
-  btn.addEventListener('click',()=>{
-    const isBlack=root.getAttribute('data-theme')==='black';
-    if(isBlack){
-      root.removeAttribute('data-theme');
-    }else{
-      root.setAttribute('data-theme','black');
-    }
-  });
-})();
-</script>
-
 </body>
 </html>
