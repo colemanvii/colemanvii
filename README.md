@@ -1,6 +1,6 @@
 # ColemanVII
 
-Software, design, writing, etc.
+Software and design work, writing, etc.
 
 ## Selected work
 
