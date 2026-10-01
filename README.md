@@ -1,9 +1,14 @@
-# ColemanVII
+# Cole Calfee
 
-Software and design work, writing, etc.
+Archive, experiments, and retired work.
 
-## Selected work
+This repository preserves earlier site pages and standalone studies. The current portfolio lives in [`personal`](https://github.com/colemanvii/personal).
 
-- [Haven](https://github.com/colemanvii/haven) — human OS.
-- [Emberwing](https://github.com/colemanvii/emberwing) — a browser-based flight game.
-- [Freeman GC](https://github.com/colemanvii/freemangc-v2) — a website and client-portal concept.
+## Current projects
+
+- [Personal](https://github.com/colemanvii/personal) — photography, design, and artwork; [colecalfee.com](https://colecalfee.com).
+- [Emberwing](https://github.com/colemanvii/emberwing) — a browser flight game.
+- [Freeman](https://github.com/colemanvii/freeman) — Freeman General Contractors website and field documentation.
+- Haven — private personal and home-system work.
+
+Historical pages and the existing `colemanvii.com` domain configuration remain preserved here.
