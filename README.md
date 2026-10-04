@@ -1,6 +1,6 @@
 # Cole Calfee
 
-Archive, experiments, and retired work.
+Archive, experiments, etc.
 
 This repository preserves earlier site pages and standalone studies. The current portfolio lives in [`personal`](https://github.com/colemanvii/personal).
 
