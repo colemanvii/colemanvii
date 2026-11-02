@@ -1,9 +1,5 @@
 # Cole Calfee
 
-Designer, builder, working artist.
-
-I make websites, identities, digital tools, and paintings.
-
 [colecalfee.com](https://colecalfee.com)
 
 ### Selected work
